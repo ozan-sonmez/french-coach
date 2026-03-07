@@ -4,589 +4,647 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0f172a" />
-  <title>Fransızca Telaffuz Koçu</title>
+  <title>French Exam Speaking Coach v2</title>
   <style>
     :root{
-      --bg:#f5f7fb;
+      --bg:#f6f8fc;
       --card:#ffffff;
       --text:#0f172a;
       --muted:#64748b;
       --line:#e2e8f0;
-      --accent:#2563eb;
-      --accent-2:#1d4ed8;
-      --good:#16a34a;
-      --warn:#ea580c;
-      --bad:#dc2626;
-      --shadow:0 10px 30px rgba(15,23,42,.08);
+      --blue:#2563eb;
+      --blue2:#1d4ed8;
+      --green:#16a34a;
+      --orange:#ea580c;
+      --red:#dc2626;
+      --purple:#7c3aed;
+      --shadow:0 12px 28px rgba(15,23,42,.08);
       --radius:18px;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-    body{padding:16px 16px 100px;max-width:760px;margin:0 auto}
-    .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:8px 0 18px}
-    h1{font-size:1.55rem;line-height:1.15;margin:0 0 6px}
-    .sub{color:var(--muted);font-size:.96rem;line-height:1.45}
-    .badge{background:#dbeafe;color:#1e40af;border-radius:999px;padding:8px 12px;font-size:.85rem;font-weight:700;white-space:nowrap}
+    body{max-width:860px;margin:0 auto;padding:16px 16px 108px}
+    h1,h2,h3,p{margin:0}
+    .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin:6px 0 16px}
+    .sub{color:var(--muted);font-size:.96rem;line-height:1.45;margin-top:6px}
+    .badge{white-space:nowrap;background:#dbeafe;color:#1e40af;border-radius:999px;padding:8px 12px;font-weight:800;font-size:.85rem}
     .grid{display:grid;gap:14px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .stat{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
-    .stat .n{font-size:1.35rem;font-weight:800}
-    .stat .l{font-size:.8rem;color:var(--muted);margin-top:4px}
-    .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-    .section-title h2{margin:0;font-size:1.05rem}
-    select,button,input,textarea{font:inherit}
-    .controls{display:flex;gap:10px;flex-wrap:wrap}
-    select{
-      width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:white;color:var(--text)
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+    .section-head h2{font-size:1.03rem}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .stat{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+    .stat .n{font-size:1.3rem;font-weight:900}
+    .stat .l{font-size:.79rem;color:var(--muted);margin-top:4px}
+    .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+    .tab{
+      border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 10px;font-weight:800;color:#0f172a
     }
-    .phrase{font-size:1.35rem;font-weight:800;line-height:1.3;margin:6px 0 8px}
-    .meaning{color:var(--muted);font-size:.98rem;margin-bottom:6px}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .pill{padding:6px 10px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:.82rem;font-weight:700}
+    .tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .hidden{display:none !important}
+    select,button,textarea,input{font:inherit}
+    select,input,textarea{
+      width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--text)
+    }
+    textarea{min-height:88px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .phrase{font-size:1.4rem;font-weight:900;line-height:1.28;margin-top:2px}
+    .meaning{margin-top:8px;color:var(--muted);font-size:1rem}
+    .tiny{font-size:.83rem;color:var(--muted)}
+    .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .pill{padding:6px 10px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:.82rem}
     .pill.gray{background:#f1f5f9;color:#475569}
-    .btn-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-    .btn-row.three{grid-template-columns:repeat(3,1fr)}
+    .pill.green{background:#dcfce7;color:#166534}
+    .pill.orange{background:#ffedd5;color:#9a3412}
+    .controls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+    .controls.three{grid-template-columns:repeat(3,1fr)}
     button{
-      border:0;border-radius:14px;padding:13px 14px;font-weight:800;cursor:pointer;transition:.15s transform,.15s opacity,.15s background
+      border:0;border-radius:14px;padding:13px 14px;font-weight:900;cursor:pointer
     }
     button:active{transform:scale(.98)}
-    .btn-primary{background:var(--accent);color:white}
-    .btn-primary:hover{background:var(--accent-2)}
-    .btn-secondary{background:#e2e8f0;color:#0f172a}
-    .btn-ghost{background:white;border:1px solid var(--line);color:#0f172a}
-    .btn-good{background:#dcfce7;color:#166534}
-    .btn-warn{background:#ffedd5;color:#9a3412}
-    .btn-bad{background:#fee2e2;color:#991b1b}
-    .btn-disabled{opacity:.55;cursor:not-allowed}
-    .recording{display:inline-flex;align-items:center;gap:8px;color:var(--bad);font-weight:800;margin-top:10px}
-    .dot{width:10px;height:10px;background:var(--bad);border-radius:50%;display:inline-block;animation:pulse 1s infinite}
-    @keyframes pulse{0%{opacity:1}50%{opacity:.3}100%{opacity:1}}
-    audio{width:100%;margin-top:10px}
-    .notes{width:100%;min-height:92px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;resize:vertical;background:#fff}
-    .list{display:grid;gap:10px}
-    .item{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fafcff}
-    .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-    .item p{margin:0}
-    .small{font-size:.85rem;color:var(--muted)}
-    .footer{position:fixed;left:0;right:0;bottom:0;background:rgba(245,247,251,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:center}
-    .footer-inner{max-width:760px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .hint{font-size:.9rem;color:var(--muted);line-height:1.45}
-    .divider{height:1px;background:var(--line);margin:14px 0}
-    .success{color:var(--good);font-weight:700}
-    .error{color:var(--bad);font-weight:700}
-    .status-box{margin-top:10px;padding:10px 12px;border-radius:12px;background:#f8fafc;border:1px solid var(--line);font-size:.92rem}
-    .voice-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}
+    .primary{background:var(--blue);color:#fff}
+    .secondary{background:#e2e8f0;color:#0f172a}
+    .ghost{background:#fff;border:1px solid var(--line);color:#0f172a}
+    .good{background:#dcfce7;color:#166534}
+    .warn{background:#ffedd5;color:#9a3412}
+    .bad{background:#fee2e2;color:#991b1b}
+    .purple{background:#ede9fe;color:#5b21b6}
     .muted{color:var(--muted)}
-    @media (max-width:520px){
-      .btn-row.three,.voice-grid,.footer-inner{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr 1fr 1fr}
+    .divider{height:1px;background:var(--line);margin:14px 0}
+    audio{width:100%;margin-top:10px}
+    .status{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#f8fafc;font-size:.92rem;line-height:1.45}
+    .ok{color:var(--green);font-weight:800}
+    .err{color:var(--red);font-weight:800}
+    .recording{display:inline-flex;align-items:center;gap:8px;color:var(--red);font-weight:800;margin-top:10px}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block;animation:pulse 1s infinite}
+    @keyframes pulse{0%{opacity:1}50%{opacity:.35}100%{opacity:1}}
+    .list{display:grid;gap:10px}
+    .item{border:1px solid var(--line);background:#fafcff;border-radius:14px;padding:12px}
+    .item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .item-title{font-weight:800;line-height:1.35}
+    .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .chip{font-size:.75rem;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#4338ca;font-weight:800}
+    .chip.gray{background:#f1f5f9;color:#475569}
+    .chip.green{background:#dcfce7;color:#166534}
+    .footer{
+      position:fixed;left:0;right:0;bottom:0;background:rgba(246,248,252,.92);
+      backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))
+    }
+    .footer-inner{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .note-card{background:#f8fafc;border:1px dashed var(--line);border-radius:14px;padding:12px}
+    .small-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .right{display:flex;justify-content:flex-end}
+    @media (max-width:720px){
+      .stats,.tabs,.row,.controls,.controls.three,.small-grid,.footer-inner{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:560px){
       .top{flex-direction:column}
-      .badge{align-self:flex-start}
-      .phrase{font-size:1.2rem}
+      .stats,.tabs,.row,.controls,.controls.three,.small-grid,.footer-inner{grid-template-columns:1fr}
+      body{padding:14px 14px 120px}
+      .phrase{font-size:1.28rem}
     }
   </style>
 </head>
 <body>
   <div class="top">
     <div>
-      <h1>Fransızca Telaffuz Koçu</h1>
-      <div class="sub">iPhone uyumlu güncellenmiş sürüm. Cümleyi dinle, profesyonel Fransızca sese yakın bir ses seç, kendi kaydını al ve notlarını sakla.</div>
+      <h1>French Exam Speaking Coach</h1>
+      <p class="sub">v2 iskelet sürümü — artık uygulama <strong>sınav odaklı</strong>. Yapı, A1/A2 müfredat konuları, ses çalışması, exam prompts ve zayıf öğeler mantığıyla yeniden kuruldu.</p>
     </div>
-    <div class="badge">v1.2 iPhone</div>
+    <div class="badge">A1 + A2 Focus</div>
   </div>
 
   <div class="grid">
     <div class="card">
-      <div class="section-title">
-        <h2>İlerleme</h2>
-        <button class="btn-ghost" id="resetProgressBtn">Sıfırla</button>
+      <div class="section-head">
+        <h2>Hızlı Durum</h2>
+        <span class="tiny">LocalStorage ile saklanır</span>
       </div>
       <div class="stats">
-        <div class="stat"><div class="n" id="doneCount">0</div><div class="l">Çalışılan</div></div>
-        <div class="stat"><div class="n" id="hardCount">0</div><div class="l">Zorlanan</div></div>
-        <div class="stat"><div class="n" id="avgScore">0</div><div class="l">Ortalama</div></div>
+        <div class="stat"><div class="n" id="statTotal">0</div><div class="l">Toplam öğe</div></div>
+        <div class="stat"><div class="n" id="statWeak">0</div><div class="l">Zayıf öğe</div></div>
+        <div class="stat"><div class="n" id="statPractices">0</div><div class="l">Toplam çalışma</div></div>
+        <div class="stat"><div class="n" id="statExam">0</div><div class="l">Exam prompt</div></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="section-title">
-        <h2>Bugünkü çalışma</h2>
+      <div class="section-head">
+        <h2>Bölümler</h2>
+        <span class="tiny">İlk geliştirme paketi</span>
       </div>
-      <div class="controls">
-        <select id="categorySelect" aria-label="Kategori seç">
-          <option value="all">Tüm cümleler</option>
-          <option value="hotel">Otel / iş</option>
-          <option value="daily">Günlük hayat</option>
-          <option value="family">Aile / okul</option>
-          <option value="sounds">Ses odaklı</option>
-        </select>
+      <div class="tabs">
+        <button class="tab active" data-tab="sounds">Sounds</button>
+        <button class="tab" data-tab="a1">A1 Topics</button>
+        <button class="tab" data-tab="a2">A2 Topics</button>
+        <button class="tab" data-tab="exam">Exam Practice</button>
+        <button class="tab" data-tab="weak">My Weak Items</button>
       </div>
+    </div>
 
-      <div class="divider"></div>
-
-      <div class="voice-grid">
+    <section id="tab-sounds" class="card tab-panel">
+      <div class="section-head">
+        <h2>Sounds — Telaffuz odaklı çalışma</h2>
+        <span class="tiny">İlk hedef: zor sesleri ayrı modüle taşımak</span>
+      </div>
+      <div class="row">
         <div>
-          <div class="small" style="margin-bottom:6px;">Dinleme sesi</div>
-          <select id="voiceSelect" aria-label="Fransızca ses seç"></select>
+          <label class="tiny">Ses grubu</label>
+          <select id="soundsGroup"></select>
         </div>
         <div>
-          <div class="small" style="margin-bottom:6px;">Ses tipi</div>
-          <div class="status-box" id="voiceTypeInfo">Profesyonel erkek sese öncelik veriliyor</div>
+          <label class="tiny">Öğe</label>
+          <select id="soundsItem"></select>
         </div>
       </div>
-      <div class="small" style="margin-top:8px;">Not: Tarayıcıdaki gerçek sesler cihazına bağlıdır. Uygulama mümkünse Fransızca erkek sese öncelik verir.</div>
 
       <div class="divider"></div>
+      <div id="soundsCard"></div>
+    </section>
 
-      <div class="phrase" id="phraseText">Je travaille dans un hôtel à Toronto.</div>
-      <div class="meaning" id="phraseMeaning">Toronto’da bir otelde çalışıyorum.</div>
-      <div class="meta">
-        <span class="pill" id="phraseLevel">A1</span>
-        <span class="pill gray" id="phraseFocus">odak: r / ô / à</span>
+    <section id="tab-a1" class="card tab-panel hidden">
+      <div class="section-head">
+        <h2>A1 Topics — Resmî müfredat mantığına göre</h2>
+        <span class="tiny">Se présenter, famille, ville, routine, nourriture...</span>
       </div>
-
-      <div class="btn-row three">
-        <button class="btn-primary" id="speakSlowBtn">Yavaş dinle</button>
-        <button class="btn-primary" id="speakNormalBtn">Normal dinle</button>
-        <button class="btn-secondary" id="nextBtn">Sonraki cümle</button>
+      <div class="row">
+        <div>
+          <label class="tiny">A1 konu</label>
+          <select id="a1Topic"></select>
+        </div>
+        <div>
+          <label class="tiny">Öğe</label>
+          <select id="a1Item"></select>
+        </div>
       </div>
-
-      <div class="btn-row">
-        <button class="btn-ghost" id="recordBtn">Kayda başla</button>
-        <button class="btn-ghost btn-disabled" id="stopBtn" disabled>Kaydı durdur</button>
-      </div>
-
-      <div id="recordingStatus" class="recording" style="display:none;"><span class="dot"></span> Kayıt alınıyor…</div>
-      <div id="recordingFeedback" class="status-box muted">Hazır. Kendi telaffuzunu kaydetmek için “Kayda başla”ya bas.</div>
-      <audio id="playback" controls style="display:none;"></audio>
-
       <div class="divider"></div>
-      <div class="section-title"><h2>Kendi notun</h2></div>
-      <textarea id="notesInput" class="notes" placeholder="Örn: ‘r’ sesi sert geliyor, ‘tu’ yerine ‘tü’ dedim."></textarea>
-      <div class="btn-row three">
-        <button class="btn-good" data-score="3">İyi söyledim</button>
-        <button class="btn-warn" data-score="2">Orta</button>
-        <button class="btn-bad" data-score="1">Zorlandım</button>
-      </div>
-      <p class="hint">Bu sürümde kayıt iPhone Safari ile daha uyumlu çalışır. Sonraki aşamada konuşmanı yazıya çevirip hedef cümleyle otomatik karşılaştırabiliriz.</p>
-      <div id="saveStatus" class="small"></div>
-    </div>
+      <div id="a1Card"></div>
+    </section>
 
-    <div class="card">
-      <div class="section-title">
-        <h2>Zorlandıklarım</h2>
-        <button class="btn-ghost" id="practiceHardBtn">Bunları çalış</button>
+    <section id="tab-a2" class="card tab-panel hidden">
+      <div class="section-head">
+        <h2>A2 Topics — Günlük yaşamı anlatma ve açıklama</h2>
+        <span class="tiny">Travail, transport, projets, école, opinions simples...</span>
       </div>
-      <div id="hardList" class="list"></div>
-    </div>
+      <div class="row">
+        <div>
+          <label class="tiny">A2 konu</label>
+          <select id="a2Topic"></select>
+        </div>
+        <div>
+          <label class="tiny">Öğe</label>
+          <select id="a2Item"></select>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div id="a2Card"></div>
+    </section>
 
-    <div class="card">
-      <div class="section-title"><h2>Telaffuz ipuçları</h2></div>
-      <div class="list">
-        <div class="item"><div class="item-top"><p><strong>u</strong> sesi</p><span class="pill gray">tu / vu</span></div><p class="small">Türkçe <em>ü</em> gibi değil. Dudak yuvarlak, ses daha önde.</p></div>
-        <div class="item"><div class="item-top"><p><strong>ou</strong> sesi</p><span class="pill gray">tout / vous</span></div><p class="small">Türkçe <em>u</em> gibi düşün.</p></div>
-        <div class="item"><div class="item-top"><p><strong>r</strong> sesi</p><span class="pill gray">rue / travail</span></div><p class="small">Boğazın arkasından gelir. Türkçe r gibi titreşimli değil.</p></div>
-        <div class="item"><div class="item-top"><p><strong>on</strong> sesi</p><span class="pill gray">bonjour / Toronto</span></div><p class="small">Burundan çıkan yuvarlak ses. Sonunda net bir “n” söyleme.</p></div>
+    <section id="tab-exam" class="card tab-panel hidden">
+      <div class="section-head">
+        <h2>Exam Practice — Konuşma soruları</h2>
+        <span class="tiny">Amaç: sınavda kendi cevabını üretmek</span>
       </div>
-    </div>
+      <div class="row">
+        <div>
+          <label class="tiny">Exam topic</label>
+          <select id="examTopic"></select>
+        </div>
+        <div>
+          <label class="tiny">Soru</label>
+          <select id="examItem"></select>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div id="examCard"></div>
+    </section>
+
+    <section id="tab-weak" class="card tab-panel hidden">
+      <div class="section-head">
+        <h2>My Weak Items</h2>
+        <span class="tiny">Tek dokunuşla kaydettiğin zor cümleler ve sorular</span>
+      </div>
+      <div id="weakList" class="list"></div>
+    </section>
   </div>
 
   <div class="footer">
     <div class="footer-inner">
-      <button class="btn-primary" id="randomBtn">Rastgele cümle</button>
-      <button class="btn-secondary" id="shareBtn">Kendi notumu kopyala</button>
+      <button class="ghost" id="resetProgressBtn">Çalışma sayısını sıfırla</button>
+      <button class="bad" id="clearWeakBtn">Zayıf öğeleri temizle</button>
     </div>
   </div>
 
-  <script>
-    const STORAGE_KEY = 'fpk_progress_v12';
-    const VOICE_KEY = 'fpk_voice_v12';
+<script>
+const DATA = {
+  sounds: {
+    "R sesi": [
+      { id:"snd_r_01", text:"Je travaille dans un restaurant.", tr:"Bir restoranda çalışıyorum.", level:"A2", topic:"sound_r", phoneme:["r"], note:"Fransız r sesini boğazdan, yumuşak söyle.", official:"phoneme_drill" },
+      { id:"snd_r_02", text:"Rue, Paris, bonjour.", tr:"Sokak, Paris, merhaba.", level:"A1", topic:"sound_r", phoneme:["r"], note:"Kelimeleri tek tek ve sonra birlikte tekrar et.", official:"phoneme_drill" },
+      { id:"snd_r_03", text:"Je regarde le métro arriver.", tr:"Metronun gelişini izliyorum.", level:"A2", topic:"sound_r", phoneme:["r"], note:"regarde ve arriver kelimelerinde r'yi bastırma.", official:"phoneme_drill" }
+    ],
+    "U / OU farkı": [
+      { id:"snd_u_01", text:"Tu habites où ?", tr:"Nerede yaşıyorsun?", level:"A1", topic:"sound_u", phoneme:["u"], note:"tu içindeki u Türkçe ü değil, daha dar.", official:"phoneme_drill" },
+      { id:"snd_u_02", text:"Tu veux du jus ou du café ?", tr:"Meyve suyu mu yoksa kahve mi istersin?", level:"A2", topic:"sound_u", phoneme:["u","ou"], note:"du ve ou seslerini ayır.", official:"phoneme_drill" },
+      { id:"snd_u_03", text:"Une rue ou une route ?", tr:"Bir sokak mı yoksa bir yol mu?", level:"A2", topic:"sound_u", phoneme:["u","ou","r"], note:"rue ile route farkını net söyle.", official:"phoneme_drill" }
+    ],
+    "ON / AN": [
+      { id:"snd_nasal_01", text:"Bonjour, mon nom est Ozan.", tr:"Merhaba, benim adım Ozan.", level:"A1", topic:"sound_nasal", phoneme:["on"], note:"on sesinde n'yi tam söyleme.", official:"phoneme_drill" },
+      { id:"snd_nasal_02", text:"Je prends le métro le matin.", tr:"Sabah metroya biniyorum.", level:"A2", topic:"sound_nasal", phoneme:["an"], note:"prends ve matin içinde burun sesi var.", official:"phoneme_drill" },
+      { id:"snd_nasal_03", text:"Nous parlons souvent français.", tr:"Sık sık Fransızca konuşuyoruz.", level:"A2", topic:"sound_nasal", phoneme:["on","an"], note:"parlons ve souvent üzerinde yavaş çalış.", official:"phoneme_drill" }
+    ]
+  },
+  a1: {
+    "Se présenter": [
+      { id:"a1_self_01", text:"Je m'appelle Ozan.", tr:"Benim adım Ozan.", level:"A1", topic:"se_presenter", phoneme:["ə","a"], examUse:"self_intro", note:"Sınavda kendini tanıtmanın ilk adımı.", official:"CEFR A1 self-identification" },
+      { id:"a1_self_02", text:"Je viens de Turquie.", tr:"Türkiye'den geliyorum.", level:"A1", topic:"se_presenter", phoneme:["v","eu"], examUse:"self_intro", note:"Ülke söyleme cümlesi.", official:"CEFR A1 origin" },
+      { id:"a1_self_03", text:"J'habite à Toronto.", tr:"Toronto'da yaşıyorum.", level:"A1", topic:"se_presenter", phoneme:["a","o"], examUse:"self_intro", note:"Şehir söyleme cümlesi.", official:"CEFR A1 place of residence" }
+    ],
+    "Famille": [
+      { id:"a1_family_01", text:"J'ai un enfant.", tr:"Bir çocuğum var.", level:"A1", topic:"famille", phoneme:["an"], examUse:"family", note:"Aileyi tanıtmak için temel cümle.", official:"CEFR A1 family" },
+      { id:"a1_family_02", text:"Ma famille est très importante pour moi.", tr:"Ailem benim için çok önemli.", level:"A1", topic:"famille", phoneme:["tr","oi"], examUse:"family", note:"Basit duygu ifadesi.", official:"CEFR A1 simple personal description" },
+      { id:"a1_family_03", text:"Mon fils va à l'école.", tr:"Oğlum okula gidiyor.", level:"A1", topic:"famille", phoneme:["on","é"], examUse:"family", note:"Çocuk ve okul bilgisi.", official:"CEFR A1 daily family info" }
+    ],
+    "Ville et logement": [
+      { id:"a1_city_01", text:"J'habite dans un appartement.", tr:"Bir apartman dairesinde yaşıyorum.", level:"A1", topic:"ville_logement", phoneme:["an"], examUse:"home", note:"Ev türü ve yaşam alanı.", official:"CEFR A1 housing" },
+      { id:"a1_city_02", text:"Ma ville est grande.", tr:"Şehrim büyük.", level:"A1", topic:"ville_logement", phoneme:["gr"], examUse:"city", note:"Şehri basit sıfatla anlatma.", official:"CEFR A1 place description" },
+      { id:"a1_city_03", text:"Il y a un parc près de chez moi.", tr:"Evimin yakınında bir park var.", level:"A1", topic:"ville_logement", phoneme:["pr","oi"], examUse:"city", note:"Yakın çevreyi tarif etme.", official:"CEFR A1 immediate environment" }
+    ],
+    "Routine quotidienne": [
+      { id:"a1_routine_01", text:"Je me lève tôt.", tr:"Erken kalkarım.", level:"A1", topic:"routine", phoneme:["œ"], examUse:"routine", note:"Günlük rutin için kısa cümle.", official:"CEFR A1 routine" },
+      { id:"a1_routine_02", text:"Je vais au travail en métro.", tr:"İşe metro ile giderim.", level:"A1", topic:"routine", phoneme:["tr","o"], examUse:"routine", note:"Ulaşım ve iş rutini.", official:"CEFR A1 daily activities" },
+      { id:"a1_routine_03", text:"Le soir, je rentre à la maison.", tr:"Akşam eve dönerim.", level:"A1", topic:"routine", phoneme:["r"], examUse:"routine", note:"Günün sonunu anlatma.", official:"CEFR A1 routine" }
+    ],
+    "Nourriture et besoins": [
+      { id:"a1_food_01", text:"Je voudrais un café, s'il vous plaît.", tr:"Bir kahve istiyorum, lütfen.", level:"A1", topic:"food", phoneme:["v","pl"], examUse:"basic_needs", note:"Kibar istek cümlesi.", official:"CEFR A1 basic transactions" },
+      { id:"a1_food_02", text:"J'aime le pain et le fromage.", tr:"Ekmeği ve peyniri severim.", level:"A1", topic:"food", phoneme:["ʒ","m"], examUse:"likes", note:"Yiyecek tercihi belirtme.", official:"CEFR A1 likes and dislikes" },
+      { id:"a1_food_03", text:"Je ne comprends pas le menu.", tr:"Menüyü anlamıyorum.", level:"A1", topic:"food", phoneme:["on","eu"], examUse:"basic_needs", note:"Anlamadığını söyleme.", official:"CEFR A1 basic interaction" }
+    ]
+  },
+  a2: {
+    "Travail": [
+      { id:"a2_work_01", text:"Je travaille dans un hôtel au centre-ville.", tr:"Şehir merkezinde bir otelde çalışıyorum.", level:"A2", topic:"travail", phoneme:["r","o"], examUse:"work", note:"İş yeri ve konum anlatımı.", official:"CEFR A2 work and daily life" },
+      { id:"a2_work_02", text:"Je parle souvent avec les clients.", tr:"Müşterilerle sık sık konuşurum.", level:"A2", topic:"travail", phoneme:["r","an"], examUse:"work", note:"İşte ne yaptığını anlatma.", official:"CEFR A2 job description" },
+      { id:"a2_work_03", text:"Mon travail est parfois fatigant, mais intéressant.", tr:"İşim bazen yorucu ama ilginç.", level:"A2", topic:"travail", phoneme:["tr","an"], examUse:"work", note:"Basit karşıtlık kurma.", official:"CEFR A2 simple opinions about work" }
+    ],
+    "Transport": [
+      { id:"a2_transport_01", text:"Je prends le métro pour aller au travail.", tr:"İşe gitmek için metroya biniyorum.", level:"A2", topic:"transport", phoneme:["an","tr"], examUse:"routine", note:"Ulaşımı biraz daha detaylı anlat.", official:"CEFR A2 travel and transport" },
+      { id:"a2_transport_02", text:"Le trajet dure environ quarante minutes.", tr:"Yolculuk yaklaşık kırk dakika sürer.", level:"A2", topic:"transport", phoneme:["r","on"], examUse:"routine", note:"Süre belirtme.", official:"CEFR A2 practical information" },
+      { id:"a2_transport_03", text:"Quand il neige, le trajet est plus difficile.", tr:"Kar yağınca yolculuk daha zor olur.", level:"A2", topic:"transport", phoneme:["an","ʒ"], examUse:"routine", note:"Koşula bağlı açıklama.", official:"CEFR A2 describing everyday situations" }
+    ],
+    "École et famille": [
+      { id:"a2_school_01", text:"Mon fils va à l'école primaire à Toronto.", tr:"Oğlum Toronto'da ilkokula gidiyor.", level:"A2", topic:"ecole_famille", phoneme:["o","r"], examUse:"family", note:"Aile ve okul bilgisi.", official:"CEFR A2 family and education" },
+      { id:"a2_school_02", text:"Je parle avec les enseignants quand c'est nécessaire.", tr:"Gerekli olduğunda öğretmenlerle konuşurum.", level:"A2", topic:"ecole_famille", phoneme:["an","r"], examUse:"family", note:"Okul iletişimi anlatma.", official:"CEFR A2 practical interactions" },
+      { id:"a2_school_03", text:"L'école est importante pour l'avenir de mon enfant.", tr:"Okul çocuğumun geleceği için önemlidir.", level:"A2", topic:"ecole_famille", phoneme:["ɛ","an"], examUse:"family", note:"Neden önemli olduğunu söyleme.", official:"CEFR A2 reasons and explanations" }
+    ],
+    "Projets": [
+      { id:"a2_projects_01", text:"Je veux améliorer mon français pour mon avenir.", tr:"Geleceğim için Fransızcamı geliştirmek istiyorum.", level:"A2", topic:"projets", phoneme:["on","r"], examUse:"future", note:"Amaç belirtme.", official:"CEFR A2 future plans" },
+      { id:"a2_projects_02", text:"Je prépare un examen de français.", tr:"Bir Fransızca sınavına hazırlanıyorum.", level:"A2", topic:"projets", phoneme:["r","an"], examUse:"future", note:"Sınav hazırlığı anlatma.", official:"CEFR A2 study goals" },
+      { id:"a2_projects_03", text:"Je voudrais parler plus facilement avec les gens.", tr:"İnsanlarla daha rahat konuşmak isterim.", level:"A2", topic:"projets", phoneme:["pl","ʒ"], examUse:"future", note:"İletişim amacı belirtme.", official:"CEFR A2 intentions" }
+    ],
+    "Opinions simples": [
+      { id:"a2_op_01", text:"Je pense que le français est important au Canada.", tr:"Fransızcanın Kanada'da önemli olduğunu düşünüyorum.", level:"A2", topic:"opinion", phoneme:["an","r"], examUse:"opinion", note:"Basit fikir belirtme.", official:"CEFR A2 simple opinions" },
+      { id:"a2_op_02", text:"À mon avis, apprendre une langue demande du temps.", tr:"Bence bir dil öğrenmek zaman ister.", level:"A2", topic:"opinion", phoneme:["an","u"], examUse:"opinion", note:"Görüşünü yumuşak şekilde söyle.", official:"CEFR A2 expressing viewpoint" },
+      { id:"a2_op_03", text:"C'est parfois difficile, mais c'est utile.", tr:"Bazen zor ama faydalı.", level:"A2", topic:"opinion", phoneme:["il","y"], examUse:"opinion", note:"Kısa ama sınavda çok işe yarar.", official:"CEFR A2 simple evaluation" }
+    ]
+  },
+  exam: {
+    "Se présenter": [
+      { id:"ex_self_01", prompt:"Présentez-vous en 4 ou 5 phrases.", level:"A1", helper:"Adın, ülken, yaşadığın şehir ve işin hakkında konuş.", starter:"Je m'appelle...", official:"CEFR A1 self-introduction" },
+      { id:"ex_self_02", prompt:"Parlez de votre famille.", level:"A1", helper:"Ailen kimlerden oluşuyor, senin için ne ifade ediyor?", starter:"J'ai...", official:"CEFR A1 family description" }
+    ],
+    "Travail": [
+      { id:"ex_work_01", prompt:"Parlez de votre travail.", level:"A2", helper:"Nerede çalışıyorsun, ne yapıyorsun, neyi seviyorsun?", starter:"Je travaille dans...", official:"CEFR A2 work description" },
+      { id:"ex_work_02", prompt:"Pourquoi voulez-vous améliorer votre français pour le travail ?", level:"A2", helper:"İş, müşteriler, gelecek ve iletişim açısından cevapla.", starter:"Je veux améliorer...", official:"CEFR A2 reasons and goals" }
+    ],
+    "Projets": [
+      { id:"ex_proj_01", prompt:"Quels sont vos projets pour apprendre le français ?", level:"A2", helper:"Ders, pratik, sınav hedefi ve günlük çalışma söyle.", starter:"Je prépare...", official:"CEFR A2 future plans" },
+      { id:"ex_proj_02", prompt:"Pourquoi le français est-il important pour vous ?", level:"A2", helper:"İş, yaşam, sınav ve gelecek açısından anlat.", starter:"Le français est important...", official:"CEFR A2 personal reasons" }
+    ]
+  }
+};
 
-    const phrases = [
-      { id: 1, category: 'hotel', level: 'A1', focus: 'r / ô / à', fr: 'Je travaille dans un hôtel à Toronto.', tr: 'Toronto’da bir otelde çalışıyorum.' },
-      { id: 2, category: 'hotel', level: 'A1', focus: 'eu / on', fr: 'Je parle avec les clients.', tr: 'Müşterilerle konuşuyorum.' },
-      { id: 3, category: 'hotel', level: 'A1', focus: 'ou / r', fr: 'Bonjour, je peux vous aider ?', tr: 'Merhaba, size yardımcı olabilir miyim?' },
-      { id: 4, category: 'daily', level: 'A1', focus: 'an / on', fr: 'Je voudrais apprendre le français.', tr: 'Fransızca öğrenmek istiyorum.' },
-      { id: 5, category: 'daily', level: 'A1', focus: 'u / r', fr: 'Tu habites où ?', tr: 'Nerede oturuyorsun?' },
-      { id: 6, category: 'daily', level: 'A1', focus: 'eu / e', fr: 'Je peux répéter, s’il vous plaît ?', tr: 'Tekrar edebilir miyim, lütfen?' },
-      { id: 7, category: 'family', level: 'A1', focus: 'on / é', fr: 'Mon fils va à l’école.', tr: 'Oğlum okula gidiyor.' },
-      { id: 8, category: 'family', level: 'A1', focus: 'an / eu', fr: 'Nous habitons au Canada depuis longtemps.', tr: 'Uzun zamandır Kanada’da yaşıyoruz.' },
-      { id: 9, category: 'family', level: 'A2', focus: 'r / an', fr: 'Je veux améliorer ma prononciation.', tr: 'Telaffuzumu geliştirmek istiyorum.' },
-      { id: 10, category: 'sounds', level: 'A1', focus: 'u', fr: 'Tu es sûr ?', tr: 'Emin misin?' },
-      { id: 11, category: 'sounds', level: 'A1', focus: 'ou', fr: 'Vous êtes où ?', tr: 'Neredesiniz?' },
-      { id: 12, category: 'sounds', level: 'A1', focus: 'r', fr: 'La rue est grande.', tr: 'Sokak büyük.' },
-      { id: 13, category: 'sounds', level: 'A1', focus: 'on', fr: 'Bonjour, comment ça va ?', tr: 'Merhaba, nasılsın?' },
-      { id: 14, category: 'sounds', level: 'A2', focus: 'eu / r / on', fr: 'Je veux mieux parler français.', tr: 'Fransızcayı daha iyi konuşmak istiyorum.' }
-    ];
+const state = {
+  weak: JSON.parse(localStorage.getItem('frenchCoachWeak') || '[]'),
+  practices: Number(localStorage.getItem('frenchCoachPractices') || 0),
+  voiceName: localStorage.getItem('frenchCoachVoice') || '',
+  notes: JSON.parse(localStorage.getItem('frenchCoachNotes') || '{}')
+};
 
-    const state = {
-      filtered: [...phrases],
-      currentIndex: 0,
-      mediaRecorder: null,
-      recordedChunks: [],
-      currentAudioUrl: null,
-      currentStream: null,
-      selectedVoiceName: '',
-      selectedMimeType: ''
-    };
+let availableVoices = [];
+let mediaRecorder = null;
+let currentStream = null;
+let recordedChunks = [];
+let currentAudioURL = null;
 
-    const els = {
-      categorySelect: document.getElementById('categorySelect'),
-      voiceSelect: document.getElementById('voiceSelect'),
-      voiceTypeInfo: document.getElementById('voiceTypeInfo'),
-      phraseText: document.getElementById('phraseText'),
-      phraseMeaning: document.getElementById('phraseMeaning'),
-      phraseLevel: document.getElementById('phraseLevel'),
-      phraseFocus: document.getElementById('phraseFocus'),
-      speakSlowBtn: document.getElementById('speakSlowBtn'),
-      speakNormalBtn: document.getElementById('speakNormalBtn'),
-      nextBtn: document.getElementById('nextBtn'),
-      recordBtn: document.getElementById('recordBtn'),
-      stopBtn: document.getElementById('stopBtn'),
-      recordingStatus: document.getElementById('recordingStatus'),
-      recordingFeedback: document.getElementById('recordingFeedback'),
-      playback: document.getElementById('playback'),
-      notesInput: document.getElementById('notesInput'),
-      saveStatus: document.getElementById('saveStatus'),
-      doneCount: document.getElementById('doneCount'),
-      hardCount: document.getElementById('hardCount'),
-      avgScore: document.getElementById('avgScore'),
-      hardList: document.getElementById('hardList'),
-      practiceHardBtn: document.getElementById('practiceHardBtn'),
-      resetProgressBtn: document.getElementById('resetProgressBtn'),
-      randomBtn: document.getElementById('randomBtn'),
-      shareBtn: document.getElementById('shareBtn')
-    };
+function saveWeak() {
+  localStorage.setItem('frenchCoachWeak', JSON.stringify(state.weak));
+  renderWeakList();
+  updateStats();
+}
+function savePractices() {
+  localStorage.setItem('frenchCoachPractices', String(state.practices));
+  updateStats();
+}
+function saveNotes() {
+  localStorage.setItem('frenchCoachNotes', JSON.stringify(state.notes));
+}
+function uniqWeakPush(item) {
+  if (!state.weak.find(x => x.id === item.id)) {
+    state.weak.unshift(item);
+    saveWeak();
+  }
+}
 
-    function getProgress() {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    }
+function updateStats(){
+  const total = Object.values(DATA.sounds).flat().length + Object.values(DATA.a1).flat().length + Object.values(DATA.a2).flat().length;
+  const examTotal = Object.values(DATA.exam).flat().length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statWeak').textContent = state.weak.length;
+  document.getElementById('statPractices').textContent = state.practices;
+  document.getElementById('statExam').textContent = examTotal;
+}
 
-    function saveProgress(progress) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    }
+function setActiveTab(name){
+  document.querySelectorAll('.tab').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+  document.getElementById('tab-'+name).classList.remove('hidden');
+}
 
-    function setFeedback(message, type = 'muted') {
-      els.recordingFeedback.textContent = message;
-      els.recordingFeedback.className = 'status-box ' + type;
-    }
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+});
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#39;');
-    }
+function populateSelect(selectId, values){
+  const el = document.getElementById(selectId);
+  el.innerHTML = '';
+  values.forEach((val, idx) => {
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = val;
+    if (idx === 0) opt.selected = true;
+    el.appendChild(opt);
+  });
+}
 
-    function upsertProgressForCurrent(score) {
-      const current = state.filtered[state.currentIndex];
-      const progress = getProgress();
-      progress[current.id] = {
-        id: current.id,
-        fr: current.fr,
-        tr: current.tr,
-        category: current.category,
-        level: current.level,
-        focus: current.focus,
-        score,
-        notes: els.notesInput.value.trim(),
-        updatedAt: new Date().toISOString()
-      };
-      saveProgress(progress);
-      renderStats();
-      renderHardList();
-      els.saveStatus.innerHTML = '<span class="success">Kaydedildi.</span>';
-      setTimeout(() => els.saveStatus.textContent = '', 1500);
-    }
+function getMaleFrenchVoice(){
+  if (!availableVoices.length) return null;
+  const frenchVoices = availableVoices.filter(v => (v.lang || '').toLowerCase().startsWith('fr'));
+  if (!frenchVoices.length) return null;
+  const preferredNames = ['henri','thomas','remy','rémy','paul','male','man'];
+  let chosen = null;
+  for (const p of preferredNames){
+    chosen = frenchVoices.find(v => (v.name || '').toLowerCase().includes(p));
+    if (chosen) return chosen;
+  }
+  if (state.voiceName) {
+    chosen = frenchVoices.find(v => v.name === state.voiceName);
+    if (chosen) return chosen;
+  }
+  return frenchVoices[0];
+}
 
-    function renderPhrase() {
-      const current = state.filtered[state.currentIndex] || phrases[0];
-      els.phraseText.textContent = current.fr;
-      els.phraseMeaning.textContent = current.tr;
-      els.phraseLevel.textContent = current.level;
-      els.phraseFocus.textContent = `odak: ${current.focus}`;
-      const saved = getProgress()[current.id];
-      els.notesInput.value = saved?.notes || '';
-      els.playback.pause();
-      els.playback.style.display = 'none';
-      els.playback.removeAttribute('src');
-      els.playback.load();
-      if (state.currentAudioUrl) {
-        URL.revokeObjectURL(state.currentAudioUrl);
-        state.currentAudioUrl = null;
+function initVoices(){
+  availableVoices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+}
+if ('speechSynthesis' in window) {
+  initVoices();
+  window.speechSynthesis.onvoiceschanged = initVoices;
+}
+
+function speakText(text, slow=false){
+  if (!('speechSynthesis' in window)) return alert('Bu cihazda sesli okuma desteklenmiyor.');
+  try {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'fr-FR';
+    utter.rate = slow ? 0.72 : 0.95;
+    utter.pitch = 0.95;
+    const voice = getMaleFrenchVoice();
+    if (voice) utter.voice = voice;
+    speechSynthesis.speak(utter);
+    state.practices += 1;
+    savePractices();
+  } catch(e){
+    alert('Sesli okuma başlatılamadı: ' + e.message);
+  }
+}
+
+function stopSpeak(){
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+}
+
+function cleanupAudioURL(){
+  if (currentAudioURL){
+    URL.revokeObjectURL(currentAudioURL);
+    currentAudioURL = null;
+  }
+}
+
+function stopRecordingTracks(){
+  if (currentStream){
+    currentStream.getTracks().forEach(t => t.stop());
+    currentStream = null;
+  }
+}
+
+function preferredMimeType(){
+  const types = [
+    'audio/mp4',
+    'audio/webm;codecs=opus',
+    'audio/webm',
+    'audio/aac',
+    'audio/ogg;codecs=opus'
+  ];
+  for (const t of types){
+    if (window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) return t;
+  }
+  return '';
+}
+
+async function startRecording(target){
+  const status = document.getElementById(target + '-status');
+  const badge = document.getElementById(target + '-recording');
+  const audio = document.getElementById(target + '-audio');
+  cleanupAudioURL();
+  audio.removeAttribute('src');
+  audio.load();
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    currentStream = stream;
+    recordedChunks = [];
+    const mimeType = preferredMimeType();
+    mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      try{
+        const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/mp4' });
+        currentAudioURL = URL.createObjectURL(blob);
+        audio.src = currentAudioURL;
+        audio.load();
+        status.innerHTML = '<span class="ok">Kayıt hazır.</span> Kendi sesini şimdi dinleyebilirsin.';
+      } catch(err){
+        status.innerHTML = '<span class="err">Kayıt oluşturulamadı.</span> ' + err.message;
+      } finally {
+        badge.classList.add('hidden');
+        stopRecordingTracks();
       }
-      setFeedback('Hazır. Kendi telaffuzunu kaydetmek için “Kayda başla”ya bas.', 'muted');
-    }
+    };
+    mediaRecorder.start();
+    badge.classList.remove('hidden');
+    status.innerHTML = '<span class="ok">Kayıt başladı.</span> Cümleyi veya cevabını şimdi söyle.';
+    state.practices += 1;
+    savePractices();
+  } catch(err){
+    let msg = err.message || 'Mikrofon açılamadı.';
+    if (err.name === 'NotAllowedError') msg = 'Mikrofon izni verilmedi. Safari > Website Settings > Microphone = Allow yap.';
+    if (err.name === 'NotFoundError') msg = 'Mikrofon bulunamadı.';
+    status.innerHTML = '<span class="err">Kayıt başlatılamadı.</span> ' + msg;
+    badge.classList.add('hidden');
+    stopRecordingTracks();
+  }
+}
 
-    function renderStats() {
-      const values = Object.values(getProgress());
-      els.doneCount.textContent = values.length;
-      els.hardCount.textContent = values.filter(v => v.score === 1).length;
-      const avg = values.length ? (values.reduce((s, v) => s + v.score, 0) / values.length).toFixed(1) : '0';
-      els.avgScore.textContent = avg;
-    }
+function stopRecording(target){
+  const status = document.getElementById(target + '-status');
+  if (mediaRecorder && mediaRecorder.state !== 'inactive'){
+    mediaRecorder.stop();
+    status.innerHTML = '<span class="ok">Kayıt durduruldu.</span> Ses dosyası hazırlanıyor...';
+  } else {
+    status.innerHTML = '<span class="err">Şu anda aktif kayıt yok.</span>';
+  }
+}
 
-    function renderHardList() {
-      const hardItems = Object.values(getProgress())
-        .filter(v => v.score === 1)
-        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+function itemCardHTML(item, mode){
+  const noteKey = item.id;
+  const noteVal = state.notes[noteKey] || '';
+  const metaTop = `
+    <div class="phrase">${item.text || item.prompt}</div>
+    ${item.tr ? `<div class="meaning">${item.tr}</div>` : ''}
+    ${item.helper ? `<div class="meaning"><strong>İpucu:</strong> ${item.helper}</div>` : ''}
+    ${item.starter ? `<div class="meaning"><strong>Başlangıç kalıbı:</strong> ${item.starter}</div>` : ''}
+    <div class="meta">
+      ${item.level ? `<span class="pill">${item.level}</span>` : ''}
+      ${item.topic ? `<span class="pill gray">${item.topic}</span>` : ''}
+      ${item.examUse ? `<span class="pill green">${item.examUse}</span>` : ''}
+      ${item.official ? `<span class="pill orange">${item.official}</span>` : ''}
+      ${item.phoneme ? `<span class="pill gray">focus: ${item.phoneme.join(' / ')}</span>` : ''}
+    </div>
+    ${item.note ? `<div class="status">${item.note}</div>` : ''}
+  `;
+  const key = mode + '-' + item.id;
+  return `
+    ${metaTop}
+    <div class="controls three">
+      <button class="primary" onclick="speakText(${JSON.stringify(item.text || item.prompt)}, false)">Normal dinle</button>
+      <button class="secondary" onclick="speakText(${JSON.stringify(item.text || item.prompt)}, true)">Yavaş dinle</button>
+      <button class="ghost" onclick="stopSpeak()">Sesi durdur</button>
+    </div>
+    <div class="controls three">
+      <button class="good" onclick="startRecording('${key}')">Kayda başla</button>
+      <button class="warn" onclick="stopRecording('${key}')">Kaydı durdur</button>
+      <button class="purple" onclick='markWeak(${JSON.stringify(item)})'>Zayıf öğeye ekle</button>
+    </div>
+    <div id="${key}-recording" class="recording hidden"><span class="dot"></span> Kayıt sürüyor...</div>
+    <audio id="${key}-audio" controls playsinline></audio>
+    <div id="${key}-status" class="status">Dinle → kaydet → kendi sesini dinle → yeniden dene.</div>
+    <div class="divider"></div>
+    <div class="note-card">
+      <div class="tiny">Kişisel notun</div>
+      <textarea id="note-${key}" placeholder="Örn: r sesi zayıf, tu / tout karıştı...">${noteVal}</textarea>
+      <div class="right" style="margin-top:10px">
+        <button class="ghost" onclick="saveNote('${noteKey}','${key}')">Notu kaydet</button>
+      </div>
+    </div>
+  `;
+}
 
-      if (!hardItems.length) {
-        els.hardList.innerHTML = '<div class="item"><p><strong>Henüz boş.</strong></p><p class="small">Bir cümleye “Zorlandım” dersen burada görünür.</p></div>';
-        return;
-      }
+function saveNote(noteKey, domKey){
+  const val = document.getElementById('note-' + domKey).value.trim();
+  if (val) state.notes[noteKey] = val;
+  else delete state.notes[noteKey];
+  saveNotes();
+  const status = document.getElementById(domKey + '-status');
+  status.innerHTML = '<span class="ok">Not kaydedildi.</span> Bu not telefonunda tutulur.';
+}
 
-      els.hardList.innerHTML = hardItems.map(item => `
-        <div class="item">
-          <div class="item-top">
-            <p><strong>${escapeHtml(item.fr)}</strong></p>
-            <span class="pill gray">${escapeHtml(item.focus)}</span>
+function markWeak(item){
+  uniqWeakPush(item);
+}
+
+function renderWeakList(){
+  const wrap = document.getElementById('weakList');
+  if (!state.weak.length){
+    wrap.innerHTML = `<div class="item"><div class="item-title">Henüz zayıf öğe yok.</div><p class="tiny" style="margin-top:6px">Çalışırken “Zayıf öğeye ekle” tuşuna bas. Burada birikecekler.</p></div>`;
+    return;
+  }
+  wrap.innerHTML = state.weak.map(item => `
+    <div class="item">
+      <div class="item-top">
+        <div>
+          <div class="item-title">${item.text || item.prompt}</div>
+          <p class="tiny" style="margin-top:6px">${item.tr || item.helper || ''}</p>
+          <div class="chips">
+            ${item.level ? `<span class="chip">${item.level}</span>` : ''}
+            ${item.topic ? `<span class="chip gray">${item.topic}</span>` : ''}
+            ${item.examUse ? `<span class="chip green">${item.examUse}</span>` : ''}
           </div>
-          <p class="small">${escapeHtml(item.tr)}</p>
-          ${item.notes ? `<p class="small" style="margin-top:8px;">Not: ${escapeHtml(item.notes)}</p>` : ''}
         </div>
-      `).join('');
-    }
+        <button class="bad" onclick="removeWeak('${item.id}')">Sil</button>
+      </div>
+    </div>
+  `).join('');
+}
 
-    function filterPhrases() {
-      const value = els.categorySelect.value;
-      state.filtered = value === 'all' ? [...phrases] : phrases.filter(p => p.category === value);
-      state.currentIndex = 0;
-      renderPhrase();
-    }
+function removeWeak(id){
+  state.weak = state.weak.filter(x => x.id !== id);
+  saveWeak();
+}
 
-    function nextPhrase() {
-      state.currentIndex = (state.currentIndex + 1) % state.filtered.length;
-      renderPhrase();
-    }
+function renderGroup(groupName, itemSelectId, targetId, sourceKey){
+  const topic = document.getElementById(groupName).value;
+  const items = DATA[sourceKey][topic];
+  populateSelect(itemSelectId, items.map((x, idx) => `${idx+1}. ${x.text || x.prompt}`));
+  const selectedIdx = 0;
+  document.getElementById(targetId).innerHTML = itemCardHTML(items[selectedIdx], sourceKey);
+  document.getElementById(itemSelectId).onchange = function(){
+    const idx = this.selectedIndex;
+    document.getElementById(targetId).innerHTML = itemCardHTML(items[idx], sourceKey);
+  };
+}
 
-    function randomPhrase() {
-      state.currentIndex = Math.floor(Math.random() * state.filtered.length);
-      renderPhrase();
-    }
+function initSection(sectionKey, groupSelectId, itemSelectId, targetId){
+  const groups = Object.keys(DATA[sectionKey]);
+  populateSelect(groupSelectId, groups);
+  renderGroup(groupSelectId, itemSelectId, targetId, sectionKey);
+  document.getElementById(groupSelectId).addEventListener('change', () => {
+    renderGroup(groupSelectId, itemSelectId, targetId, sectionKey);
+  });
+}
 
-    function choosePreferredVoice(voices) {
-      const frenchVoices = voices.filter(v => (v.lang || '').toLowerCase().startsWith('fr'));
-      if (!frenchVoices.length) return null;
-      const maleNameRegex = /(thomas|daniel|nicolas|remy|rémy|henri|antoine|paul|alexandre|male|man|guy)/i;
-      const enhancedRegex = /(premium|enhanced|superior|natural)/i;
-      return frenchVoices.find(v => maleNameRegex.test(v.name))
-        || frenchVoices.find(v => maleNameRegex.test(v.voiceURI || ''))
-        || frenchVoices.find(v => enhancedRegex.test(v.name))
-        || frenchVoices[0];
-    }
+document.getElementById('clearWeakBtn').addEventListener('click', () => {
+  state.weak = [];
+  saveWeak();
+});
+document.getElementById('resetProgressBtn').addEventListener('click', () => {
+  state.practices = 0;
+  savePractices();
+});
 
-    function updateVoiceTypeInfo() {
-      const selected = speechSynthesis.getVoices().find(v => v.name === state.selectedVoiceName);
-      if (!selected) {
-        els.voiceTypeInfo.textContent = 'Cihazdaki uygun Fransızca sesi kullanıyor';
-        return;
-      }
-      const isLikelyMale = /(thomas|daniel|nicolas|remy|rémy|henri|antoine|paul|male|man|guy)/i.test(selected.name + ' ' + (selected.voiceURI || ''));
-      els.voiceTypeInfo.textContent = isLikelyMale
-        ? `Seçili ses: ${selected.name} • erkek / profesyonel öncelikli`
-        : `Seçili ses: ${selected.name} • cihazda bulunan en uygun Fransızca ses`;
-    }
+initSection('sounds', 'soundsGroup', 'soundsItem', 'soundsCard');
+initSection('a1', 'a1Topic', 'a1Item', 'a1Card');
+initSection('a2', 'a2Topic', 'a2Item', 'a2Card');
+initSection('exam', 'examTopic', 'examItem', 'examCard');
+renderWeakList();
+updateStats();
 
-    function populateVoices() {
-      if (!('speechSynthesis' in window)) {
-        els.voiceSelect.innerHTML = '<option>Bu cihazda ses seçimi yok</option>';
-        els.voiceSelect.disabled = true;
-        return;
-      }
-
-      const allVoices = speechSynthesis.getVoices();
-      const frenchVoices = allVoices.filter(v => (v.lang || '').toLowerCase().startsWith('fr'));
-
-      if (!frenchVoices.length) {
-        els.voiceSelect.innerHTML = '<option>Fransızca ses bulunamadı</option>';
-        els.voiceSelect.disabled = true;
-        updateVoiceTypeInfo();
-        return;
-      }
-
-      const savedVoice = localStorage.getItem(VOICE_KEY);
-      const preferred = savedVoice && frenchVoices.find(v => v.name === savedVoice)
-        ? frenchVoices.find(v => v.name === savedVoice)
-        : choosePreferredVoice(frenchVoices);
-
-      state.selectedVoiceName = preferred?.name || frenchVoices[0].name;
-      els.voiceSelect.innerHTML = frenchVoices.map(v => `<option value="${escapeHtml(v.name)}">${escapeHtml(v.name)} (${escapeHtml(v.lang)})</option>`).join('');
-      els.voiceSelect.value = state.selectedVoiceName;
-      localStorage.setItem(VOICE_KEY, state.selectedVoiceName);
-      updateVoiceTypeInfo();
-    }
-
-    function speak(text, rate = 0.78) {
-      if (!('speechSynthesis' in window)) {
-        alert('Bu tarayıcıda sesli okuma desteklenmiyor.');
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
-      utterance.rate = rate;
-      utterance.pitch = 0.92;
-
-      const voices = window.speechSynthesis.getVoices();
-      const selected = voices.find(v => v.name === state.selectedVoiceName);
-      if (selected) {
-        utterance.voice = selected;
-      } else {
-        const fallback = choosePreferredVoice(voices);
-        if (fallback) utterance.voice = fallback;
-      }
-
-      utterance.onstart = () => setFeedback('Dinletme başladı. Sesin profesyonelliği cihazındaki Fransızca ses paketine bağlıdır.', 'muted');
-      utterance.onerror = () => setFeedback('Dinletme başlatılamadı. Safari’yi yenileyip tekrar dene.', 'error');
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function getSupportedMimeType() {
-      if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') return '';
-      const candidates = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
-      return candidates.find(type => MediaRecorder.isTypeSupported(type)) || '';
-    }
-
-    async function startRecording() {
-      if (!navigator.mediaDevices?.getUserMedia) {
-        setFeedback('Bu tarayıcı mikrofon erişimini desteklemiyor.', 'error');
-        return;
-      }
-      if (!window.MediaRecorder) {
-        setFeedback('Bu cihazda kayıt özelliği desteklenmiyor.', 'error');
-        return;
-      }
-
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        state.currentStream = stream;
-        state.recordedChunks = [];
-        state.selectedMimeType = getSupportedMimeType();
-        state.mediaRecorder = state.selectedMimeType
-          ? new MediaRecorder(stream, { mimeType: state.selectedMimeType })
-          : new MediaRecorder(stream);
-
-        state.mediaRecorder.ondataavailable = event => {
-          if (event.data && event.data.size > 0) state.recordedChunks.push(event.data);
-        };
-
-        state.mediaRecorder.onerror = event => {
-          console.error('Recorder error:', event.error || event);
-          setFeedback('Kayıt sırasında hata oluştu. Sayfayı yenileyip tekrar dene.', 'error');
-        };
-
-        state.mediaRecorder.onstop = () => {
-          try {
-            const blobType = state.mediaRecorder.mimeType || state.selectedMimeType || 'audio/mp4';
-            const blob = new Blob(state.recordedChunks, { type: blobType });
-            if (state.currentAudioUrl) URL.revokeObjectURL(state.currentAudioUrl);
-            state.currentAudioUrl = URL.createObjectURL(blob);
-            els.playback.src = state.currentAudioUrl;
-            els.playback.style.display = 'block';
-            els.playback.load();
-            setFeedback(`Kayıt hazır. Oynatıcıdan dinleyebilirsin. Format: ${blobType || 'otomatik'}`, 'success');
-          } catch (error) {
-            console.error(error);
-            setFeedback('Kayıt alındı ama oynatıcıya yüklenemedi.', 'error');
-          } finally {
-            state.currentStream?.getTracks().forEach(track => track.stop());
-            state.currentStream = null;
-          }
-        };
-
-        state.mediaRecorder.start();
-        els.recordingStatus.style.display = 'inline-flex';
-        els.recordBtn.disabled = true;
-        els.recordBtn.classList.add('btn-disabled');
-        els.stopBtn.disabled = false;
-        els.stopBtn.classList.remove('btn-disabled');
-        setFeedback('Kayıt başladı. Cümleyi şimdi net ve yavaş söyle.', 'muted');
-      } catch (err) {
-        console.error(err);
-        const message = err?.name === 'NotAllowedError'
-          ? 'Mikrofon izni kapalı. Safari site ayarlarından Microphone → Allow yap.'
-          : 'Mikrofon açılamadı. Safari’yi kapatıp tekrar deneyebilirsin.';
-        setFeedback(message, 'error');
-      }
-    }
-
-    function stopRecording() {
-      if (state.mediaRecorder && state.mediaRecorder.state !== 'inactive') {
-        state.mediaRecorder.stop();
-      }
-      els.recordingStatus.style.display = 'none';
-      els.recordBtn.disabled = false;
-      els.recordBtn.classList.remove('btn-disabled');
-      els.stopBtn.disabled = true;
-      els.stopBtn.classList.add('btn-disabled');
-    }
-
-    function practiceHardOnes() {
-      const hardIds = Object.values(getProgress()).filter(v => v.score === 1).map(v => v.id);
-      if (!hardIds.length) {
-        alert('Henüz zorlandığın cümle yok.');
-        return;
-      }
-      state.filtered = phrases.filter(p => hardIds.includes(p.id));
-      state.currentIndex = 0;
-      els.categorySelect.value = 'all';
-      renderPhrase();
-    }
-
-    function resetProgress() {
-      if (!confirm('Tüm ilerleme verilerini silmek istiyor musun?')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      renderStats();
-      renderHardList();
-      renderPhrase();
-    }
-
-    async function copyNote() {
-      const current = state.filtered[state.currentIndex];
-      const text = `Fransızca telaffuz notum\n\nCümle: ${current.fr}\nAnlam: ${current.tr}\nOdak: ${current.focus}\nNotum: ${els.notesInput.value.trim() || '-'}\n`;
-      try {
-        await navigator.clipboard.writeText(text);
-        els.saveStatus.innerHTML = '<span class="success">Not kopyalandı.</span>';
-        setTimeout(() => els.saveStatus.textContent = '', 1500);
-      } catch {
-        alert('Kopyalama başarısız oldu.');
-      }
-    }
-
-    els.categorySelect.addEventListener('change', filterPhrases);
-    els.voiceSelect.addEventListener('change', () => {
-      state.selectedVoiceName = els.voiceSelect.value;
-      localStorage.setItem(VOICE_KEY, state.selectedVoiceName);
-      updateVoiceTypeInfo();
-    });
-    els.nextBtn.addEventListener('click', nextPhrase);
-    els.randomBtn.addEventListener('click', randomPhrase);
-    els.speakSlowBtn.addEventListener('click', () => speak(state.filtered[state.currentIndex].fr, 0.68));
-    els.speakNormalBtn.addEventListener('click', () => speak(state.filtered[state.currentIndex].fr, 0.88));
-    els.recordBtn.addEventListener('click', startRecording);
-    els.stopBtn.addEventListener('click', stopRecording);
-    els.practiceHardBtn.addEventListener('click', practiceHardOnes);
-    els.resetProgressBtn.addEventListener('click', resetProgress);
-    els.shareBtn.addEventListener('click', copyNote);
-
-    document.querySelectorAll('[data-score]').forEach(btn => {
-      btn.addEventListener('click', () => upsertProgressForCurrent(Number(btn.dataset.score)));
-    });
-
-    if ('speechSynthesis' in window) {
-      populateVoices();
-      window.speechSynthesis.addEventListener?.('voiceschanged', populateVoices);
-      setTimeout(populateVoices, 300);
-      setTimeout(populateVoices, 1000);
-    }
-
-    renderStats();
-    renderHardList();
-    renderPhrase();
-  </script>
+window.markWeak = markWeak;
+window.removeWeak = removeWeak;
+window.speakText = speakText;
+window.stopSpeak = stopSpeak;
+window.startRecording = startRecording;
+window.stopRecording = stopRecording;
+window.saveNote = saveNote;
+</script>
 </body>
 </html>
