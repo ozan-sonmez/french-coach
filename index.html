@@ -35,7 +35,7 @@
     .stat .l{font-size:.8rem;color:var(--muted);margin-top:4px}
     .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
     .section-title h2{margin:0;font-size:1.05rem}
-    select,button,input{font:inherit}
+    select,button,input,textarea{font:inherit}
     .controls{display:flex;gap:10px;flex-wrap:wrap}
     select{
       width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:white;color:var(--text)
@@ -74,8 +74,12 @@
     .hint{font-size:.9rem;color:var(--muted);line-height:1.45}
     .divider{height:1px;background:var(--line);margin:14px 0}
     .success{color:var(--good);font-weight:700}
+    .error{color:var(--bad);font-weight:700}
+    .status-box{margin-top:10px;padding:10px 12px;border-radius:12px;background:#f8fafc;border:1px solid var(--line);font-size:.92rem}
+    .voice-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}
+    .muted{color:var(--muted)}
     @media (max-width:520px){
-      .btn-row.three{grid-template-columns:1fr}
+      .btn-row.three,.voice-grid,.footer-inner{grid-template-columns:1fr}
       .stats{grid-template-columns:1fr 1fr 1fr}
       .top{flex-direction:column}
       .badge{align-self:flex-start}
@@ -87,9 +91,9 @@
   <div class="top">
     <div>
       <h1>Fransızca Telaffuz Koçu</h1>
-      <div class="sub">Başlangıç sürümü. Telefonda çalışır. Cümleyi dinle, kendi sesini kaydet, kendine puan ver, zorlandıklarını sakla.</div>
+      <div class="sub">iPhone uyumlu güncellenmiş sürüm. Cümleyi dinle, profesyonel Fransızca sese yakın bir ses seç, kendi kaydını al ve notlarını sakla.</div>
     </div>
-    <div class="badge">Starter v1</div>
+    <div class="badge">v1.2 iPhone</div>
   </div>
 
   <div class="grid">
@@ -118,7 +122,23 @@
           <option value="sounds">Ses odaklı</option>
         </select>
       </div>
+
       <div class="divider"></div>
+
+      <div class="voice-grid">
+        <div>
+          <div class="small" style="margin-bottom:6px;">Dinleme sesi</div>
+          <select id="voiceSelect" aria-label="Fransızca ses seç"></select>
+        </div>
+        <div>
+          <div class="small" style="margin-bottom:6px;">Ses tipi</div>
+          <div class="status-box" id="voiceTypeInfo">Profesyonel erkek sese öncelik veriliyor</div>
+        </div>
+      </div>
+      <div class="small" style="margin-top:8px;">Not: Tarayıcıdaki gerçek sesler cihazına bağlıdır. Uygulama mümkünse Fransızca erkek sese öncelik verir.</div>
+
+      <div class="divider"></div>
+
       <div class="phrase" id="phraseText">Je travaille dans un hôtel à Toronto.</div>
       <div class="meaning" id="phraseMeaning">Toronto’da bir otelde çalışıyorum.</div>
       <div class="meta">
@@ -138,6 +158,7 @@
       </div>
 
       <div id="recordingStatus" class="recording" style="display:none;"><span class="dot"></span> Kayıt alınıyor…</div>
+      <div id="recordingFeedback" class="status-box muted">Hazır. Kendi telaffuzunu kaydetmek için “Kayda başla”ya bas.</div>
       <audio id="playback" controls style="display:none;"></audio>
 
       <div class="divider"></div>
@@ -148,7 +169,7 @@
         <button class="btn-warn" data-score="2">Orta</button>
         <button class="btn-bad" data-score="1">Zorlandım</button>
       </div>
-      <p class="hint">Bu ilk sürümde puanı sen veriyorsun. Sonraki aşamada konuşmanı yazıya çevirip hedef cümleyle otomatik karşılaştırabiliriz.</p>
+      <p class="hint">Bu sürümde kayıt iPhone Safari ile daha uyumlu çalışır. Sonraki aşamada konuşmanı yazıya çevirip hedef cümleyle otomatik karşılaştırabiliriz.</p>
       <div id="saveStatus" class="small"></div>
     </div>
 
@@ -179,6 +200,9 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'fpk_progress_v12';
+    const VOICE_KEY = 'fpk_voice_v12';
+
     const phrases = [
       { id: 1, category: 'hotel', level: 'A1', focus: 'r / ô / à', fr: 'Je travaille dans un hôtel à Toronto.', tr: 'Toronto’da bir otelde çalışıyorum.' },
       { id: 2, category: 'hotel', level: 'A1', focus: 'eu / on', fr: 'Je parle avec les clients.', tr: 'Müşterilerle konuşuyorum.' },
@@ -202,11 +226,15 @@
       mediaRecorder: null,
       recordedChunks: [],
       currentAudioUrl: null,
-      recognitionSupported: 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window,
+      currentStream: null,
+      selectedVoiceName: '',
+      selectedMimeType: ''
     };
 
     const els = {
       categorySelect: document.getElementById('categorySelect'),
+      voiceSelect: document.getElementById('voiceSelect'),
+      voiceTypeInfo: document.getElementById('voiceTypeInfo'),
       phraseText: document.getElementById('phraseText'),
       phraseMeaning: document.getElementById('phraseMeaning'),
       phraseLevel: document.getElementById('phraseLevel'),
@@ -217,6 +245,7 @@
       recordBtn: document.getElementById('recordBtn'),
       stopBtn: document.getElementById('stopBtn'),
       recordingStatus: document.getElementById('recordingStatus'),
+      recordingFeedback: document.getElementById('recordingFeedback'),
       playback: document.getElementById('playback'),
       notesInput: document.getElementById('notesInput'),
       saveStatus: document.getElementById('saveStatus'),
@@ -231,11 +260,25 @@
     };
 
     function getProgress() {
-      return JSON.parse(localStorage.getItem('fpk_progress_v1') || '{}');
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     }
 
     function saveProgress(progress) {
-      localStorage.setItem('fpk_progress_v1', JSON.stringify(progress));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function setFeedback(message, type = 'muted') {
+      els.recordingFeedback.textContent = message;
+      els.recordingFeedback.className = 'status-box ' + type;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
     }
 
     function upsertProgressForCurrent(score) {
@@ -267,19 +310,21 @@
       els.phraseFocus.textContent = `odak: ${current.focus}`;
       const saved = getProgress()[current.id];
       els.notesInput.value = saved?.notes || '';
+      els.playback.pause();
       els.playback.style.display = 'none';
-      els.playback.src = '';
+      els.playback.removeAttribute('src');
+      els.playback.load();
       if (state.currentAudioUrl) {
         URL.revokeObjectURL(state.currentAudioUrl);
         state.currentAudioUrl = null;
       }
+      setFeedback('Hazır. Kendi telaffuzunu kaydetmek için “Kayda başla”ya bas.', 'muted');
     }
 
     function renderStats() {
       const values = Object.values(getProgress());
       els.doneCount.textContent = values.length;
-      const hard = values.filter(v => v.score === 1);
-      els.hardCount.textContent = hard.length;
+      els.hardCount.textContent = values.filter(v => v.score === 1).length;
       const avg = values.length ? (values.reduce((s, v) => s + v.score, 0) / values.length).toFixed(1) : '0';
       els.avgScore.textContent = avg;
     }
@@ -306,15 +351,6 @@
       `).join('');
     }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#39;');
-    }
-
     function filterPhrases() {
       const value = els.categorySelect.value;
       state.filtered = value === 'all' ? [...phrases] : phrases.filter(p => p.category === value);
@@ -332,6 +368,58 @@
       renderPhrase();
     }
 
+    function choosePreferredVoice(voices) {
+      const frenchVoices = voices.filter(v => (v.lang || '').toLowerCase().startsWith('fr'));
+      if (!frenchVoices.length) return null;
+      const maleNameRegex = /(thomas|daniel|nicolas|remy|rémy|henri|antoine|paul|alexandre|male|man|guy)/i;
+      const enhancedRegex = /(premium|enhanced|superior|natural)/i;
+      return frenchVoices.find(v => maleNameRegex.test(v.name))
+        || frenchVoices.find(v => maleNameRegex.test(v.voiceURI || ''))
+        || frenchVoices.find(v => enhancedRegex.test(v.name))
+        || frenchVoices[0];
+    }
+
+    function updateVoiceTypeInfo() {
+      const selected = speechSynthesis.getVoices().find(v => v.name === state.selectedVoiceName);
+      if (!selected) {
+        els.voiceTypeInfo.textContent = 'Cihazdaki uygun Fransızca sesi kullanıyor';
+        return;
+      }
+      const isLikelyMale = /(thomas|daniel|nicolas|remy|rémy|henri|antoine|paul|male|man|guy)/i.test(selected.name + ' ' + (selected.voiceURI || ''));
+      els.voiceTypeInfo.textContent = isLikelyMale
+        ? `Seçili ses: ${selected.name} • erkek / profesyonel öncelikli`
+        : `Seçili ses: ${selected.name} • cihazda bulunan en uygun Fransızca ses`;
+    }
+
+    function populateVoices() {
+      if (!('speechSynthesis' in window)) {
+        els.voiceSelect.innerHTML = '<option>Bu cihazda ses seçimi yok</option>';
+        els.voiceSelect.disabled = true;
+        return;
+      }
+
+      const allVoices = speechSynthesis.getVoices();
+      const frenchVoices = allVoices.filter(v => (v.lang || '').toLowerCase().startsWith('fr'));
+
+      if (!frenchVoices.length) {
+        els.voiceSelect.innerHTML = '<option>Fransızca ses bulunamadı</option>';
+        els.voiceSelect.disabled = true;
+        updateVoiceTypeInfo();
+        return;
+      }
+
+      const savedVoice = localStorage.getItem(VOICE_KEY);
+      const preferred = savedVoice && frenchVoices.find(v => v.name === savedVoice)
+        ? frenchVoices.find(v => v.name === savedVoice)
+        : choosePreferredVoice(frenchVoices);
+
+      state.selectedVoiceName = preferred?.name || frenchVoices[0].name;
+      els.voiceSelect.innerHTML = frenchVoices.map(v => `<option value="${escapeHtml(v.name)}">${escapeHtml(v.name)} (${escapeHtml(v.lang)})</option>`).join('');
+      els.voiceSelect.value = state.selectedVoiceName;
+      localStorage.setItem(VOICE_KEY, state.selectedVoiceName);
+      updateVoiceTypeInfo();
+    }
+
     function speak(text, rate = 0.78) {
       if (!('speechSynthesis' in window)) {
         alert('Bu tarayıcıda sesli okuma desteklenmiyor.');
@@ -341,40 +429,88 @@
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'fr-FR';
       utterance.rate = rate;
-      utterance.pitch = 1;
+      utterance.pitch = 0.92;
 
       const voices = window.speechSynthesis.getVoices();
-      const frenchVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('fr'));
-      if (frenchVoice) utterance.voice = frenchVoice;
+      const selected = voices.find(v => v.name === state.selectedVoiceName);
+      if (selected) {
+        utterance.voice = selected;
+      } else {
+        const fallback = choosePreferredVoice(voices);
+        if (fallback) utterance.voice = fallback;
+      }
 
+      utterance.onstart = () => setFeedback('Dinletme başladı. Sesin profesyonelliği cihazındaki Fransızca ses paketine bağlıdır.', 'muted');
+      utterance.onerror = () => setFeedback('Dinletme başlatılamadı. Safari’yi yenileyip tekrar dene.', 'error');
       window.speechSynthesis.speak(utterance);
     }
 
+    function getSupportedMimeType() {
+      if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') return '';
+      const candidates = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+      return candidates.find(type => MediaRecorder.isTypeSupported(type)) || '';
+    }
+
     async function startRecording() {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        setFeedback('Bu tarayıcı mikrofon erişimini desteklemiyor.', 'error');
+        return;
+      }
+      if (!window.MediaRecorder) {
+        setFeedback('Bu cihazda kayıt özelliği desteklenmiyor.', 'error');
+        return;
+      }
+
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        state.currentStream = stream;
         state.recordedChunks = [];
-        state.mediaRecorder = new MediaRecorder(stream);
+        state.selectedMimeType = getSupportedMimeType();
+        state.mediaRecorder = state.selectedMimeType
+          ? new MediaRecorder(stream, { mimeType: state.selectedMimeType })
+          : new MediaRecorder(stream);
+
         state.mediaRecorder.ondataavailable = event => {
-          if (event.data.size > 0) state.recordedChunks.push(event.data);
+          if (event.data && event.data.size > 0) state.recordedChunks.push(event.data);
         };
+
+        state.mediaRecorder.onerror = event => {
+          console.error('Recorder error:', event.error || event);
+          setFeedback('Kayıt sırasında hata oluştu. Sayfayı yenileyip tekrar dene.', 'error');
+        };
+
         state.mediaRecorder.onstop = () => {
-          const blob = new Blob(state.recordedChunks, { type: 'audio/webm' });
-          if (state.currentAudioUrl) URL.revokeObjectURL(state.currentAudioUrl);
-          state.currentAudioUrl = URL.createObjectURL(blob);
-          els.playback.src = state.currentAudioUrl;
-          els.playback.style.display = 'block';
-          stream.getTracks().forEach(track => track.stop());
+          try {
+            const blobType = state.mediaRecorder.mimeType || state.selectedMimeType || 'audio/mp4';
+            const blob = new Blob(state.recordedChunks, { type: blobType });
+            if (state.currentAudioUrl) URL.revokeObjectURL(state.currentAudioUrl);
+            state.currentAudioUrl = URL.createObjectURL(blob);
+            els.playback.src = state.currentAudioUrl;
+            els.playback.style.display = 'block';
+            els.playback.load();
+            setFeedback(`Kayıt hazır. Oynatıcıdan dinleyebilirsin. Format: ${blobType || 'otomatik'}`, 'success');
+          } catch (error) {
+            console.error(error);
+            setFeedback('Kayıt alındı ama oynatıcıya yüklenemedi.', 'error');
+          } finally {
+            state.currentStream?.getTracks().forEach(track => track.stop());
+            state.currentStream = null;
+          }
         };
+
         state.mediaRecorder.start();
         els.recordingStatus.style.display = 'inline-flex';
         els.recordBtn.disabled = true;
         els.recordBtn.classList.add('btn-disabled');
         els.stopBtn.disabled = false;
         els.stopBtn.classList.remove('btn-disabled');
+        setFeedback('Kayıt başladı. Cümleyi şimdi net ve yavaş söyle.', 'muted');
       } catch (err) {
-        alert('Mikrofon izni gerekiyor. Safari ayarlarından mikrofona izin ver.');
         console.error(err);
+        const message = err?.name === 'NotAllowedError'
+          ? 'Mikrofon izni kapalı. Safari site ayarlarından Microphone → Allow yap.'
+          : 'Mikrofon açılamadı. Safari’yi kapatıp tekrar deneyebilirsin.';
+        setFeedback(message, 'error');
       }
     }
 
@@ -403,7 +539,7 @@
 
     function resetProgress() {
       if (!confirm('Tüm ilerleme verilerini silmek istiyor musun?')) return;
-      localStorage.removeItem('fpk_progress_v1');
+      localStorage.removeItem(STORAGE_KEY);
       renderStats();
       renderHardList();
       renderPhrase();
@@ -422,10 +558,15 @@
     }
 
     els.categorySelect.addEventListener('change', filterPhrases);
+    els.voiceSelect.addEventListener('change', () => {
+      state.selectedVoiceName = els.voiceSelect.value;
+      localStorage.setItem(VOICE_KEY, state.selectedVoiceName);
+      updateVoiceTypeInfo();
+    });
     els.nextBtn.addEventListener('click', nextPhrase);
     els.randomBtn.addEventListener('click', randomPhrase);
     els.speakSlowBtn.addEventListener('click', () => speak(state.filtered[state.currentIndex].fr, 0.68));
-    els.speakNormalBtn.addEventListener('click', () => speak(state.filtered[state.currentIndex].fr, 0.9));
+    els.speakNormalBtn.addEventListener('click', () => speak(state.filtered[state.currentIndex].fr, 0.88));
     els.recordBtn.addEventListener('click', startRecording);
     els.stopBtn.addEventListener('click', stopRecording);
     els.practiceHardBtn.addEventListener('click', practiceHardOnes);
@@ -436,7 +577,12 @@
       btn.addEventListener('click', () => upsertProgressForCurrent(Number(btn.dataset.score)));
     });
 
-    window.speechSynthesis?.addEventListener?.('voiceschanged', () => {});
+    if ('speechSynthesis' in window) {
+      populateVoices();
+      window.speechSynthesis.addEventListener?.('voiceschanged', populateVoices);
+      setTimeout(populateVoices, 300);
+      setTimeout(populateVoices, 1000);
+    }
 
     renderStats();
     renderHardList();
