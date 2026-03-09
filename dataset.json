@@ -1,0 +1,1406 @@
+{
+  "a1": [
+    {
+      "id": "a1_001",
+      "topic": "self",
+      "fr": "Je m'appelle Ozan.",
+      "tr": "Benim adım Ozan.",
+      "en": "My name is Ozan."
+    },
+    {
+      "id": "a1_002",
+      "topic": "self",
+      "fr": "Je viens de Turquie.",
+      "tr": "Türkiye'den geliyorum.",
+      "en": "I come from Turkey."
+    },
+    {
+      "id": "a1_003",
+      "topic": "self",
+      "fr": "J'habite à Toronto.",
+      "tr": "Toronto'da yaşıyorum.",
+      "en": "I live in Toronto."
+    },
+    {
+      "id": "a1_004",
+      "topic": "self",
+      "fr": "J'apprends le français.",
+      "tr": "Fransızca öğreniyorum.",
+      "en": "I am learning French."
+    },
+    {
+      "id": "a1_005",
+      "topic": "self",
+      "fr": "Je parle un peu anglais.",
+      "tr": "Biraz İngilizce konuşuyorum.",
+      "en": "I speak a little English."
+    },
+    {
+      "id": "a1_006",
+      "topic": "self",
+      "fr": "J'ai quarante ans.",
+      "tr": "Kırk yaşındayım.",
+      "en": "I am forty years old."
+    },
+    {
+      "id": "a1_007",
+      "topic": "self",
+      "fr": "Je suis calme et patient.",
+      "tr": "Sakin ve sabırlıyım.",
+      "en": "I am calm and patient."
+    },
+    {
+      "id": "a1_008",
+      "topic": "self",
+      "fr": "Je suis marié.",
+      "tr": "Evliyim.",
+      "en": "I am married."
+    },
+    {
+      "id": "a1_009",
+      "topic": "self",
+      "fr": "Je travaille au centre-ville.",
+      "tr": "Şehir merkezinde çalışıyorum.",
+      "en": "I work downtown."
+    },
+    {
+      "id": "a1_010",
+      "topic": "self",
+      "fr": "Je veux améliorer mon français.",
+      "tr": "Fransızcamı geliştirmek istiyorum.",
+      "en": "I want to improve my French."
+    },
+    {
+      "id": "a1_011",
+      "topic": "self",
+      "fr": "Je suis motivé pour apprendre.",
+      "tr": "Öğrenmek için motiveyim.",
+      "en": "I am motivated to learn."
+    },
+    {
+      "id": "a1_012",
+      "topic": "self",
+      "fr": "Je commence à parler plus facilement.",
+      "tr": "Daha rahat konuşmaya başlıyorum.",
+      "en": "I am starting to speak more easily."
+    },
+    {
+      "id": "a1_013",
+      "topic": "self",
+      "fr": "Je ne parle pas encore très bien.",
+      "tr": "Henüz çok iyi konuşamıyorum.",
+      "en": "I do not speak very well yet."
+    },
+    {
+      "id": "a1_014",
+      "topic": "self",
+      "fr": "Je comprends des phrases simples.",
+      "tr": "Basit cümleleri anlıyorum.",
+      "en": "I understand simple sentences."
+    },
+    {
+      "id": "a1_015",
+      "topic": "self",
+      "fr": "Je veux parler avec confiance.",
+      "tr": "Kendime güvenerek konuşmak istiyorum.",
+      "en": "I want to speak with confidence."
+    },
+    {
+      "id": "a1_016",
+      "topic": "self",
+      "fr": "Je suis en niveau A1.",
+      "tr": "A1 seviyesindeyim.",
+      "en": "I am at A1 level."
+    },
+    {
+      "id": "a1_017",
+      "topic": "self",
+      "fr": "Je pratique un peu chaque jour.",
+      "tr": "Her gün biraz pratik yapıyorum.",
+      "en": "I practice a little every day."
+    },
+    {
+      "id": "a1_018",
+      "topic": "self",
+      "fr": "Je lis des phrases en français.",
+      "tr": "Fransızca cümleler okuyorum.",
+      "en": "I read sentences in French."
+    },
+    {
+      "id": "a1_019",
+      "topic": "self",
+      "fr": "Je répète après l'audio.",
+      "tr": "Ses kaydından sonra tekrar ediyorum.",
+      "en": "I repeat after the audio."
+    },
+    {
+      "id": "a1_020",
+      "topic": "self",
+      "fr": "Je veux progresser pas à pas.",
+      "tr": "Adım adım ilerlemek istiyorum.",
+      "en": "I want to improve step by step."
+    },
+    {
+      "id": "a1_021",
+      "topic": "family",
+      "fr": "J'ai un enfant.",
+      "tr": "Bir çocuğum var.",
+      "en": "I have one child."
+    },
+    {
+      "id": "a1_022",
+      "topic": "family",
+      "fr": "Mon fils va à l'école.",
+      "tr": "Oğlum okula gidiyor.",
+      "en": "My son goes to school."
+    },
+    {
+      "id": "a1_023",
+      "topic": "family",
+      "fr": "Ma famille est très importante pour moi.",
+      "tr": "Ailem benim için çok önemli.",
+      "en": "My family is very important to me."
+    },
+    {
+      "id": "a1_024",
+      "topic": "family",
+      "fr": "Nous vivons ensemble à Toronto.",
+      "tr": "Toronto'da birlikte yaşıyoruz.",
+      "en": "We live together in Toronto."
+    },
+    {
+      "id": "a1_025",
+      "topic": "family",
+      "fr": "Ma femme me soutient beaucoup.",
+      "tr": "Eşim bana çok destek oluyor.",
+      "en": "My wife supports me a lot."
+    },
+    {
+      "id": "a1_026",
+      "topic": "family",
+      "fr": "Le soir, nous dînons en famille.",
+      "tr": "Akşamları ailece yemek yeriz.",
+      "en": "In the evening, we have dinner as a family."
+    },
+    {
+      "id": "a1_027",
+      "topic": "family",
+      "fr": "Mon enfant aime lire des livres.",
+      "tr": "Çocuğum kitap okumayı sever.",
+      "en": "My child likes reading books."
+    },
+    {
+      "id": "a1_028",
+      "topic": "family",
+      "fr": "Nous parlons souvent de l'école.",
+      "tr": "Sık sık okul hakkında konuşuruz.",
+      "en": "We often talk about school."
+    },
+    {
+      "id": "a1_029",
+      "topic": "family",
+      "fr": "Le week-end, je passe du temps avec ma famille.",
+      "tr": "Hafta sonu ailemle vakit geçiririm.",
+      "en": "On weekends, I spend time with my family."
+    },
+    {
+      "id": "a1_030",
+      "topic": "family",
+      "fr": "Je veux un bon avenir pour mon enfant.",
+      "tr": "Çocuğum için iyi bir gelecek istiyorum.",
+      "en": "I want a good future for my child."
+    },
+    {
+      "id": "a1_031",
+      "topic": "family",
+      "fr": "Ma famille habite avec moi.",
+      "tr": "Ailem benimle yaşıyor.",
+      "en": "My family lives with me."
+    },
+    {
+      "id": "a1_032",
+      "topic": "family",
+      "fr": "Nous aimons marcher ensemble.",
+      "tr": "Birlikte yürümeyi severiz.",
+      "en": "We like walking together."
+    },
+    {
+      "id": "a1_033",
+      "topic": "family",
+      "fr": "Mon enfant apprend vite.",
+      "tr": "Çocuğum hızlı öğreniyor.",
+      "en": "My child learns quickly."
+    },
+    {
+      "id": "a1_034",
+      "topic": "family",
+      "fr": "Je parle avec mon fils chaque soir.",
+      "tr": "Her akşam oğlumla konuşurum.",
+      "en": "I talk with my son every evening."
+    },
+    {
+      "id": "a1_035",
+      "topic": "family",
+      "fr": "Nous allons parfois au parc.",
+      "tr": "Bazen parka gideriz.",
+      "en": "We sometimes go to the park."
+    },
+    {
+      "id": "a1_036",
+      "topic": "family",
+      "fr": "La famille me donne de la force.",
+      "tr": "Ailem bana güç veriyor.",
+      "en": "My family gives me strength."
+    },
+    {
+      "id": "a1_037",
+      "topic": "family",
+      "fr": "Je veux rester près de ma famille.",
+      "tr": "Aileme yakın kalmak istiyorum.",
+      "en": "I want to stay close to my family."
+    },
+    {
+      "id": "a1_038",
+      "topic": "family",
+      "fr": "Nous mangeons ensemble à la maison.",
+      "tr": "Evde birlikte yemek yeriz.",
+      "en": "We eat together at home."
+    },
+    {
+      "id": "a1_039",
+      "topic": "family",
+      "fr": "Mon fils aime l'école et ses amis.",
+      "tr": "Oğlum okulu ve arkadaşlarını seviyor.",
+      "en": "My son likes school and his friends."
+    },
+    {
+      "id": "a1_040",
+      "topic": "family",
+      "fr": "Je suis heureux avec ma famille.",
+      "tr": "Ailemle mutluyum.",
+      "en": "I am happy with my family."
+    },
+    {
+      "id": "a1_041",
+      "topic": "city",
+      "fr": "Toronto est une grande ville.",
+      "tr": "Toronto büyük bir şehir.",
+      "en": "Toronto is a big city."
+    },
+    {
+      "id": "a1_042",
+      "topic": "city",
+      "fr": "Il y a beaucoup de parcs ici.",
+      "tr": "Burada çok park var.",
+      "en": "There are many parks here."
+    },
+    {
+      "id": "a1_043",
+      "topic": "city",
+      "fr": "Le métro est pratique.",
+      "tr": "Metro kullanışlıdır.",
+      "en": "The subway is convenient."
+    },
+    {
+      "id": "a1_044",
+      "topic": "city",
+      "fr": "J'aime mon quartier.",
+      "tr": "Mahallemi seviyorum.",
+      "en": "I like my neighborhood."
+    },
+    {
+      "id": "a1_045",
+      "topic": "city",
+      "fr": "Il y a une bibliothèque près de chez moi.",
+      "tr": "Evim yakınında bir kütüphane var.",
+      "en": "There is a library near my home."
+    },
+    {
+      "id": "a1_046",
+      "topic": "city",
+      "fr": "Le centre-ville est animé.",
+      "tr": "Şehir merkezi hareketlidir.",
+      "en": "Downtown is lively."
+    },
+    {
+      "id": "a1_047",
+      "topic": "city",
+      "fr": "Je vais souvent au supermarché du quartier.",
+      "tr": "Sık sık mahalledeki markete giderim.",
+      "en": "I often go to the neighborhood supermarket."
+    },
+    {
+      "id": "a1_048",
+      "topic": "city",
+      "fr": "Le matin, les rues sont calmes.",
+      "tr": "Sabahları sokaklar sakindir.",
+      "en": "In the morning, the streets are calm."
+    },
+    {
+      "id": "a1_049",
+      "topic": "city",
+      "fr": "J'aime marcher dans ma ville.",
+      "tr": "Şehrimde yürümeyi severim.",
+      "en": "I like walking in my city."
+    },
+    {
+      "id": "a1_050",
+      "topic": "city",
+      "fr": "Il y a une école près du parc.",
+      "tr": "Parkın yanında bir okul var.",
+      "en": "There is a school near the park."
+    },
+    {
+      "id": "a1_051",
+      "topic": "city",
+      "fr": "Je connais bien mon quartier.",
+      "tr": "Mahallemi iyi tanıyorum.",
+      "en": "I know my neighborhood well."
+    },
+    {
+      "id": "a1_052",
+      "topic": "city",
+      "fr": "Il y a un arrêt de bus près d'ici.",
+      "tr": "Buraya yakın bir otobüs durağı var.",
+      "en": "There is a bus stop near here."
+    },
+    {
+      "id": "a1_053",
+      "topic": "city",
+      "fr": "Je prends souvent le métro rouge.",
+      "tr": "Sık sık kırmızı metro hattını kullanırım.",
+      "en": "I often take the red subway line."
+    },
+    {
+      "id": "a1_054",
+      "topic": "city",
+      "fr": "La ville est très diverse.",
+      "tr": "Şehir çok çeşitlidir.",
+      "en": "The city is very diverse."
+    },
+    {
+      "id": "a1_055",
+      "topic": "city",
+      "fr": "Je vois beaucoup de monde au centre-ville.",
+      "tr": "Şehir merkezinde çok insan görüyorum.",
+      "en": "I see many people downtown."
+    },
+    {
+      "id": "a1_056",
+      "topic": "city",
+      "fr": "Le parc est beau au printemps.",
+      "tr": "Park ilkbaharda güzeldir.",
+      "en": "The park is beautiful in spring."
+    },
+    {
+      "id": "a1_057",
+      "topic": "city",
+      "fr": "J'aime la vie à Toronto.",
+      "tr": "Toronto'daki hayatı seviyorum.",
+      "en": "I like life in Toronto."
+    },
+    {
+      "id": "a1_058",
+      "topic": "city",
+      "fr": "Il y a des cafés partout.",
+      "tr": "Her yerde kafeler var.",
+      "en": "There are cafés everywhere."
+    },
+    {
+      "id": "a1_059",
+      "topic": "city",
+      "fr": "Ma ville est pratique pour les familles.",
+      "tr": "Şehrim aileler için kullanışlıdır.",
+      "en": "My city is convenient for families."
+    },
+    {
+      "id": "a1_060",
+      "topic": "city",
+      "fr": "Je découvre de nouveaux endroits.",
+      "tr": "Yeni yerler keşfediyorum.",
+      "en": "I discover new places."
+    },
+    {
+      "id": "a1_061",
+      "topic": "routine",
+      "fr": "Je me lève tôt.",
+      "tr": "Erken kalkarım.",
+      "en": "I get up early."
+    },
+    {
+      "id": "a1_062",
+      "topic": "routine",
+      "fr": "Je prends le métro pour aller au travail.",
+      "tr": "İşe gitmek için metroya binerim.",
+      "en": "I take the subway to go to work."
+    },
+    {
+      "id": "a1_063",
+      "topic": "routine",
+      "fr": "Je commence le travail le matin.",
+      "tr": "Sabah işe başlarım.",
+      "en": "I start work in the morning."
+    },
+    {
+      "id": "a1_064",
+      "topic": "routine",
+      "fr": "Je bois un café avant de partir.",
+      "tr": "Çıkmadan önce kahve içerim.",
+      "en": "I drink a coffee before leaving."
+    },
+    {
+      "id": "a1_065",
+      "topic": "routine",
+      "fr": "À midi, je mange quelque chose de simple.",
+      "tr": "Öğlen basit bir şey yerim.",
+      "en": "At noon, I eat something simple."
+    },
+    {
+      "id": "a1_066",
+      "topic": "routine",
+      "fr": "Après le travail, je rentre à la maison.",
+      "tr": "İşten sonra eve dönerim.",
+      "en": "After work, I go home."
+    },
+    {
+      "id": "a1_067",
+      "topic": "routine",
+      "fr": "Le soir, j'étudie le français.",
+      "tr": "Akşam Fransızca çalışırım.",
+      "en": "In the evening, I study French."
+    },
+    {
+      "id": "a1_068",
+      "topic": "routine",
+      "fr": "Je regarde parfois une vidéo en français.",
+      "tr": "Bazen Fransızca bir video izlerim.",
+      "en": "Sometimes I watch a video in French."
+    },
+    {
+      "id": "a1_069",
+      "topic": "routine",
+      "fr": "Je me couche vers dix heures.",
+      "tr": "Saat ona doğru yatarım.",
+      "en": "I go to bed around ten o'clock."
+    },
+    {
+      "id": "a1_070",
+      "topic": "routine",
+      "fr": "Le dimanche, je me repose un peu.",
+      "tr": "Pazar biraz dinlenirim.",
+      "en": "On Sunday, I rest a little."
+    },
+    {
+      "id": "a1_071",
+      "topic": "routine",
+      "fr": "Je quitte la maison à temps.",
+      "tr": "Evden zamanında çıkarım.",
+      "en": "I leave home on time."
+    },
+    {
+      "id": "a1_072",
+      "topic": "routine",
+      "fr": "Je vérifie mon téléphone le matin.",
+      "tr": "Sabah telefonumu kontrol ederim.",
+      "en": "I check my phone in the morning."
+    },
+    {
+      "id": "a1_073",
+      "topic": "routine",
+      "fr": "Je prépare mes affaires la veille.",
+      "tr": "Eşyalarımı bir gece önceden hazırlarım.",
+      "en": "I prepare my things the night before."
+    },
+    {
+      "id": "a1_074",
+      "topic": "routine",
+      "fr": "Je prends une pause dans l'après-midi.",
+      "tr": "Öğleden sonra mola veririm.",
+      "en": "I take a break in the afternoon."
+    },
+    {
+      "id": "a1_075",
+      "topic": "routine",
+      "fr": "Je marche un peu chaque jour.",
+      "tr": "Her gün biraz yürürüm.",
+      "en": "I walk a little every day."
+    },
+    {
+      "id": "a1_076",
+      "topic": "routine",
+      "fr": "Je fais souvent des listes.",
+      "tr": "Sık sık liste yaparım.",
+      "en": "I often make lists."
+    },
+    {
+      "id": "a1_077",
+      "topic": "routine",
+      "fr": "Je rentre tard quand je travaille beaucoup.",
+      "tr": "Çok çalıştığımda geç dönerim.",
+      "en": "I come home late when I work a lot."
+    },
+    {
+      "id": "a1_078",
+      "topic": "routine",
+      "fr": "Je lis avant de dormir.",
+      "tr": "Uyumadan önce okurum.",
+      "en": "I read before sleeping."
+    },
+    {
+      "id": "a1_079",
+      "topic": "routine",
+      "fr": "Je commence la semaine avec énergie.",
+      "tr": "Haftaya enerjik başlarım.",
+      "en": "I start the week with energy."
+    },
+    {
+      "id": "a1_080",
+      "topic": "routine",
+      "fr": "Je garde une routine simple.",
+      "tr": "Basit bir rutinim var.",
+      "en": "I keep a simple routine."
+    },
+    {
+      "id": "a1_081",
+      "topic": "food",
+      "fr": "J'aime le pain et le fromage.",
+      "tr": "Ekmeği ve peyniri severim.",
+      "en": "I like bread and cheese."
+    },
+    {
+      "id": "a1_082",
+      "topic": "food",
+      "fr": "Je voudrais un café, s'il vous plaît.",
+      "tr": "Bir kahve istiyorum, lütfen.",
+      "en": "I would like a coffee, please."
+    },
+    {
+      "id": "a1_083",
+      "topic": "food",
+      "fr": "Je prends souvent un sandwich au déjeuner.",
+      "tr": "Öğle yemeğinde sık sık sandviç alırım.",
+      "en": "I often have a sandwich for lunch."
+    },
+    {
+      "id": "a1_084",
+      "topic": "food",
+      "fr": "Je bois beaucoup d'eau.",
+      "tr": "Çok su içerim.",
+      "en": "I drink a lot of water."
+    },
+    {
+      "id": "a1_085",
+      "topic": "food",
+      "fr": "Je ne mange pas très tard.",
+      "tr": "Çok geç yemem.",
+      "en": "I do not eat very late."
+    },
+    {
+      "id": "a1_086",
+      "topic": "food",
+      "fr": "Le matin, je mange des œufs.",
+      "tr": "Sabah yumurta yerim.",
+      "en": "In the morning, I eat eggs."
+    },
+    {
+      "id": "a1_087",
+      "topic": "food",
+      "fr": "J'aime les fruits frais.",
+      "tr": "Taze meyveleri severim.",
+      "en": "I like fresh fruit."
+    },
+    {
+      "id": "a1_088",
+      "topic": "food",
+      "fr": "Je préfère le thé le soir.",
+      "tr": "Akşamları çayı tercih ederim.",
+      "en": "I prefer tea in the evening."
+    },
+    {
+      "id": "a1_089",
+      "topic": "food",
+      "fr": "Le menu est simple aujourd'hui.",
+      "tr": "Bugün menü basit.",
+      "en": "The menu is simple today."
+    },
+    {
+      "id": "a1_090",
+      "topic": "food",
+      "fr": "Je veux quelque chose de chaud.",
+      "tr": "Sıcak bir şey istiyorum.",
+      "en": "I want something hot."
+    },
+    {
+      "id": "a1_091",
+      "topic": "food",
+      "fr": "Je cuisine parfois à la maison.",
+      "tr": "Bazen evde yemek yaparım.",
+      "en": "I sometimes cook at home."
+    },
+    {
+      "id": "a1_092",
+      "topic": "food",
+      "fr": "J'aime le poulet et le riz.",
+      "tr": "Tavuk ve pilavı severim.",
+      "en": "I like chicken and rice."
+    },
+    {
+      "id": "a1_093",
+      "topic": "food",
+      "fr": "Je mange léger le soir.",
+      "tr": "Akşam hafif yerim.",
+      "en": "I eat light in the evening."
+    },
+    {
+      "id": "a1_094",
+      "topic": "food",
+      "fr": "Je prends une soupe en hiver.",
+      "tr": "Kışın çorba içerim.",
+      "en": "I have soup in winter."
+    },
+    {
+      "id": "a1_095",
+      "topic": "food",
+      "fr": "Le café est trop chaud.",
+      "tr": "Kahve çok sıcak.",
+      "en": "The coffee is too hot."
+    },
+    {
+      "id": "a1_096",
+      "topic": "food",
+      "fr": "Je mange lentement.",
+      "tr": "Yavaş yerim.",
+      "en": "I eat slowly."
+    },
+    {
+      "id": "a1_097",
+      "topic": "food",
+      "fr": "Je ne bois pas trop de sucre.",
+      "tr": "Çok şekerli içecek içmem.",
+      "en": "I do not drink too much sugar."
+    },
+    {
+      "id": "a1_098",
+      "topic": "food",
+      "fr": "J'achète du lait et des fruits.",
+      "tr": "Süt ve meyve alırım.",
+      "en": "I buy milk and fruit."
+    },
+    {
+      "id": "a1_099",
+      "topic": "food",
+      "fr": "Je préfère un repas simple.",
+      "tr": "Basit bir yemek tercih ederim.",
+      "en": "I prefer a simple meal."
+    },
+    {
+      "id": "a1_100",
+      "topic": "food",
+      "fr": "J'aime essayer de nouveaux plats.",
+      "tr": "Yeni yemekler denemeyi severim.",
+      "en": "I like trying new dishes."
+    }
+  ],
+  "a2": [
+    {
+      "id": "a2_001",
+      "topic": "work",
+      "fr": "Je travaille dans un hôtel au centre-ville.",
+      "tr": "Şehir merkezinde bir otelde çalışıyorum.",
+      "en": "I work in a hotel downtown."
+    },
+    {
+      "id": "a2_002",
+      "topic": "work",
+      "fr": "Je parle souvent avec les clients.",
+      "tr": "Müşterilerle sık sık konuşurum.",
+      "en": "I often speak with customers."
+    },
+    {
+      "id": "a2_003",
+      "topic": "work",
+      "fr": "Mon travail est parfois fatigant, mais intéressant.",
+      "tr": "İşim bazen yorucu ama ilginç.",
+      "en": "My job is sometimes tiring but interesting."
+    },
+    {
+      "id": "a2_004",
+      "topic": "work",
+      "fr": "J'aime le contact avec les gens.",
+      "tr": "İnsanlarla iletişimi seviyorum.",
+      "en": "I like being in contact with people."
+    },
+    {
+      "id": "a2_005",
+      "topic": "work",
+      "fr": "Je commence tôt certains jours.",
+      "tr": "Bazı günler erken başlarım.",
+      "en": "I start early on some days."
+    },
+    {
+      "id": "a2_006",
+      "topic": "work",
+      "fr": "Je dois rester poli avec tout le monde.",
+      "tr": "Herkese karşı kibar kalmam gerekir.",
+      "en": "I have to stay polite with everyone."
+    },
+    {
+      "id": "a2_007",
+      "topic": "work",
+      "fr": "Je réponds aux questions des clients.",
+      "tr": "Müşterilerin sorularını yanıtlarım.",
+      "en": "I answer customers' questions."
+    },
+    {
+      "id": "a2_008",
+      "topic": "work",
+      "fr": "Je travaille bien sous pression.",
+      "tr": "Baskı altında iyi çalışırım.",
+      "en": "I work well under pressure."
+    },
+    {
+      "id": "a2_009",
+      "topic": "work",
+      "fr": "Je veux améliorer mon français pour mon travail.",
+      "tr": "İşim için Fransızcamı geliştirmek istiyorum.",
+      "en": "I want to improve my French for my job."
+    },
+    {
+      "id": "a2_010",
+      "topic": "work",
+      "fr": "Mon travail me donne de l'expérience.",
+      "tr": "İşim bana deneyim kazandırıyor.",
+      "en": "My job gives me experience."
+    },
+    {
+      "id": "a2_011",
+      "topic": "work",
+      "fr": "Je parle avec des visiteurs de différents pays.",
+      "tr": "Farklı ülkelerden gelen ziyaretçilerle konuşurum.",
+      "en": "I speak with visitors from different countries."
+    },
+    {
+      "id": "a2_012",
+      "topic": "work",
+      "fr": "Je reste calme quand il y a un problème.",
+      "tr": "Bir sorun olduğunda sakin kalırım.",
+      "en": "I stay calm when there is a problem."
+    },
+    {
+      "id": "a2_013",
+      "topic": "work",
+      "fr": "J'aime aider les gens.",
+      "tr": "İnsanlara yardım etmeyi severim.",
+      "en": "I like helping people."
+    },
+    {
+      "id": "a2_014",
+      "topic": "work",
+      "fr": "Je travaille en équipe.",
+      "tr": "Takım halinde çalışırım.",
+      "en": "I work as part of a team."
+    },
+    {
+      "id": "a2_015",
+      "topic": "work",
+      "fr": "Je finis parfois tard le soir.",
+      "tr": "Bazen akşam geç saatte bitiririm.",
+      "en": "I sometimes finish late in the evening."
+    },
+    {
+      "id": "a2_016",
+      "topic": "work",
+      "fr": "Je prends mes responsabilités au sérieux.",
+      "tr": "Sorumluluklarımı ciddiye alırım.",
+      "en": "I take my responsibilities seriously."
+    },
+    {
+      "id": "a2_017",
+      "topic": "work",
+      "fr": "Je veux évoluer dans mon travail.",
+      "tr": "İşimde ilerlemek istiyorum.",
+      "en": "I want to grow in my job."
+    },
+    {
+      "id": "a2_018",
+      "topic": "work",
+      "fr": "Je connais bien les tâches de base.",
+      "tr": "Temel görevleri iyi biliyorum.",
+      "en": "I know the basic tasks well."
+    },
+    {
+      "id": "a2_019",
+      "topic": "work",
+      "fr": "Je fais attention aux détails.",
+      "tr": "Detaylara dikkat ederim.",
+      "en": "I pay attention to details."
+    },
+    {
+      "id": "a2_020",
+      "topic": "work",
+      "fr": "Je suis fier de mon travail.",
+      "tr": "İşimle gurur duyuyorum.",
+      "en": "I am proud of my work."
+    },
+    {
+      "id": "a2_021",
+      "topic": "transport",
+      "fr": "Je prends le métro pour aller au travail.",
+      "tr": "İşe gitmek için metroya binerim.",
+      "en": "I take the subway to go to work."
+    },
+    {
+      "id": "a2_022",
+      "topic": "transport",
+      "fr": "Le trajet dure environ quarante minutes.",
+      "tr": "Yolculuk yaklaşık kırk dakika sürer.",
+      "en": "The trip takes about forty minutes."
+    },
+    {
+      "id": "a2_023",
+      "topic": "transport",
+      "fr": "Quand il neige, le trajet est plus difficile.",
+      "tr": "Kar yağınca yolculuk daha zor olur.",
+      "en": "When it snows, the trip is more difficult."
+    },
+    {
+      "id": "a2_024",
+      "topic": "transport",
+      "fr": "Je pars plus tôt quand il y a du trafic.",
+      "tr": "Trafik olduğunda daha erken çıkarım.",
+      "en": "I leave earlier when there is traffic."
+    },
+    {
+      "id": "a2_025",
+      "topic": "transport",
+      "fr": "Je préfère le métro à la voiture.",
+      "tr": "Arabaya göre metroyu tercih ederim.",
+      "en": "I prefer the subway to the car."
+    },
+    {
+      "id": "a2_026",
+      "topic": "transport",
+      "fr": "Parfois, je prends le bus.",
+      "tr": "Bazen otobüse binerim.",
+      "en": "Sometimes I take the bus."
+    },
+    {
+      "id": "a2_027",
+      "topic": "transport",
+      "fr": "Je regarde l'heure du prochain train.",
+      "tr": "Bir sonraki trenin saatine bakarım.",
+      "en": "I check the time of the next train."
+    },
+    {
+      "id": "a2_028",
+      "topic": "transport",
+      "fr": "Le transport en commun est pratique.",
+      "tr": "Toplu taşıma kullanışlıdır.",
+      "en": "Public transportation is practical."
+    },
+    {
+      "id": "a2_029",
+      "topic": "transport",
+      "fr": "Je marche un peu avant de prendre le métro.",
+      "tr": "Metroya binmeden önce biraz yürürüm.",
+      "en": "I walk a little before taking the subway."
+    },
+    {
+      "id": "a2_030",
+      "topic": "transport",
+      "fr": "Le matin, les stations sont pleines.",
+      "tr": "Sabahları istasyonlar kalabalık olur.",
+      "en": "In the morning, stations are crowded."
+    },
+    {
+      "id": "a2_031",
+      "topic": "transport",
+      "fr": "Je connais mon itinéraire habituel.",
+      "tr": "Her zamanki güzergahımı biliyorum.",
+      "en": "I know my usual route."
+    },
+    {
+      "id": "a2_032",
+      "topic": "transport",
+      "fr": "Je dois parfois attendre longtemps.",
+      "tr": "Bazen uzun süre beklemem gerekir.",
+      "en": "Sometimes I have to wait a long time."
+    },
+    {
+      "id": "a2_033",
+      "topic": "transport",
+      "fr": "Je voyage rarement en taxi.",
+      "tr": "Nadiren taksiyle yolculuk yaparım.",
+      "en": "I rarely travel by taxi."
+    },
+    {
+      "id": "a2_034",
+      "topic": "transport",
+      "fr": "Je préfère un trajet simple.",
+      "tr": "Basit bir yolculuğu tercih ederim.",
+      "en": "I prefer a simple commute."
+    },
+    {
+      "id": "a2_035",
+      "topic": "transport",
+      "fr": "Le métro est rapide quand tout va bien.",
+      "tr": "Her şey yolunda olduğunda metro hızlıdır.",
+      "en": "The subway is fast when everything goes well."
+    },
+    {
+      "id": "a2_036",
+      "topic": "transport",
+      "fr": "Je prends toujours ma carte avec moi.",
+      "tr": "Kartımı her zaman yanıma alırım.",
+      "en": "I always take my card with me."
+    },
+    {
+      "id": "a2_037",
+      "topic": "transport",
+      "fr": "Je descends à la même station chaque jour.",
+      "tr": "Her gün aynı istasyonda inerim.",
+      "en": "I get off at the same station every day."
+    },
+    {
+      "id": "a2_038",
+      "topic": "transport",
+      "fr": "Je regarde les horaires sur mon téléphone.",
+      "tr": "Saatleri telefonumdan kontrol ederim.",
+      "en": "I check the schedule on my phone."
+    },
+    {
+      "id": "a2_039",
+      "topic": "transport",
+      "fr": "En hiver, je fais plus attention au trajet.",
+      "tr": "Kışın yolculuğa daha çok dikkat ederim.",
+      "en": "In winter, I pay more attention to my commute."
+    },
+    {
+      "id": "a2_040",
+      "topic": "transport",
+      "fr": "Le transport fait partie de ma routine.",
+      "tr": "Ulaşım rutinimin bir parçasıdır.",
+      "en": "Transportation is part of my routine."
+    },
+    {
+      "id": "a2_041",
+      "topic": "school_family",
+      "fr": "Mon fils va à l'école primaire à Toronto.",
+      "tr": "Oğlum Toronto'da ilkokula gidiyor.",
+      "en": "My son goes to primary school in Toronto."
+    },
+    {
+      "id": "a2_042",
+      "topic": "school_family",
+      "fr": "Je parle avec les enseignants quand c'est nécessaire.",
+      "tr": "Gerekli olduğunda öğretmenlerle konuşurum.",
+      "en": "I speak with the teachers when necessary."
+    },
+    {
+      "id": "a2_043",
+      "topic": "school_family",
+      "fr": "L'école est importante pour l'avenir de mon enfant.",
+      "tr": "Okul çocuğumun geleceği için önemlidir.",
+      "en": "School is important for my child's future."
+    },
+    {
+      "id": "a2_044",
+      "topic": "school_family",
+      "fr": "Je veux soutenir mon enfant dans ses études.",
+      "tr": "Çocuğumu eğitiminde desteklemek istiyorum.",
+      "en": "I want to support my child in his studies."
+    },
+    {
+      "id": "a2_045",
+      "topic": "school_family",
+      "fr": "Je regarde les messages de l'école.",
+      "tr": "Okuldan gelen mesajlara bakarım.",
+      "en": "I check the messages from school."
+    },
+    {
+      "id": "a2_046",
+      "topic": "school_family",
+      "fr": "Mon enfant aime ses activités scolaires.",
+      "tr": "Çocuğum okul etkinliklerini sever.",
+      "en": "My child likes school activities."
+    },
+    {
+      "id": "a2_047",
+      "topic": "school_family",
+      "fr": "Je veux qu'il parle bien anglais et français.",
+      "tr": "Onun iyi İngilizce ve Fransızca konuşmasını istiyorum.",
+      "en": "I want him to speak English and French well."
+    },
+    {
+      "id": "a2_048",
+      "topic": "school_family",
+      "fr": "Nous faisons les devoirs ensemble parfois.",
+      "tr": "Bazen ödevleri birlikte yaparız.",
+      "en": "We sometimes do homework together."
+    },
+    {
+      "id": "a2_049",
+      "topic": "school_family",
+      "fr": "Je pose des questions sur l'école.",
+      "tr": "Okulla ilgili sorular sorarım.",
+      "en": "I ask questions about school."
+    },
+    {
+      "id": "a2_050",
+      "topic": "school_family",
+      "fr": "Je veux un environnement stable pour ma famille.",
+      "tr": "Ailem için istikrarlı bir ortam istiyorum.",
+      "en": "I want a stable environment for my family."
+    },
+    {
+      "id": "a2_051",
+      "topic": "school_family",
+      "fr": "L'éducation est une priorité pour nous.",
+      "tr": "Eğitim bizim için önceliktir.",
+      "en": "Education is a priority for us."
+    },
+    {
+      "id": "a2_052",
+      "topic": "school_family",
+      "fr": "Mon enfant a besoin d'un bon soutien.",
+      "tr": "Çocuğumun iyi bir desteğe ihtiyacı var.",
+      "en": "My child needs good support."
+    },
+    {
+      "id": "a2_053",
+      "topic": "school_family",
+      "fr": "Je suis content quand il apprend quelque chose de nouveau.",
+      "tr": "Yeni bir şey öğrendiğinde mutlu olurum.",
+      "en": "I am happy when he learns something new."
+    },
+    {
+      "id": "a2_054",
+      "topic": "school_family",
+      "fr": "Nous parlons souvent de la journée d'école.",
+      "tr": "Sık sık okul gününden bahsederiz.",
+      "en": "We often talk about the school day."
+    },
+    {
+      "id": "a2_055",
+      "topic": "school_family",
+      "fr": "Je veux aider mon enfant à réussir.",
+      "tr": "Çocuğumun başarılı olmasına yardım etmek istiyorum.",
+      "en": "I want to help my child succeed."
+    },
+    {
+      "id": "a2_056",
+      "topic": "school_family",
+      "fr": "Je respecte beaucoup les enseignants.",
+      "tr": "Öğretmenlere çok saygı duyarım.",
+      "en": "I respect teachers a lot."
+    },
+    {
+      "id": "a2_057",
+      "topic": "school_family",
+      "fr": "L'école donne de bonnes habitudes aux enfants.",
+      "tr": "Okul çocuklara iyi alışkanlıklar kazandırır.",
+      "en": "School gives children good habits."
+    },
+    {
+      "id": "a2_058",
+      "topic": "school_family",
+      "fr": "Je crois que la lecture est très importante.",
+      "tr": "Okumanın çok önemli olduğuna inanıyorum.",
+      "en": "I believe reading is very important."
+    },
+    {
+      "id": "a2_059",
+      "topic": "school_family",
+      "fr": "Je veux que mon enfant aime apprendre.",
+      "tr": "Çocuğumun öğrenmeyi sevmesini istiyorum.",
+      "en": "I want my child to enjoy learning."
+    },
+    {
+      "id": "a2_060",
+      "topic": "school_family",
+      "fr": "Nous faisons de notre mieux pour la famille.",
+      "tr": "Ailemiz için elimizden gelenin en iyisini yapıyoruz.",
+      "en": "We do our best for the family."
+    },
+    {
+      "id": "a2_061",
+      "topic": "projects",
+      "fr": "Je veux améliorer mon français pour mon avenir.",
+      "tr": "Geleceğim için Fransızcamı geliştirmek istiyorum.",
+      "en": "I want to improve my French for my future."
+    },
+    {
+      "id": "a2_062",
+      "topic": "projects",
+      "fr": "Je prépare un examen de français.",
+      "tr": "Bir Fransızca sınavına hazırlanıyorum.",
+      "en": "I am preparing for a French exam."
+    },
+    {
+      "id": "a2_063",
+      "topic": "projects",
+      "fr": "Je voudrais parler plus facilement avec les gens.",
+      "tr": "İnsanlarla daha rahat konuşmak isterim.",
+      "en": "I would like to speak more easily with people."
+    },
+    {
+      "id": "a2_064",
+      "topic": "projects",
+      "fr": "Je veux pratiquer chaque jour.",
+      "tr": "Her gün pratik yapmak istiyorum.",
+      "en": "I want to practice every day."
+    },
+    {
+      "id": "a2_065",
+      "topic": "projects",
+      "fr": "Mon objectif est de parler avec plus de confiance.",
+      "tr": "Hedefim daha güvenli konuşmak.",
+      "en": "My goal is to speak with more confidence."
+    },
+    {
+      "id": "a2_066",
+      "topic": "projects",
+      "fr": "Je veux utiliser le français au travail.",
+      "tr": "İşte Fransızcayı kullanmak istiyorum.",
+      "en": "I want to use French at work."
+    },
+    {
+      "id": "a2_067",
+      "topic": "projects",
+      "fr": "Je voudrais comprendre mieux les audios.",
+      "tr": "Ses kayıtlarını daha iyi anlamak istiyorum.",
+      "en": "I would like to understand audio better."
+    },
+    {
+      "id": "a2_068",
+      "topic": "projects",
+      "fr": "Je veux construire une bonne routine d'étude.",
+      "tr": "İyi bir çalışma rutini kurmak istiyorum.",
+      "en": "I want to build a good study routine."
+    },
+    {
+      "id": "a2_069",
+      "topic": "projects",
+      "fr": "Je fais des efforts pour progresser.",
+      "tr": "İlerlemek için çaba gösteriyorum.",
+      "en": "I make efforts to improve."
+    },
+    {
+      "id": "a2_070",
+      "topic": "projects",
+      "fr": "Je veux passer plus de temps à parler.",
+      "tr": "Konuşmaya daha çok zaman ayırmak istiyorum.",
+      "en": "I want to spend more time speaking."
+    },
+    {
+      "id": "a2_071",
+      "topic": "projects",
+      "fr": "Je veux apprendre du vocabulaire utile.",
+      "tr": "Yararlı kelimeler öğrenmek istiyorum.",
+      "en": "I want to learn useful vocabulary."
+    },
+    {
+      "id": "a2_072",
+      "topic": "projects",
+      "fr": "Je voudrais mieux prononcer certains sons.",
+      "tr": "Bazı sesleri daha iyi telaffuz etmek isterim.",
+      "en": "I would like to pronounce certain sounds better."
+    },
+    {
+      "id": "a2_073",
+      "topic": "projects",
+      "fr": "Je veux écouter du français chaque semaine.",
+      "tr": "Her hafta Fransızca dinlemek istiyorum.",
+      "en": "I want to listen to French every week."
+    },
+    {
+      "id": "a2_074",
+      "topic": "projects",
+      "fr": "Je veux continuer même quand c'est difficile.",
+      "tr": "Zor olduğunda bile devam etmek istiyorum.",
+      "en": "I want to continue even when it is difficult."
+    },
+    {
+      "id": "a2_075",
+      "topic": "projects",
+      "fr": "Mon projet est d'avoir un meilleur niveau.",
+      "tr": "Projem daha iyi bir seviyeye ulaşmak.",
+      "en": "My plan is to reach a better level."
+    },
+    {
+      "id": "a2_076",
+      "topic": "projects",
+      "fr": "Je veux être plus à l'aise à l'oral.",
+      "tr": "Sözlü konuşmada daha rahat olmak istiyorum.",
+      "en": "I want to feel more comfortable speaking."
+    },
+    {
+      "id": "a2_077",
+      "topic": "projects",
+      "fr": "Je prépare des réponses pour l'examen.",
+      "tr": "Sınav için cevaplar hazırlıyorum.",
+      "en": "I prepare answers for the exam."
+    },
+    {
+      "id": "a2_078",
+      "topic": "projects",
+      "fr": "Je veux parler plus naturellement.",
+      "tr": "Daha doğal konuşmak istiyorum.",
+      "en": "I want to speak more naturally."
+    },
+    {
+      "id": "a2_079",
+      "topic": "projects",
+      "fr": "Je garde mes objectifs en tête.",
+      "tr": "Hedeflerimi aklımda tutuyorum.",
+      "en": "I keep my goals in mind."
+    },
+    {
+      "id": "a2_080",
+      "topic": "projects",
+      "fr": "Je suis sérieux dans mon apprentissage.",
+      "tr": "Öğrenmemde ciddiyim.",
+      "en": "I am serious about my learning."
+    },
+    {
+      "id": "a2_081",
+      "topic": "opinions",
+      "fr": "Je pense que le français est important au Canada.",
+      "tr": "Fransızcanın Kanada'da önemli olduğunu düşünüyorum.",
+      "en": "I think French is important in Canada."
+    },
+    {
+      "id": "a2_082",
+      "topic": "opinions",
+      "fr": "À mon avis, apprendre une langue demande du temps.",
+      "tr": "Bence bir dil öğrenmek zaman ister.",
+      "en": "In my opinion, learning a language takes time."
+    },
+    {
+      "id": "a2_083",
+      "topic": "opinions",
+      "fr": "C'est parfois difficile, mais c'est utile.",
+      "tr": "Bazen zor ama faydalı.",
+      "en": "It is sometimes difficult, but it is useful."
+    },
+    {
+      "id": "a2_084",
+      "topic": "opinions",
+      "fr": "Je crois que la pratique est essentielle.",
+      "tr": "Pratiğin çok önemli olduğuna inanıyorum.",
+      "en": "I believe practice is essential."
+    },
+    {
+      "id": "a2_085",
+      "topic": "opinions",
+      "fr": "À mon avis, parler chaque jour aide beaucoup.",
+      "tr": "Bence her gün konuşmak çok yardımcı olur.",
+      "en": "In my opinion, speaking every day helps a lot."
+    },
+    {
+      "id": "a2_086",
+      "topic": "opinions",
+      "fr": "Je trouve le français beau mais exigeant.",
+      "tr": "Fransızcayı güzel ama zorlayıcı buluyorum.",
+      "en": "I find French beautiful but demanding."
+    },
+    {
+      "id": "a2_087",
+      "topic": "opinions",
+      "fr": "Je pense qu'il faut être patient.",
+      "tr": "Sabırlı olmak gerektiğini düşünüyorum.",
+      "en": "I think one must be patient."
+    },
+    {
+      "id": "a2_088",
+      "topic": "opinions",
+      "fr": "Je crois que les erreurs font partie de l'apprentissage.",
+      "tr": "Hataların öğrenmenin bir parçası olduğuna inanıyorum.",
+      "en": "I believe mistakes are part of learning."
+    },
+    {
+      "id": "a2_089",
+      "topic": "opinions",
+      "fr": "À mon avis, écouter est aussi important que parler.",
+      "tr": "Bence dinlemek de konuşmak kadar önemlidir.",
+      "en": "In my opinion, listening is as important as speaking."
+    },
+    {
+      "id": "a2_090",
+      "topic": "opinions",
+      "fr": "Je pense qu'un bon accent vient avec le temps.",
+      "tr": "İyi bir aksanın zamanla geldiğini düşünüyorum.",
+      "en": "I think a good accent comes with time."
+    },
+    {
+      "id": "a2_091",
+      "topic": "opinions",
+      "fr": "Je trouve que la confiance est importante.",
+      "tr": "Özgüvenin önemli olduğunu düşünüyorum.",
+      "en": "I think confidence is important."
+    },
+    {
+      "id": "a2_092",
+      "topic": "opinions",
+      "fr": "À mon avis, il faut répéter beaucoup.",
+      "tr": "Bence çok tekrar etmek gerekir.",
+      "en": "In my opinion, you need to repeat a lot."
+    },
+    {
+      "id": "a2_093",
+      "topic": "opinions",
+      "fr": "Je pense qu'un bon professeur aide beaucoup.",
+      "tr": "İyi bir öğretmenin çok yardımcı olduğunu düşünüyorum.",
+      "en": "I think a good teacher helps a lot."
+    },
+    {
+      "id": "a2_094",
+      "topic": "opinions",
+      "fr": "Je crois que la motivation change tout.",
+      "tr": "Motivasyonun her şeyi değiştirdiğine inanıyorum.",
+      "en": "I believe motivation changes everything."
+    },
+    {
+      "id": "a2_095",
+      "topic": "opinions",
+      "fr": "Je pense qu'il faut parler sans avoir peur.",
+      "tr": "Korkmadan konuşmak gerektiğini düşünüyorum.",
+      "en": "I think one should speak without fear."
+    },
+    {
+      "id": "a2_096",
+      "topic": "opinions",
+      "fr": "À mon avis, les petites étapes sont importantes.",
+      "tr": "Bence küçük adımlar önemlidir.",
+      "en": "In my opinion, small steps are important."
+    },
+    {
+      "id": "a2_097",
+      "topic": "opinions",
+      "fr": "Je trouve les exercices de prononciation très utiles.",
+      "tr": "Telaffuz alıştırmalarını çok faydalı buluyorum.",
+      "en": "I find pronunciation exercises very useful."
+    },
+    {
+      "id": "a2_098",
+      "topic": "opinions",
+      "fr": "Je pense que la régularité est la clé.",
+      "tr": "Düzenliliğin anahtar olduğunu düşünüyorum.",
+      "en": "I think consistency is the key."
+    },
+    {
+      "id": "a2_099",
+      "topic": "opinions",
+      "fr": "Je crois que chacun peut progresser.",
+      "tr": "Herkesin ilerleyebileceğine inanıyorum.",
+      "en": "I believe everyone can improve."
+    },
+    {
+      "id": "a2_100",
+      "topic": "opinions",
+      "fr": "À mon avis, il ne faut pas abandonner.",
+      "tr": "Bence vazgeçmemek gerekir.",
+      "en": "In my opinion, you should not give up."
+    }
+  ]
+}
