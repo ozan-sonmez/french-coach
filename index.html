@@ -1,438 +1,245 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>French Coach 200</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 980px; margin: 20px auto; padding: 16px; background: #f7f8fb; color: #111827; }
-    .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); margin-bottom: 16px; }
-    h1 { margin-top: 0; }
-    select, button {
-      padding: 10px 12px; border-radius: 10px; border: 1px solid #d1d5db;
-      margin: 6px 0; width: 100%; font-size: 16px;
-    }
-    button { background: #2563eb; color: white; border: none; cursor: pointer; }
-    button:hover { background: #1d4ed8; }
-    .secondary { background: #e5e7eb; color: #111827; }
-    .secondary:hover { background: #d1d5db; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-    .row4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
-    .sentence { font-size: 30px; font-weight: bold; color: #111827; margin-bottom: 8px; }
-    .translation { color: #6b7280; font-size: 18px; }
-    .status { margin-top: 12px; color: #6b7280; }
-    .hidden { display: none; }
-    audio { width: 100%; margin-top: 16px; }
-    @media (max-width: 760px) {
-      .row, .row3, .row4 { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parléo</title>
+
+<style>
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#f5f5f4;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.sentence{
+font-size:28px;
+font-weight:bold;
+line-height:1.6;
+margin-bottom:15px;
+}
+
+.word{
+padding:2px 6px;
+border-radius:6px;
+}
+
+.word.active{
+background:#14B8A6;
+color:white;
+}
+
+.translation{
+color:#666;
+margin-bottom:20px;
+}
+
+.controls{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.listen{
+background:#14B8A6;
+color:white;
+}
+
+.repeat{
+background:#6366F1;
+color:white;
+}
+
+.next{
+background:#FB7185;
+color:white;
+}
+
+audio{
+width:100%;
+margin-top:10px;
+}
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+border-top:1px solid #ddd;
+display:flex;
+justify-content:space-around;
+padding:10px;
+}
+
+.nav button{
+background:none;
+font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
-  <div class="card">
-    <h1 id="appTitle">French Coach 200</h1>
 
-    <div class="row3">
-      <div>
-        <label id="uiLangLabel">Interface Language</label>
-        <select id="uiLangSelect">
-          <option value="tr">Türkçe</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-      <div>
-        <label id="modeLabel">Mode</label>
-        <select id="modeSelect">
-          <option value="browse">Browse</option>
-          <option value="practice">Practice</option>
-        </select>
-      </div>
-      <div>
-        <label id="translationLabel">Translation</label>
-        <select id="translationSelect">
-          <option value="tr">Türkçe</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-    </div>
+<div class="container">
 
-    <div class="row4">
-      <div>
-        <label id="sectionLabel">Level</label>
-        <select id="sectionSelect">
-          <option value="a1">A1</option>
-          <option value="a2">A2</option>
-        </select>
-      </div>
-      <div>
-        <label id="topicLabel">Topic</label>
-        <select id="topicSelect"></select>
-      </div>
-      <div>
-        <label id="orderLabel">Order</label>
-        <select id="orderSelect">
-          <option value="sequential">Sequential</option>
-          <option value="random">Random</option>
-        </select>
-      </div>
-      <div>
-        <label id="autoNextLabel">Auto Next</label>
-        <select id="autoNextSelect">
-          <option value="off">Off</option>
-          <option value="on">On</option>
-        </select>
-      </div>
-    </div>
+<h2>Parléo</h2>
 
-    <div class="row3">
-      <div>
-        <label id="voiceLabel">Voice</label>
-        <select id="voiceSelect">
-          <option value="male">Erkek</option>
-          <option value="female">Kadın</option>
-        </select>
-      </div>
-      <div>
-        <label id="speedLabel">Speed</label>
-        <select id="speedSelect">
-          <option value="normal">Normal</option>
-          <option value="slow">Yavaş</option>
-        </select>
-      </div>
-      <div id="browseBox">
-        <label id="sentenceLabel">Sentence</label>
-        <select id="itemSelect"></select>
-      </div>
-    </div>
-  </div>
+<div id="sentence" class="sentence"></div>
 
-  <div class="card">
-    <div id="sentenceText" class="sentence"></div>
-    <div id="sentenceTranslation" class="translation"></div>
+<div id="translation" class="translation"></div>
 
-    <div class="row4" style="margin-top:16px;">
-      <button id="prevBtn" class="secondary">Önceki</button>
-      <button id="playBtn">Dinle</button>
-      <button id="nextBtn" class="secondary">Sonraki</button>
-      <button id="shuffleBtn" class="secondary">Karışık Seç</button>
-    </div>
+<div class="controls">
 
-    <audio id="player" controls></audio>
-    <div id="status" class="status">Hazır.</div>
-  </div>
+<button class="listen" onclick="playAudio()">Listen</button>
 
-  <script>
-    let DATA = null;
-    let currentSection = "a1";
-    let currentTopic = "all";
-    let currentIndex = 0;
-    let uiLang = "tr";
+<button class="repeat" onclick="repeatAudio()">Repeat</button>
 
-    const I18N = {
-      tr: {
-        appTitle: "French Coach 200",
-        uiLangLabel: "Arayüz Dili",
-        modeLabel: "Mod",
-        translationLabel: "Çeviri",
-        sectionLabel: "Seviye",
-        topicLabel: "Konu",
-        orderLabel: "Sıra",
-        autoNextLabel: "Otomatik Sonraki",
-        voiceLabel: "Ses",
-        speedLabel: "Hız",
-        sentenceLabel: "Cümle",
-        prevBtn: "Önceki",
-        playBtn: "Dinle",
-        nextBtn: "Sonraki",
-        shuffleBtn: "Karışık Seç",
-        browse: "Liste",
-        practice: "Pratik",
-        sequential: "Sıralı",
-        random: "Karışık",
-        off: "Kapalı",
-        on: "Açık",
-        voiceMale: "Erkek",
-        voiceFemale: "Kadın",
-        speedNormal: "Normal",
-        speedSlow: "Yavaş",
-        transTR: "Türkçe",
-        transEN: "English",
-        topicAll: "Hepsi",
-        ready: "Hazır.",
-        playing: "Ses çalınıyor.",
-        audioMissing: "Ses çalınamadı. MP3 dosyası eksik olabilir.",
-        autoNextDone: "Otomatik olarak sonraki cümleye geçildi.",
-        dataError: "dataset.json okunamadı."
-      },
-      en: {
-        appTitle: "French Coach 200",
-        uiLangLabel: "Interface Language",
-        modeLabel: "Mode",
-        translationLabel: "Translation",
-        sectionLabel: "Level",
-        topicLabel: "Topic",
-        orderLabel: "Order",
-        autoNextLabel: "Auto Next",
-        voiceLabel: "Voice",
-        speedLabel: "Speed",
-        sentenceLabel: "Sentence",
-        prevBtn: "Previous",
-        playBtn: "Listen",
-        nextBtn: "Next",
-        shuffleBtn: "Random Pick",
-        browse: "Browse",
-        practice: "Practice",
-        sequential: "Sequential",
-        random: "Random",
-        off: "Off",
-        on: "On",
-        voiceMale: "Male",
-        voiceFemale: "Female",
-        speedNormal: "Normal",
-        speedSlow: "Slow",
-        transTR: "Turkish",
-        transEN: "English",
-        topicAll: "All",
-        ready: "Ready.",
-        playing: "Audio is playing.",
-        audioMissing: "Audio could not be played. The MP3 may be missing.",
-        autoNextDone: "Moved to the next sentence automatically.",
-        dataError: "Could not read dataset.json."
-      }
-    };
+<button class="next" onclick="nextSentence()">Next</button>
 
-    const uiLangSelect = document.getElementById("uiLangSelect");
-    const modeSelect = document.getElementById("modeSelect");
-    const translationSelect = document.getElementById("translationSelect");
-    const sectionSelect = document.getElementById("sectionSelect");
-    const topicSelect = document.getElementById("topicSelect");
-    const orderSelect = document.getElementById("orderSelect");
-    const autoNextSelect = document.getElementById("autoNextSelect");
-    const voiceSelect = document.getElementById("voiceSelect");
-    const speedSelect = document.getElementById("speedSelect");
-    const itemSelect = document.getElementById("itemSelect");
-    const browseBox = document.getElementById("browseBox");
-    const sentenceText = document.getElementById("sentenceText");
-    const sentenceTranslation = document.getElementById("sentenceTranslation");
-    const player = document.getElementById("player");
-    const statusEl = document.getElementById("status");
+</div>
 
-    function t(key) { return I18N[uiLang][key] || key; }
+<audio id="player" controls></audio>
 
-    function applyUILanguage() {
-      document.getElementById("appTitle").textContent = t("appTitle");
-      document.getElementById("uiLangLabel").textContent = t("uiLangLabel");
-      document.getElementById("modeLabel").textContent = t("modeLabel");
-      document.getElementById("translationLabel").textContent = t("translationLabel");
-      document.getElementById("sectionLabel").textContent = t("sectionLabel");
-      document.getElementById("topicLabel").textContent = t("topicLabel");
-      document.getElementById("orderLabel").textContent = t("orderLabel");
-      document.getElementById("autoNextLabel").textContent = t("autoNextLabel");
-      document.getElementById("voiceLabel").textContent = t("voiceLabel");
-      document.getElementById("speedLabel").textContent = t("speedLabel");
-      document.getElementById("sentenceLabel").textContent = t("sentenceLabel");
+</div>
 
-      modeSelect.options[0].text = t("browse");
-      modeSelect.options[1].text = t("practice");
-      orderSelect.options[0].text = t("sequential");
-      orderSelect.options[1].text = t("random");
-      autoNextSelect.options[0].text = t("off");
-      autoNextSelect.options[1].text = t("on");
-      voiceSelect.options[0].text = t("voiceMale");
-      voiceSelect.options[1].text = t("voiceFemale");
-      speedSelect.options[0].text = t("speedNormal");
-      speedSelect.options[1].text = t("speedSlow");
-      translationSelect.options[0].text = t("transTR");
-      translationSelect.options[1].text = t("transEN");
-      document.getElementById("prevBtn").textContent = t("prevBtn");
-      document.getElementById("playBtn").textContent = t("playBtn");
-      document.getElementById("nextBtn").textContent = t("nextBtn");
-      document.getElementById("shuffleBtn").textContent = t("shuffleBtn");
+<div class="nav">
 
-      populateTopics();
-      if (modeSelect.value === "practice") {
-        sentenceTranslation.style.display = "none";
-      } else {
-        sentenceTranslation.style.display = "block";
-      }
-    }
+<button>Practice</button>
+<button>Words</button>
+<button>Flashcards</button>
+<button>Settings</button>
 
-    function getAllItems() {
-      return DATA ? (DATA[currentSection] || []) : [];
-    }
+</div>
 
-    function getFilteredItems() {
-      const items = getAllItems();
-      if (currentTopic === "all") return items;
-      return items.filter(x => x.topic === currentTopic);
-    }
+<script>
 
-    function currentItems() { return getFilteredItems(); }
+let dataset = [];
+let index = 0;
 
-    function currentItem() {
-      const items = currentItems();
-      return items[currentIndex] || null;
-    }
+async function loadData(){
 
-    function getAudioPath(item) {
-      return `audio/${voiceSelect.value}/${speedSelect.value}/${item.id}.mp3`;
-    }
+let res = await fetch("dataset.json");
 
-    function getFrench(item) { return item.fr || item.text || ""; }
-    function getTranslation(item) {
-      return translationSelect.value === "en" ? (item.en || item.tr || "") : (item.tr || item.en || "");
-    }
+let data = await res.json();
 
-    function populateTopics() {
-      const items = getAllItems();
-      const topics = ["all", ...new Set(items.map(x => x.topic).filter(Boolean))];
-      const prev = currentTopic;
-      topicSelect.innerHTML = "";
-      topics.forEach(topic => {
-        const opt = document.createElement("option");
-        opt.value = topic;
-        opt.textContent = topic === "all" ? t("topicAll") : topic;
-        topicSelect.appendChild(opt);
-      });
-      currentTopic = topics.includes(prev) ? prev : "all";
-      topicSelect.value = currentTopic;
-    }
+dataset = data.a1;
 
-    function populateItems() {
-      const items = currentItems();
-      itemSelect.innerHTML = "";
-      items.forEach((item, idx) => {
-        const opt = document.createElement("option");
-        opt.value = idx;
-        opt.textContent = `${idx + 1}. ${getFrench(item)}`;
-        itemSelect.appendChild(opt);
-      });
-      currentIndex = 0;
-      renderItem();
-    }
+showSentence();
 
-    function renderItem() {
-      const item = currentItem();
-      if (!item) {
-        sentenceText.textContent = "";
-        sentenceTranslation.textContent = "";
-        player.removeAttribute("src");
-        statusEl.textContent = t("ready");
-        return;
-      }
+}
 
-      sentenceText.textContent = getFrench(item);
+function showSentence(){
 
-      if (modeSelect.value === "practice") {
-        sentenceTranslation.style.display = "none";
-        browseBox.style.display = "none";
-      } else {
-        sentenceTranslation.style.display = "block";
-        sentenceTranslation.textContent = getTranslation(item);
-        browseBox.style.display = "block";
-      }
+let item = dataset[index];
 
-      player.src = getAudioPath(item);
-      if (itemSelect.options.length) itemSelect.value = String(currentIndex);
-      statusEl.textContent = `${t("ready")} ${getAudioPath(item)}`;
-    }
+let words = item.fr.split(" ");
 
-    function nextSequential() {
-      const items = currentItems();
-      if (!items.length) return;
-      currentIndex = (currentIndex + 1) % items.length;
-      renderItem();
-    }
+let html = "";
 
-    function prevSequential() {
-      const items = currentItems();
-      if (!items.length) return;
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      renderItem();
-    }
+words.forEach(w=>{
+html += `<span class="word">${w}</span> `;
+});
 
-    function randomPick() {
-      const items = currentItems();
-      if (!items.length) return;
-      currentIndex = Math.floor(Math.random() * items.length);
-      renderItem();
-    }
+document.getElementById("sentence").innerHTML = html;
 
-    async function loadData() {
-      try {
-        const res = await fetch("dataset.json");
-        DATA = await res.json();
-        populateTopics();
-        populateItems();
-        applyUILanguage();
-        statusEl.textContent = t("ready");
-      } catch (e) {
-        statusEl.textContent = t("dataError");
-      }
-    }
+document.getElementById("translation").innerText = item.en;
 
-    uiLangSelect.addEventListener("change", e => {
-      uiLang = e.target.value;
-      applyUILanguage();
-      renderItem();
-    });
+document.getElementById("player").src =
+`audio/male/normal/${item.id}.mp3`;
 
-    modeSelect.addEventListener("change", () => renderItem());
+}
 
-    translationSelect.addEventListener("change", () => renderItem());
+function playAudio(){
 
-    sectionSelect.addEventListener("change", () => {
-      currentSection = sectionSelect.value;
-      currentTopic = "all";
-      populateTopics();
-      populateItems();
-    });
+let player = document.getElementById("player");
 
-    topicSelect.addEventListener("change", () => {
-      currentTopic = topicSelect.value;
-      populateItems();
-    });
+player.currentTime = 0;
 
-    itemSelect.addEventListener("change", () => {
-      currentIndex = Number(itemSelect.value);
-      renderItem();
-    });
+player.play();
 
-    voiceSelect.addEventListener("change", renderItem);
-    speedSelect.addEventListener("change", renderItem);
+highlightWords();
 
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      if (orderSelect.value === "random") randomPick();
-      else prevSequential();
-    });
+}
 
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      if (orderSelect.value === "random") randomPick();
-      else nextSequential();
-    });
+function repeatAudio(){
 
-    document.getElementById("shuffleBtn").addEventListener("click", randomPick);
+let player = document.getElementById("player");
 
-    player.addEventListener("ended", () => {
-      if (autoNextSelect.value === "on") {
-        if (orderSelect.value === "random") randomPick();
-        else nextSequential();
-        statusEl.textContent = t("autoNextDone");
-      }
-    });
+player.currentTime = 0;
 
-    document.getElementById("playBtn").addEventListener("click", async () => {
-      try {
-        player.load();
-        await player.play();
-        statusEl.textContent = t("playing");
-      } catch (e) {
-        statusEl.textContent = t("audioMissing");
-      }
-    });
+player.play();
 
-    loadData();
-  </script>
+}
+
+function nextSentence(){
+
+index++;
+
+if(index >= dataset.length){
+
+index = 0;
+
+}
+
+showSentence();
+
+}
+
+function highlightWords(){
+
+let words = document.querySelectorAll(".word");
+
+let player = document.getElementById("player");
+
+let duration = player.duration;
+
+let step = duration / words.length;
+
+let i = 0;
+
+let interval = setInterval(()=>{
+
+words.forEach(w=>w.classList.remove("active"));
+
+if(words[i]) words[i].classList.add("active");
+
+i++;
+
+if(i >= words.length){
+
+clearInterval(interval);
+
+}
+
+}, step*1000);
+
+}
+
+loadData();
+
+</script>
+
 </body>
 </html>
