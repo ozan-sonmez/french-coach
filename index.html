@@ -1,244 +1,523 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Parléo</title>
 
 <style>
-
 body{
-font-family:Arial, Helvetica, sans-serif;
-background:#f5f5f4;
-margin:0;
-padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f5f5f4;
+  margin:0;
+  padding:20px;
+  padding-bottom:90px;
+  color:#2b2b2b;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
 }
 
 .container{
-max-width:700px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:16px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  max-width:700px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+h2{
+  margin-top:0;
 }
 
 .sentence{
-font-size:28px;
-font-weight:bold;
-line-height:1.6;
-margin-bottom:15px;
+  font-size:28px;
+  font-weight:bold;
+  line-height:1.6;
+  margin-bottom:15px;
 }
 
 .word{
-padding:2px 6px;
-border-radius:6px;
+  padding:2px 6px;
+  border-radius:8px;
+  transition:all 0.15s ease;
 }
 
 .word.active{
-background:#14B8A6;
-color:white;
+  background:rgba(20,184,166,0.18);
+  color:#111827;
+  transform:scale(1.04);
 }
 
 .translation{
-color:#666;
-margin-bottom:20px;
+  color:#666;
+  margin-bottom:20px;
+  font-size:18px;
 }
 
 .controls{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:20px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
 button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
 }
 
 .listen{
-background:#14B8A6;
-color:white;
-}
-
-.repeat{
-background:#6366F1;
-color:white;
+  background:#14B8A6;
+  color:white;
 }
 
 .next{
-background:#FB7185;
-color:white;
+  background:#FB7185;
+  color:white;
+}
+
+.prev{
+  background:#6366F1;
+  color:white;
+}
+
+.flip{
+  background:#14B8A6;
+  color:white;
+}
+
+.random{
+  background:#6366F1;
+  color:white;
 }
 
 audio{
-width:100%;
-margin-top:10px;
+  width:100%;
+  margin-top:10px;
 }
 
 .nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-border-top:1px solid #ddd;
-display:flex;
-justify-content:space-around;
-padding:10px;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid #ddd;
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+  z-index:999;
 }
 
 .nav button{
-background:none;
-font-weight:bold;
+  background:none;
+  font-weight:bold;
+  color:#666;
+  padding:10px 12px;
 }
 
+.nav button.active{
+  color:#6366F1;
+}
+
+.word-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.word-item{
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:12px;
+  background:#fafafa;
+}
+
+.flashcard-wrap{
+  perspective:1000px;
+  height:420px;
+}
+
+.flashcard{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.5s;
+}
+
+.flashcard.flipped{
+  transform:rotateY(180deg);
+}
+
+.flash-face{
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  border-radius:20px;
+  background:white;
+  border:1px solid #eee;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:30px;
+}
+
+.flash-back{
+  transform:rotateY(180deg);
+}
+
+.flash-word{
+  font-size:34px;
+  font-weight:bold;
+  margin-bottom:16px;
+}
+
+.flash-meta{
+  font-size:20px;
+  line-height:1.7;
+  color:#555;
+}
+
+.setting-group{
+  margin-bottom:18px;
+}
+
+.setting-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.setting-group select{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:16px;
+  background:white;
+}
+
+@media (max-width:600px){
+  .sentence{
+    font-size:24px;
+  }
+
+  .flash-word{
+    font-size:28px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- PRACTICE -->
+<div id="practiceScreen" class="screen active">
+  <div class="container">
+    <h2>Parléo</h2>
+    <div id="sentence" class="sentence"></div>
+    <div id="translation" class="translation"></div>
 
-<h2>Parléo</h2>
+    <div class="controls">
+      <button class="listen" onclick="playAudio()">Listen</button>
+      <button class="prev" onclick="prevSentence()">Previous</button>
+      <button class="next" onclick="nextSentence()">Next</button>
+    </div>
 
-<div id="sentence" class="sentence"></div>
-
-<div id="translation" class="translation"></div>
-
-<div class="controls">
-
-<button class="listen" onclick="playAudio()">Listen</button>
-
-<button class="repeat" onclick="repeatAudio()">Repeat</button>
-
-<button class="next" onclick="nextSentence()">Next</button>
-
+    <audio id="player" controls></audio>
+  </div>
 </div>
 
-<audio id="player" controls></audio>
-
+<!-- WORDS -->
+<div id="wordsScreen" class="screen">
+  <div class="container">
+    <h2>Words</h2>
+    <div id="wordsList" class="word-list"></div>
+  </div>
 </div>
 
+<!-- FLASHCARDS -->
+<div id="flashcardsScreen" class="screen">
+  <div class="container">
+    <h2>Flashcards</h2>
+
+    <div class="flashcard-wrap">
+      <div id="flashcard" class="flashcard" onclick="flipCard()">
+        <div class="flash-face flash-front">
+          <div id="flashFront" class="flash-word"></div>
+          <div style="color:#888;">Tap to flip</div>
+        </div>
+
+        <div class="flash-face flash-back">
+          <div id="flashBackWord" class="flash-word"></div>
+          <div id="flashBackMeta" class="flash-meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls" style="margin-top:20px;">
+      <button class="prev" onclick="prevSentence()">Previous</button>
+      <button class="flip" onclick="flipCard()">Flip</button>
+      <button class="random" onclick="randomSentence()">Random</button>
+      <button class="next" onclick="nextSentence()">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="settingsScreen" class="screen">
+  <div class="container">
+    <h2>Settings</h2>
+
+    <div class="setting-group">
+      <label for="levelSelect">Level</label>
+      <select id="levelSelect" onchange="changeLevel()">
+        <option value="a1">A1</option>
+        <option value="a2">A2</option>
+      </select>
+    </div>
+
+    <div class="setting-group">
+      <label for="voiceSelect">Voice</label>
+      <select id="voiceSelect" onchange="refreshAudio()">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+
+    <div class="setting-group">
+      <label for="speedSelect">Speed</label>
+      <select id="speedSelect" onchange="refreshAudio()">
+        <option value="normal">Normal</option>
+        <option value="slow">Slow</option>
+      </select>
+    </div>
+
+    <div class="setting-group">
+      <label for="translationSelect">Translation</label>
+      <select id="translationSelect" onchange="showSentence()">
+        <option value="en">English</option>
+        <option value="tr">Türkçe</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
 <div class="nav">
-
-<button>Practice</button>
-<button>Words</button>
-<button>Flashcards</button>
-<button>Settings</button>
-
+  <button id="tabPractice" class="active" onclick="showScreen('practiceScreen', this)">Practice</button>
+  <button id="tabWords" onclick="showScreen('wordsScreen', this)">Words</button>
+  <button id="tabFlashcards" onclick="showScreen('flashcardsScreen', this)">Flashcards</button>
+  <button id="tabSettings" onclick="showScreen('settingsScreen', this)">Settings</button>
 </div>
 
 <script>
-
 let dataset = [];
+let currentLevel = "a1";
 let index = 0;
+let highlightInterval = null;
 
 async function loadData(){
+  let res = await fetch("dataset.json");
+  let data = await res.json();
+  dataset = data[currentLevel];
+  showSentence();
+  buildWordsList();
+  buildFlashcard();
+}
 
-let res = await fetch("dataset.json");
-
-let data = await res.json();
-
-dataset = data.a1;
-
-showSentence();
-
+function getCurrentItem(){
+  return dataset[index];
 }
 
 function showSentence(){
+  let item = getCurrentItem();
+  if(!item) return;
 
-let item = dataset[index];
+  let words = item.fr.split(" ");
+  let html = "";
 
-let words = item.fr.split(" ");
+  words.forEach(w=>{
+    html += `<span class="word">${w}</span> `;
+  });
 
-let html = "";
+  document.getElementById("sentence").innerHTML = html;
 
-words.forEach(w=>{
-html += `<span class="word">${w}</span> `;
-});
+  let translationMode = document.getElementById("translationSelect").value;
+  document.getElementById("translation").innerText =
+    translationMode === "tr" ? item.tr : item.en;
 
-document.getElementById("sentence").innerHTML = html;
+  refreshAudio();
+  buildFlashcard();
+}
 
-document.getElementById("translation").innerText = item.en;
+function refreshAudio(){
+  let item = getCurrentItem();
+  if(!item) return;
 
-document.getElementById("player").src =
-`audio/male/normal/${item.id}.mp3`;
+  let voice = document.getElementById("voiceSelect").value;
+  let speed = document.getElementById("speedSelect").value;
 
+  document.getElementById("player").src =
+    `audio/${voice}/${speed}/${item.id}.mp3`;
+}
+
+function clearHighlight(){
+  let words = document.querySelectorAll(".word");
+  words.forEach(w=>w.classList.remove("active"));
+
+  if(highlightInterval){
+    clearInterval(highlightInterval);
+    highlightInterval = null;
+  }
 }
 
 function playAudio(){
-
-let player = document.getElementById("player");
-
-player.currentTime = 0;
-
-player.play();
-
-highlightWords();
-
+  let player = document.getElementById("player");
+  player.currentTime = 0;
+  player.play();
+  startHighlight();
 }
 
-function repeatAudio(){
+function startHighlight(){
+  clearHighlight();
 
-let player = document.getElementById("player");
+  let words = document.querySelectorAll(".word");
+  let player = document.getElementById("player");
 
-player.currentTime = 0;
+  setTimeout(()=>{
+    let duration = player.duration;
 
-player.play();
+    if(!duration || !words.length) return;
 
+    let step = duration / words.length;
+    let i = 0;
+
+    highlightInterval = setInterval(()=>{
+      words.forEach(w=>w.classList.remove("active"));
+      if(words[i]) words[i].classList.add("active");
+      i++;
+
+      if(i >= words.length){
+        clearInterval(highlightInterval);
+      }
+    }, step * 1000);
+  }, 120);
 }
 
 function nextSentence(){
-
-index++;
-
-if(index >= dataset.length){
-
-index = 0;
-
+  index++;
+  if(index >= dataset.length) index = 0;
+  clearHighlight();
+  showSentence();
+  buildWordsList();
 }
 
-showSentence();
-
+function prevSentence(){
+  index--;
+  if(index < 0) index = dataset.length - 1;
+  clearHighlight();
+  showSentence();
+  buildWordsList();
 }
 
-function highlightWords(){
-
-let words = document.querySelectorAll(".word");
-
-let player = document.getElementById("player");
-
-let duration = player.duration;
-
-let step = duration / words.length;
-
-let i = 0;
-
-let interval = setInterval(()=>{
-
-words.forEach(w=>w.classList.remove("active"));
-
-if(words[i]) words[i].classList.add("active");
-
-i++;
-
-if(i >= words.length){
-
-clearInterval(interval);
-
+function randomSentence(){
+  index = Math.floor(Math.random() * dataset.length);
+  clearHighlight();
+  showSentence();
+  buildWordsList();
 }
 
-}, step*1000);
+function buildWordsList(){
+  let list = document.getElementById("wordsList");
+  list.innerHTML = "";
 
+  let seen = new Set();
+
+  dataset.forEach(item=>{
+    item.fr.split(" ").forEach(w=>{
+      let clean = w.replace(/[.,!?;:]/g, "").toLowerCase();
+      if(clean) seen.add(clean);
+    });
+  });
+
+  [...seen].sort().forEach(word=>{
+    let div = document.createElement("div");
+    div.className = "word-item";
+    div.innerText = word;
+    list.appendChild(div);
+  });
 }
+
+function buildFlashcard(){
+  let item = getCurrentItem();
+  if(!item) return;
+
+  document.getElementById("flashFront").innerText = item.fr;
+  document.getElementById("flashBackWord").innerText = item.fr;
+
+  let translationMode = document.getElementById("translationSelect").value;
+  let meaning = translationMode === "tr" ? item.tr : item.en;
+
+  document.getElementById("flashBackMeta").innerHTML = `
+    ${meaning}<br>
+    <span style="color:#888; font-size:16px;">${item.topic || ""}</span>
+  `;
+}
+
+function flipCard(){
+  document.getElementById("flashcard").classList.toggle("flipped");
+}
+
+function showScreen(screenId, btn){
+  document.querySelectorAll(".screen").forEach(s=>{
+    s.classList.remove("active");
+  });
+
+  document.getElementById(screenId).classList.add("active");
+
+  document.querySelectorAll(".nav button").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  btn.classList.add("active");
+}
+
+function changeLevel(){
+  currentLevel = document.getElementById("levelSelect").value;
+  index = 0;
+
+  fetch("dataset.json")
+    .then(res => res.json())
+    .then(data => {
+      dataset = data[currentLevel];
+      clearHighlight();
+      showSentence();
+      buildWordsList();
+      buildFlashcard();
+    });
+}
+
+document.getElementById("player").addEventListener("ended", ()=>{
+  clearHighlight();
+});
 
 loadData();
-
 </script>
 
 </body>
