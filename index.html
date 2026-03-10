@@ -70,6 +70,11 @@ font-weight:600;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
+.settings-item{
+padding:12px 0;
+border-bottom:1px solid #eee;
+}
+
 </style>
 </head>
 
@@ -78,8 +83,8 @@ box-shadow:0 10px 25px rgba(0,0,0,0.08);
 <div class="app">
 
 <div id="practice" class="screen active">
-<div class="practice-sentence">
-Practice sentence example
+<div class="practice-sentence" id="practiceSentence">
+Loading sentence...
 </div>
 <button onclick="listenSentence()">Listen</button>
 </div>
@@ -91,7 +96,11 @@ Loading...
 </div>
 
 <div id="settings" class="screen">
-Settings
+
+<div class="settings-item">Language: French</div>
+<div class="settings-item">Level: A1</div>
+<div class="settings-item">Version: Parléo Alpha</div>
+
 </div>
 
 <div class="bottom-nav">
@@ -132,10 +141,43 @@ el.classList.add("active")
 
 }
 
-/* PRACTICE */
+/* PRACTICE DATASET */
+
+let sentenceData=[]
+let currentSentence=0
+
+async function loadSentenceDataset(){
+
+try{
+
+const res=await fetch("dataset.json")
+
+sentenceData=await res.json()
+
+if(sentenceData.length>0){
+document.getElementById("practiceSentence").textContent=sentenceData[0].fr
+}
+
+}catch(e){
+console.error("Sentence dataset error:",e)
+}
+
+}
+
+/* PRACTICE AUDIO */
 
 function listenSentence(){
-alert("Listen placeholder")
+
+if(sentenceData.length===0) return
+
+let audioFile=sentenceData[currentSentence].audio
+
+if(!audioFile) return
+
+let audio=new Audio("audio/"+audioFile)
+
+audio.play()
+
 }
 
 /* WORD DATASET */
@@ -166,6 +208,9 @@ console.error("Dataset error:",e)
 
 }
 
+/* LOAD DATA */
+
+loadSentenceDataset()
 loadWordsDataset()
 
 </script>
