@@ -1,0 +1,62 @@
+[
+  {
+    "word": "manger",
+    "meaning": {
+      "tr": "yemek yemek",
+      "en": "to eat"
+    },
+    "ipa": "mɑ̃ʒe",
+    "syllables": "man-ger",
+    "frequency": "A1"
+  },
+  {
+    "word": "maison",
+    "meaning": {
+      "tr": "ev",
+      "en": "house"
+    },
+    "ipa": "mɛzɔ̃",
+    "syllables": "mai-son",
+    "frequency": "A1"
+  },
+  {
+    "word": "travail",
+    "meaning": {
+      "tr": "iş",
+      "en": "work"
+    },
+    "ipa": "tʁavaj",
+    "syllables": "tra-vail",
+    "frequency": "A1"
+  },
+  {
+    "word": "parler",
+    "meaning": {
+      "tr": "konuşmak",
+      "en": "to speak"
+    },
+    "ipa": "paʁle",
+    "syllables": "par-ler",
+    "frequency": "A1"
+  },
+  {
+    "word": "apprendre",
+    "meaning": {
+      "tr": "öğrenmek",
+      "en": "to learn"
+    },
+    "ipa": "apʁɑ̃dʁ",
+    "syllables": "ap-pren-dre",
+    "frequency": "A1"
+  },
+  {
+    "word": "ville",
+    "meaning": {
+      "tr": "şehir",
+      "en": "city"
+    },
+    "ipa": "vil",
+    "syllables": "ville",
+    "frequency": "A1"
+  }
+]
