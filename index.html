@@ -220,6 +220,7 @@ audio{
 
 <body>
 
+<!-- PRACTICE -->
 <div id="practiceScreen" class="screen active">
   <div class="container">
     <h2>Parléo</h2>
@@ -237,6 +238,7 @@ audio{
   </div>
 </div>
 
+<!-- FLASHCARDS -->
 <div id="flashcardsScreen" class="screen">
   <div class="container">
     <div class="flashcard-wrap" id="flashcardWrap">
@@ -256,6 +258,7 @@ audio{
   </div>
 </div>
 
+<!-- SETTINGS -->
 <div id="settingsScreen" class="screen">
   <div class="container">
     <h2>Settings</h2>
@@ -270,7 +273,7 @@ audio{
 
     <div class="setting-group">
       <label for="voiceSelect">Voice</label>
-      <select id="voiceSelect" onchange="refreshAudio()">
+      <select id="voiceSelect" onchange="saveSettings(); refreshAudio();">
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select>
@@ -278,7 +281,7 @@ audio{
 
     <div class="setting-group">
       <label for="speedSelect">Speed</label>
-      <select id="speedSelect" onchange="refreshAudio()">
+      <select id="speedSelect" onchange="saveSettings(); refreshAudio();">
         <option value="normal">Normal</option>
         <option value="slow">Slow</option>
       </select>
@@ -286,7 +289,7 @@ audio{
 
     <div class="setting-group">
       <label for="translationSelect">Translation</label>
-      <select id="translationSelect" onchange="showSentence();buildFlashcard();">
+      <select id="translationSelect" onchange="saveSettings(); showSentence(); buildFlashcard();">
         <option value="en">English</option>
         <option value="tr">Türkçe</option>
       </select>
@@ -294,10 +297,11 @@ audio{
   </div>
 </div>
 
+<!-- NAV -->
 <div class="nav">
-  <button class="active" onclick="showScreen('practiceScreen',this)">Practice</button>
-  <button onclick="showScreen('flashcardsScreen',this)">Flashcards</button>
-  <button onclick="showScreen('settingsScreen',this)">Settings</button>
+  <button id="navPractice" class="active" onclick="showScreen('practiceScreen',this)">Practice</button>
+  <button id="navFlashcards" onclick="showScreen('flashcardsScreen',this)">Flashcards</button>
+  <button id="navSettings" onclick="showScreen('settingsScreen',this)">Settings</button>
 </div>
 
 <script>
@@ -310,6 +314,11 @@ let lastHighlightIndex = -1;
 
 let wordCards = [];
 let wordIndex = 0;
+let wordCounts = {};
+let wordDataset = [];
+
+const STORAGE_KEY = "parleo_settings_v2";
+const TAB_KEY = "parleo_active_tab_v1";
 
 const sentenceEl = document.getElementById("sentence");
 const translationEl = document.getElementById("translation");
@@ -321,14 +330,79 @@ const flashBackWord = document.getElementById("flashBackWord");
 const flashBackMeta = document.getElementById("flashBackMeta");
 const flashcardWrap = document.getElementById("flashcardWrap");
 
+function normalizeWord(word){
+  return word
+    .toLowerCase()
+    .replace(/[.,!?;:()"']/g, "")
+    .trim();
+}
+
+function saveSettings(){
+  const payload = {
+    level: document.getElementById("levelSelect").value,
+    voice: document.getElementById("voiceSelect").value,
+    speed: document.getElementById("speedSelect").value,
+    translation: document.getElementById("translationSelect").value
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+function loadSettings(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const s = JSON.parse(raw);
+
+    if(s.level) document.getElementById("levelSelect").value = s.level;
+    if(s.voice) document.getElementById("voiceSelect").value = s.voice;
+    if(s.speed) document.getElementById("speedSelect").value = s.speed;
+    if(s.translation) document.getElementById("translationSelect").value = s.translation;
+
+    currentLevel = document.getElementById("levelSelect").value;
+  }catch(e){}
+}
+
+function saveActiveTab(id){
+  localStorage.setItem(TAB_KEY, id);
+}
+
+function restoreActiveTab(){
+  const id = localStorage.getItem(TAB_KEY);
+  if(!id) return;
+  const btnMap = {
+    practiceScreen: document.getElementById("navPractice"),
+    flashcardsScreen: document.getElementById("navFlashcards"),
+    settingsScreen: document.getElementById("navSettings")
+  };
+  if(btnMap[id]){
+    showScreen(id, btnMap[id]);
+  }
+}
+
+async function loadWordDataset(){
+  try{
+    const res = await fetch("words_dataset.json");
+    if(!res.ok) return;
+    wordDataset = await res.json();
+  }catch(e){
+    wordDataset = [];
+  }
+}
+
 async function loadData(){
+  loadSettings();
+  await loadWordDataset();
+
   const res = await fetch("dataset.json");
   const data = await res.json();
+
   dataset = data[currentLevel];
   index = 0;
+
   showSentence();
   buildWordCards();
   buildFlashcard();
+  restoreActiveTab();
 }
 
 function currentItem(){
@@ -449,11 +523,18 @@ function prevSentence(){
 
 function buildWordCards(){
   const set = new Set();
+  wordCounts = {};
 
   dataset.forEach(item => {
+    const localSeen = new Set();
+
     item.fr.split(" ").forEach(w => {
-      const clean = w.replace(/[.,!?;:]/g, "").trim().toLowerCase();
+      const clean = normalizeWord(w);
       if(clean) set.add(clean);
+      if(clean && !localSeen.has(clean)){
+        wordCounts[clean] = (wordCounts[clean] || 0) + 1;
+        localSeen.add(clean);
+      }
     });
   });
 
@@ -461,19 +542,45 @@ function buildWordCards(){
   wordIndex = 0;
 }
 
+function findWordInfo(word){
+  const clean = normalizeWord(word);
+  return wordDataset.find(x => normalizeWord(x.fr || x.word || "") === clean);
+}
+
 function buildFlashcard(){
   if(!wordCards.length) return;
 
   const word = wordCards[wordIndex];
+  const info = findWordInfo(word);
+
   flashcard.classList.remove("flipped");
   flashFront.innerText = word;
   flashBackWord.innerText = word;
 
-  flashBackMeta.innerHTML = `
-    meaning coming next<br>
-    pronunciation coming next<br>
-    syllables coming next
-  `;
+  let meta = "";
+
+  if(info){
+    const translationMode = document.getElementById("translationSelect").value;
+    const meaning = translationMode === "tr" ? (info.tr || "") : (info.en || "");
+    const ipa = info.ipa || "";
+    const syllables = info.syllables || "";
+    const frequency = info.frequency || "";
+
+    meta = `
+      ${meaning || "meaning unavailable"}<br>
+      ${ipa || "pronunciation unavailable"}<br>
+      ${syllables || "syllables unavailable"}<br>
+      ${frequency ? "Top " + frequency : "Seen in " + (wordCounts[word] || 0) + " sentence(s)"}
+    `;
+  } else {
+    meta = `
+      Seen in ${wordCounts[word] || 0} sentence(s)<br>
+      meaning ready when words_dataset.json is added<br>
+      pronunciation ready when words_dataset.json is added
+    `;
+  }
+
+  flashBackMeta.innerHTML = meta;
 }
 
 function flipCard(){
@@ -500,10 +607,13 @@ function showScreen(id, btn){
 
   document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
+
+  saveActiveTab(id);
 }
 
 function changeLevel(){
   currentLevel = document.getElementById("levelSelect").value;
+  saveSettings();
   loadData();
 }
 
@@ -538,7 +648,7 @@ flashcardWrap.addEventListener("touchend", (e) => {
 
   if(diffX < 0){
     nextFlashcard();
-  } else {
+  }else{
     prevFlashcard();
   }
 }, { passive:true });
