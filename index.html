@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
 <title>Parléo</title>
 
 <style>
@@ -14,17 +17,29 @@
   --text:#2B2B2B;
 }
 
-body{
-  font-family:Arial, Helvetica, sans-serif;
-  background:var(--bg);
+html, body{
   margin:0;
-  padding:20px;
-  padding-bottom:90px;
+  padding:0;
+  background:var(--bg);
   color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  overflow-x:hidden;
+  overscroll-behavior:none;
+  touch-action:manipulation;
 }
 
-.screen{display:none}
-.screen.active{display:block}
+body{
+  padding:20px;
+  padding-bottom:90px;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
 
 .container{
   max-width:700px;
@@ -32,28 +47,30 @@ body{
   background:white;
   padding:25px;
   border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  box-shadow:0 10px 25px rgba(0,0,0,0.10);
 }
 
-h2{margin-top:0}
+h2{
+  margin-top:0;
+}
 
 .sentence{
   font-size:28px;
   font-weight:bold;
   line-height:1.7;
   margin-bottom:15px;
-  min-height:80px;
+  min-height:88px;
 }
 
 .word{
+  display:inline-block;
   padding:3px 6px;
   border-radius:8px;
-  transition:all 0.12s ease;
-  display:inline-block;
+  transition:all 0.10s ease;
 }
 
 .word.active{
-  background:rgba(20,184,166,0.22);
+  background:rgba(20,184,166,0.24);
   transform:scale(1.04);
 }
 
@@ -79,9 +96,20 @@ button{
   cursor:pointer;
 }
 
-.listen{background:var(--secondary);color:white}
-.next{background:var(--accent);color:white}
-.prev{background:var(--primary);color:white}
+.listen{
+  background:var(--secondary);
+  color:white;
+}
+
+.prev{
+  background:var(--primary);
+  color:white;
+}
+
+.next{
+  background:var(--accent);
+  color:white;
+}
 
 audio{
   width:100%;
@@ -117,6 +145,7 @@ audio{
   height:520px;
   overflow:hidden;
   user-select:none;
+  touch-action:pan-y;
 }
 
 .flashcard{
@@ -138,13 +167,14 @@ audio{
   border-radius:20px;
   background:white;
   border:1px solid #eee;
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  box-shadow:0 10px 25px rgba(0,0,0,0.10);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   padding:30px;
   text-align:center;
+  overflow:hidden;
 }
 
 .flash-back{
@@ -190,10 +220,21 @@ audio{
 }
 
 @media (max-width:600px){
-  .sentence{font-size:24px}
-  .flash-word{font-size:34px}
-  .flash-meta{font-size:18px}
-  .flashcard-wrap{height:460px}
+  .sentence{
+    font-size:24px;
+  }
+
+  .flash-word{
+    font-size:34px;
+  }
+
+  .flash-meta{
+    font-size:18px;
+  }
+
+  .flashcard-wrap{
+    height:460px;
+  }
 }
 </style>
 </head>
@@ -288,7 +329,9 @@ audio{
 let dataset = [];
 let index = 0;
 let currentLevel = "a1";
+
 let highlightInterval = null;
+let lastHighlightIndex = -1;
 
 let wordCards = [];
 let wordIndex = 0;
@@ -296,6 +339,7 @@ let wordIndex = 0;
 const sentenceEl = document.getElementById("sentence");
 const translationEl = document.getElementById("translation");
 const player = document.getElementById("player");
+
 const flashcard = document.getElementById("flashcard");
 const flashFront = document.getElementById("flashFront");
 const flashBackWord = document.getElementById("flashBackWord");
@@ -345,6 +389,7 @@ function clearHighlight(){
     clearInterval(highlightInterval);
     highlightInterval = null;
   }
+  lastHighlightIndex = -1;
 }
 
 function playAudio(){
@@ -379,17 +424,27 @@ function startHighlight(){
   const step = duration / words.length;
 
   highlightInterval = setInterval(() => {
-    const lead = step * 0.55;
-    const t = Math.min(duration, player.currentTime + lead);
-    const idx = Math.min(words.length - 1, Math.floor(t / step));
-
-    words.forEach(w => w.classList.remove("active"));
-    if(words[idx]) words[idx].classList.add("active");
-
     if(player.paused || player.ended){
       clearHighlight();
+      return;
     }
-  }, 50);
+
+    const lead = step * 0.55;
+    const t = Math.min(duration, player.currentTime + lead);
+
+    let idx = Math.round(t / step);
+    if(idx >= words.length) idx = words.length - 1;
+
+    if(idx < lastHighlightIndex){
+      idx = lastHighlightIndex;
+    }
+
+    if(idx !== lastHighlightIndex){
+      words.forEach(w => w.classList.remove("active"));
+      if(words[idx]) words[idx].classList.add("active");
+      lastHighlightIndex = idx;
+    }
+  }, 40);
 }
 
 function nextSentence(){
@@ -424,9 +479,11 @@ function buildFlashcard(){
   if(!wordCards.length) return;
 
   const word = wordCards[wordIndex];
+
   flashcard.classList.remove("flipped");
   flashFront.innerText = word;
   flashBackWord.innerText = word;
+
   flashBackMeta.innerHTML = `
     meaning coming next<br>
     pronunciation coming next<br>
@@ -467,26 +524,36 @@ function changeLevel(){
 
 player.addEventListener("ended", clearHighlight);
 player.addEventListener("pause", () => {
-  if(player.currentTime === 0 || player.ended) clearHighlight();
+  if(player.currentTime === 0 || player.ended){
+    clearHighlight();
+  }
 });
 
 flashcard.addEventListener("click", flipCard);
 
 let startX = 0;
+let startY = 0;
 
 flashcardWrap.addEventListener("touchstart", (e) => {
-  startX = e.changedTouches[0].clientX;
+  const touch = e.changedTouches[0];
+  startX = touch.clientX;
+  startY = touch.clientY;
 }, { passive:true });
 
 flashcardWrap.addEventListener("touchend", (e) => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = endX - startX;
+  const touch = e.changedTouches[0];
+  const endX = touch.clientX;
+  const endY = touch.clientY;
 
-  if(Math.abs(diff) < 40) return;
+  const diffX = endX - startX;
+  const diffY = endY - startY;
 
-  if(diff < 0){
+  if(Math.abs(diffX) < 40) return;
+  if(Math.abs(diffY) > Math.abs(diffX)) return;
+
+  if(diffX < 0){
     nextFlashcard();
-  } else {
+  }else{
     prevFlashcard();
   }
 }, { passive:true });
