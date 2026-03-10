@@ -1,659 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Parléo</title>
 
 <style>
-:root{
-  --primary:#6366F1;
-  --secondary:#14B8A6;
-  --accent:#FB7185;
-  --bg:#F5F5F4;
-  --text:#2B2B2B;
-}
-
-html, body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial, Helvetica, sans-serif;
-  overflow-x:hidden;
-  overscroll-behavior:none;
-  touch-action:manipulation;
-}
 
 body{
-  padding:20px;
-  padding-bottom:90px;
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;
+background:#F5F5F4;
+color:#2B2B2B;
 }
 
-.screen{display:none}
-.screen.active{display:block}
-
-.container{
-  max-width:700px;
-  margin:auto;
-  background:white;
-  padding:25px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.10);
+.app{
+max-width:500px;
+margin:auto;
+min-height:100vh;
+display:flex;
+flex-direction:column;
 }
 
-h2{margin-top:0}
-
-.sentence{
-  font-size:28px;
-  font-weight:bold;
-  line-height:1.7;
-  margin-bottom:15px;
-  min-height:88px;
+.screen{
+flex:1;
+display:none;
+padding:20px;
 }
 
-.word{
-  display:inline-block;
-  padding:3px 6px;
-  border-radius:8px;
-  transition:all 0.10s ease;
+.screen.active{
+display:block;
 }
 
-.word.active{
-  background:rgba(20,184,166,0.24);
-  transform:scale(1.04);
+.bottom-nav{
+height:60px;
+display:flex;
+background:white;
+border-top:1px solid #eee;
 }
 
-.translation{
-  color:#666;
-  margin-bottom:20px;
-  font-size:18px;
-  min-height:28px;
+.nav-item{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:500;
+cursor:pointer;
 }
 
-.controls{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
+.nav-item.active{
+color:#6366F1;
 }
 
-button{
-  padding:12px 18px;
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.listen{
-  background:var(--secondary);
-  color:white;
-}
-
-.prev{
-  background:var(--primary);
-  color:white;
-}
-
-.next{
-  background:var(--accent);
-  color:white;
-}
-
-audio{
-  width:100%;
-  margin-top:10px;
-}
-
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  border-top:1px solid #ddd;
-  display:flex;
-  justify-content:space-around;
-  padding:10px;
-  z-index:999;
-}
-
-.nav button{
-  background:none;
-  font-weight:bold;
-  color:#666;
-  padding:10px 12px;
-}
-
-.nav button.active{
-  color:var(--primary);
-}
-
-.flashcard-wrap{
-  perspective:1000px;
-  height:520px;
-  overflow:hidden;
-  user-select:none;
-  touch-action:pan-y;
+.practice-sentence{
+font-size:22px;
+line-height:1.4;
+margin-bottom:20px;
 }
 
 .flashcard{
-  width:100%;
-  height:100%;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform 0.4s ease;
+height:320px;
+background:white;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:600;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
-.flashcard.flipped{
-  transform:rotateY(180deg);
-}
-
-.flash-face{
-  position:absolute;
-  inset:0;
-  backface-visibility:hidden;
-  border-radius:20px;
-  background:white;
-  border:1px solid #eee;
-  box-shadow:0 10px 25px rgba(0,0,0,0.10);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:30px;
-  text-align:center;
-  overflow:hidden;
-}
-
-.flash-back{
-  transform:rotateY(180deg);
-}
-
-.flash-word{
-  font-size:42px;
-  font-weight:bold;
-  line-height:1.3;
-}
-
-.flash-meta{
-  font-size:20px;
-  color:#555;
-  margin-top:20px;
-  line-height:1.7;
-}
-
-.flash-note{
-  margin-top:18px;
-  color:#888;
-  font-size:14px;
-}
-
-.setting-group{
-  margin-bottom:18px;
-}
-
-.setting-group label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:6px;
-}
-
-.setting-group select{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  font-size:16px;
-  background:white;
-}
-
-@media (max-width:600px){
-  .sentence{font-size:24px}
-  .flash-word{font-size:34px}
-  .flash-meta{font-size:18px}
-  .flashcard-wrap{height:460px}
-}
 </style>
 </head>
 
 <body>
 
-<!-- PRACTICE -->
-<div id="practiceScreen" class="screen active">
-  <div class="container">
-    <h2>Parléo</h2>
+<div class="app">
 
-    <div id="sentence" class="sentence"></div>
-    <div id="translation" class="translation"></div>
-
-    <div class="controls">
-      <button class="listen" onclick="playAudio()">Listen</button>
-      <button class="prev" onclick="prevSentence()">Previous</button>
-      <button class="next" onclick="nextSentence()">Next</button>
-    </div>
-
-    <audio id="player" controls></audio>
-  </div>
+<div id="practice" class="screen active">
+<div class="practice-sentence">
+Practice sentence example
+</div>
+<button onclick="listenSentence()">Listen</button>
 </div>
 
-<!-- FLASHCARDS -->
-<div id="flashcardsScreen" class="screen">
-  <div class="container">
-    <div class="flashcard-wrap" id="flashcardWrap">
-      <div id="flashcard" class="flashcard">
-        <div class="flash-face">
-          <div id="flashFront" class="flash-word"></div>
-          <div class="flash-note">Tap to flip</div>
-        </div>
-
-        <div class="flash-face flash-back">
-          <div id="flashBackWord" class="flash-word"></div>
-          <div id="flashBackMeta" class="flash-meta"></div>
-          <div class="flash-note">Swipe for next card</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="flashcards" class="screen">
+<div class="flashcard" id="flashcard">
+Loading...
+</div>
 </div>
 
-<!-- SETTINGS -->
-<div id="settingsScreen" class="screen">
-  <div class="container">
-    <h2>Settings</h2>
-
-    <div class="setting-group">
-      <label for="levelSelect">Level</label>
-      <select id="levelSelect" onchange="changeLevel()">
-        <option value="a1">A1</option>
-        <option value="a2">A2</option>
-      </select>
-    </div>
-
-    <div class="setting-group">
-      <label for="voiceSelect">Voice</label>
-      <select id="voiceSelect" onchange="saveSettings(); refreshAudio();">
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
-    </div>
-
-    <div class="setting-group">
-      <label for="speedSelect">Speed</label>
-      <select id="speedSelect" onchange="saveSettings(); refreshAudio();">
-        <option value="normal">Normal</option>
-        <option value="slow">Slow</option>
-      </select>
-    </div>
-
-    <div class="setting-group">
-      <label for="translationSelect">Translation</label>
-      <select id="translationSelect" onchange="saveSettings(); showSentence(); buildFlashcard();">
-        <option value="en">English</option>
-        <option value="tr">Türkçe</option>
-      </select>
-    </div>
-  </div>
+<div id="settings" class="screen">
+Settings
 </div>
 
-<!-- NAV -->
-<div class="nav">
-  <button id="navPractice" class="active" onclick="showScreen('practiceScreen',this)">Practice</button>
-  <button id="navFlashcards" onclick="showScreen('flashcardsScreen',this)">Flashcards</button>
-  <button id="navSettings" onclick="showScreen('settingsScreen',this)">Settings</button>
+<div class="bottom-nav">
+
+<div class="nav-item active" onclick="switchTab('practice',this)">
+Practice
+</div>
+
+<div class="nav-item" onclick="switchTab('flashcards',this)">
+Flashcards
+</div>
+
+<div class="nav-item" onclick="switchTab('settings',this)">
+Settings
+</div>
+
+</div>
+
 </div>
 
 <script>
-let dataset = [];
-let index = 0;
-let currentLevel = "a1";
 
-let highlightInterval = null;
-let lastHighlightIndex = -1;
+/* NAV */
 
-let wordCards = [];
-let wordIndex = 0;
-let wordCounts = {};
-let wordDataset = [];
+function switchTab(id,el){
 
-const STORAGE_KEY = "parleo_settings_v2";
-const TAB_KEY = "parleo_active_tab_v1";
+document.querySelectorAll(".screen").forEach(s=>{
+s.classList.remove("active")
+})
 
-const sentenceEl = document.getElementById("sentence");
-const translationEl = document.getElementById("translation");
-const player = document.getElementById("player");
+document.getElementById(id).classList.add("active")
 
-const flashcard = document.getElementById("flashcard");
-const flashFront = document.getElementById("flashFront");
-const flashBackWord = document.getElementById("flashBackWord");
-const flashBackMeta = document.getElementById("flashBackMeta");
-const flashcardWrap = document.getElementById("flashcardWrap");
+document.querySelectorAll(".nav-item").forEach(n=>{
+n.classList.remove("active")
+})
 
-function normalizeWord(word){
-  return word
-    .toLowerCase()
-    .replace(/[.,!?;:()"']/g, "")
-    .trim();
+el.classList.add("active")
+
 }
 
-function saveSettings(){
-  const payload = {
-    level: document.getElementById("levelSelect").value,
-    voice: document.getElementById("voiceSelect").value,
-    speed: document.getElementById("speedSelect").value,
-    translation: document.getElementById("translationSelect").value
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+/* PRACTICE */
+
+function listenSentence(){
+alert("Listen placeholder")
 }
 
-function loadSettings(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return;
-    const s = JSON.parse(raw);
+/* WORD DATASET */
 
-    if(s.level) document.getElementById("levelSelect").value = s.level;
-    if(s.voice) document.getElementById("voiceSelect").value = s.voice;
-    if(s.speed) document.getElementById("speedSelect").value = s.speed;
-    if(s.translation) document.getElementById("translationSelect").value = s.translation;
+let wordsData=[]
 
-    currentLevel = document.getElementById("levelSelect").value;
-  }catch(e){}
+async function loadWordsDataset(){
+
+try{
+
+const res=await fetch("words_dataset.json")
+
+wordsData=await res.json()
+
+console.log("Words dataset loaded:",wordsData)
+
+if(wordsData.length>0){
+
+document.getElementById("flashcard").textContent=wordsData[0].word
+
 }
 
-function saveActiveTab(id){
-  localStorage.setItem(TAB_KEY, id);
+}catch(e){
+
+console.error("Dataset error:",e)
+
 }
 
-function restoreActiveTab(){
-  const id = localStorage.getItem(TAB_KEY);
-  if(!id) return;
-  const btnMap = {
-    practiceScreen: document.getElementById("navPractice"),
-    flashcardsScreen: document.getElementById("navFlashcards"),
-    settingsScreen: document.getElementById("navSettings")
-  };
-  if(btnMap[id]){
-    showScreen(id, btnMap[id]);
-  }
 }
 
-async function loadWordDataset(){
-  try{
-    const res = await fetch("words_dataset.json");
-    if(!res.ok) return;
-    wordDataset = await res.json();
-  }catch(e){
-    wordDataset = [];
-  }
-}
+loadWordsDataset()
 
-async function loadData(){
-  loadSettings();
-  await loadWordDataset();
-
-  const res = await fetch("dataset.json");
-  const data = await res.json();
-
-  dataset = data[currentLevel];
-  index = 0;
-
-  showSentence();
-  buildWordCards();
-  buildFlashcard();
-  restoreActiveTab();
-}
-
-function currentItem(){
-  return dataset[index];
-}
-
-function showSentence(){
-  const item = currentItem();
-  if(!item) return;
-
-  const words = item.fr.split(" ");
-  sentenceEl.innerHTML = words.map(w => `<span class="word">${w}</span>`).join(" ");
-
-  const mode = document.getElementById("translationSelect").value;
-  translationEl.innerText = mode === "tr" ? item.tr : item.en;
-
-  refreshAudio();
-}
-
-function refreshAudio(){
-  const item = currentItem();
-  if(!item) return;
-
-  const voice = document.getElementById("voiceSelect").value;
-  const speed = document.getElementById("speedSelect").value;
-
-  player.src = `audio/${voice}/${speed}/${item.id}.mp3`;
-}
-
-function clearHighlight(){
-  document.querySelectorAll(".word").forEach(w => w.classList.remove("active"));
-  if(highlightInterval){
-    clearInterval(highlightInterval);
-    highlightInterval = null;
-  }
-  lastHighlightIndex = -1;
-}
-
-function playAudio(){
-  clearHighlight();
-
-  const words = document.querySelectorAll(".word");
-  if(words.length){
-    words[0].classList.add("active");
-    lastHighlightIndex = 0;
-  }
-
-  player.currentTime = 0;
-  player.play();
-
-  const startWhenReady = () => {
-    if(!player.duration || !isFinite(player.duration)) return;
-    startHighlight();
-    player.removeEventListener("loadedmetadata", startWhenReady);
-    player.removeEventListener("canplay", startWhenReady);
-  };
-
-  player.addEventListener("loadedmetadata", startWhenReady);
-  player.addEventListener("canplay", startWhenReady);
-
-  if(player.duration && isFinite(player.duration)){
-    startHighlight();
-  }
-}
-
-function startHighlight(){
-  if(highlightInterval){
-    clearInterval(highlightInterval);
-    highlightInterval = null;
-  }
-
-  const words = document.querySelectorAll(".word");
-  if(!words.length) return;
-
-  const duration = player.duration;
-  if(!duration || !isFinite(duration)) return;
-
-  const step = duration / words.length;
-
-  highlightInterval = setInterval(() => {
-    if(player.paused || player.ended){
-      clearHighlight();
-      return;
-    }
-
-    const lead = step * 0.55;
-    const t = Math.min(duration, player.currentTime + lead);
-
-    let idx = Math.floor(t / step);
-    if(idx >= words.length) idx = words.length - 1;
-    if(idx < 0) idx = 0;
-
-    if(idx < lastHighlightIndex){
-      idx = lastHighlightIndex;
-    }
-
-    if(idx !== lastHighlightIndex){
-      words.forEach(w => w.classList.remove("active"));
-      if(words[idx]) words[idx].classList.add("active");
-      lastHighlightIndex = idx;
-    }
-  }, 40);
-}
-
-function nextSentence(){
-  index++;
-  if(index >= dataset.length) index = 0;
-  clearHighlight();
-  showSentence();
-}
-
-function prevSentence(){
-  index--;
-  if(index < 0) index = dataset.length - 1;
-  clearHighlight();
-  showSentence();
-}
-
-function buildWordCards(){
-  const set = new Set();
-  wordCounts = {};
-
-  dataset.forEach(item => {
-    const localSeen = new Set();
-
-    item.fr.split(" ").forEach(w => {
-      const clean = normalizeWord(w);
-      if(clean) set.add(clean);
-      if(clean && !localSeen.has(clean)){
-        wordCounts[clean] = (wordCounts[clean] || 0) + 1;
-        localSeen.add(clean);
-      }
-    });
-  });
-
-  wordCards = [...set].sort();
-  wordIndex = 0;
-}
-
-function findWordInfo(word){
-  const clean = normalizeWord(word);
-  return wordDataset.find(x => normalizeWord(x.fr || x.word || "") === clean);
-}
-
-function buildFlashcard(){
-  if(!wordCards.length) return;
-
-  const word = wordCards[wordIndex];
-  const info = findWordInfo(word);
-
-  flashcard.classList.remove("flipped");
-  flashFront.innerText = word;
-  flashBackWord.innerText = word;
-
-  let meta = "";
-
-  if(info){
-    const translationMode = document.getElementById("translationSelect").value;
-    const meaning = translationMode === "tr" ? (info.tr || "") : (info.en || "");
-    const ipa = info.ipa || "";
-    const syllables = info.syllables || "";
-    const frequency = info.frequency || "";
-
-    meta = `
-      ${meaning || "meaning unavailable"}<br>
-      ${ipa || "pronunciation unavailable"}<br>
-      ${syllables || "syllables unavailable"}<br>
-      ${frequency ? "Top " + frequency : "Seen in " + (wordCounts[word] || 0) + " sentence(s)"}
-    `;
-  } else {
-    meta = `
-      Seen in ${wordCounts[word] || 0} sentence(s)<br>
-      meaning ready when words_dataset.json is added<br>
-      pronunciation ready when words_dataset.json is added
-    `;
-  }
-
-  flashBackMeta.innerHTML = meta;
-}
-
-function flipCard(){
-  flashcard.classList.toggle("flipped");
-}
-
-function nextFlashcard(){
-  if(!wordCards.length) return;
-  wordIndex++;
-  if(wordIndex >= wordCards.length) wordIndex = 0;
-  buildFlashcard();
-}
-
-function prevFlashcard(){
-  if(!wordCards.length) return;
-  wordIndex--;
-  if(wordIndex < 0) wordIndex = wordCards.length - 1;
-  buildFlashcard();
-}
-
-function showScreen(id, btn){
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-
-  document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-
-  saveActiveTab(id);
-}
-
-function changeLevel(){
-  currentLevel = document.getElementById("levelSelect").value;
-  saveSettings();
-  loadData();
-}
-
-player.addEventListener("ended", clearHighlight);
-player.addEventListener("pause", () => {
-  if(player.currentTime === 0 || player.ended){
-    clearHighlight();
-  }
-});
-
-flashcard.addEventListener("click", flipCard);
-
-let startX = 0;
-let startY = 0;
-
-flashcardWrap.addEventListener("touchstart", (e) => {
-  const touch = e.changedTouches[0];
-  startX = touch.clientX;
-  startY = touch.clientY;
-}, { passive:true });
-
-flashcardWrap.addEventListener("touchend", (e) => {
-  const touch = e.changedTouches[0];
-  const endX = touch.clientX;
-  const endY = touch.clientY;
-
-  const diffX = endX - startX;
-  const diffY = endY - startY;
-
-  if(Math.abs(diffX) < 40) return;
-  if(Math.abs(diffY) > Math.abs(diffX)) return;
-
-  if(diffX < 0){
-    nextFlashcard();
-  }else{
-    prevFlashcard();
-  }
-}, { passive:true });
-
-loadData();
 </script>
 
 </body>
