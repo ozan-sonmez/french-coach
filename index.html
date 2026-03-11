@@ -65,9 +65,29 @@ border-radius:16px;
 display:flex;
 align-items:center;
 justify-content:center;
+text-align:center;
+padding:20px;
 font-size:28px;
 font-weight:600;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
+cursor:pointer;
+}
+
+.card-ipa{
+font-size:18px;
+margin-top:10px;
+color:#666;
+}
+
+.card-meaning{
+font-size:20px;
+margin-top:15px;
+}
+
+.card-frequency{
+font-size:14px;
+margin-top:8px;
+color:#999;
 }
 
 .settings-item{
@@ -90,7 +110,7 @@ Loading sentence...
 </div>
 
 <div id="flashcards" class="screen">
-<div class="flashcard" id="flashcard">
+<div class="flashcard" id="flashcard" onclick="flipCard()">
 Loading...
 </div>
 </div>
@@ -181,18 +201,46 @@ sentenceData[currentSentence].fr
 /* FLASHCARDS */
 
 let wordsData=[]
+let currentWord=0
+let flipped=false
 
 async function loadWordsDataset(){
 
 const res=await fetch("words_dataset.json")
 wordsData=await res.json()
 
-if(wordsData.length>0){
-
-document.getElementById("flashcard").textContent=
-wordsData[0].word
+renderCard()
 
 }
+
+function renderCard(){
+
+const card=wordsData[currentWord]
+
+if(!flipped){
+
+document.getElementById("flashcard").innerHTML=
+`<div>${card.word}</div>`
+
+}else{
+
+document.getElementById("flashcard").innerHTML=
+`
+<div>${card.word}</div>
+<div class="card-ipa">/${card.ipa}/</div>
+<div class="card-ipa">${card.syllables}</div>
+<div class="card-meaning">${card.meaning.tr}</div>
+<div class="card-frequency">${card.frequency}</div>
+`
+
+}
+
+}
+
+function flipCard(){
+
+flipped=!flipped
+renderCard()
 
 }
 
