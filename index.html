@@ -333,6 +333,7 @@ let currentSentence = 0
 let showingTranslation = false
 let currentAudio = null
 let highlightTimer = null
+let userUnlockedAudio = false
 
 let wordsData = []
 let currentWord = Number(localStorage.getItem('parleo_current_word') || 0)
@@ -362,13 +363,12 @@ function restoreActiveTab(){
 async function loadSentenceDataset(){
   const errEl = document.getElementById('practiceError')
   try{
-    const res = await fetch('dataset.json?v=20260311e')
+    const res = await fetch('dataset.json?v=20260311f')
     if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading dataset.json')
     const data = await res.json()
     sentenceData = [...(data.a1 || []), ...(data.a2 || [])]
     errEl.textContent = ''
     renderSentence()
-    autoReadCurrentSentence()
   }catch(err){
     document.getElementById('practiceSentence').textContent = 'dataset.json could not be loaded.'
     errEl.textContent = String(err)
@@ -443,16 +443,20 @@ function startHighlightForAudio(durationSec, text){
   }, stepMs)
 }
 
-function autoReadCurrentSentence(){
+function playSentenceAudio(force = false){
   if(!sentenceData.length || showingTranslation) return
 
   const errEl = document.getElementById('practiceError')
   errEl.textContent = ''
 
-  const item = sentenceData[currentSentence]
-  stopSentenceAudio()
+  if(!userUnlockedAudio && !force){
+    return
+  }
 
+  const item = sentenceData[currentSentence]
   if(!item || !item.id) return
+
+  stopSentenceAudio()
 
   const audio = new Audio(`audio/${item.id}.mp3`)
   currentAudio = audio
@@ -478,7 +482,9 @@ function autoReadCurrentSentence(){
     errEl.textContent = 'Audio could not be played.'
   })
 
-  audio.play().catch((err) => {
+  audio.play().then(() => {
+    userUnlockedAudio = true
+  }).catch((err) => {
     if(highlightTimer){
       clearInterval(highlightTimer)
       highlightTimer = null
@@ -489,33 +495,36 @@ function autoReadCurrentSentence(){
 }
 
 function replaySentenceAudio(){
-  autoReadCurrentSentence()
+  userUnlockedAudio = true
+  playSentenceAudio(true)
 }
 
 function nextSentence(){
   if(!sentenceData.length) return
+  userUnlockedAudio = true
   stopSentenceAudio()
   currentSentence++
   if(currentSentence >= sentenceData.length) currentSentence = 0
   showingTranslation = false
   renderSentence()
-  autoReadCurrentSentence()
+  playSentenceAudio(true)
 }
 
 function toggleTranslation(){
   if(!sentenceData.length) return
+  userUnlockedAudio = true
   stopSentenceAudio()
   showingTranslation = !showingTranslation
   renderSentence()
   if(!showingTranslation){
-    autoReadCurrentSentence()
+    playSentenceAudio(true)
   }
 }
 
 async function loadWordsDataset(){
   const errEl = document.getElementById('flashError')
   try{
-    const res = await fetch('words.json?v=20260311e')
+    const res = await fetch('words.json?v=20260311f')
     if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading words.json')
     wordsData = await res.json()
     if(!Array.isArray(wordsData)) throw new Error('words.json is not an array')
