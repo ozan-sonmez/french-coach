@@ -1,206 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Parleo</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Parléo</title>
 <style>
-
+:root{
+  --primary:#6366F1;
+  --accent:#FB7185;
+  --bg:#F5F5F4;
+  --text:#2B2B2B;
+  --muted:#6B7280;
+}
+*{box-sizing:border-box}
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-background:#F5F5F4;
-color:#2B2B2B;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-
 .app{
-max-width:500px;
-margin:auto;
-min-height:100vh;
-display:flex;
-flex-direction:column;
+  max-width:500px;
+  margin:auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
-
 .screen{
-flex:1;
-display:none;
-padding:20px;
+  flex:1;
+  display:block;
+  padding:20px 20px 90px;
 }
-
-.screen.active{
-display:block;
-}
-
-.bottom-nav{
-height:60px;
-display:flex;
-background:white;
-border-top:1px solid #eee;
-}
-
-.nav-item{
-flex:1;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:500;
-cursor:pointer;
-}
-
-.nav-item.active{
-color:#6366F1;
-}
-
 .flashcard{
-height:320px;
-background:white;
-border-radius:16px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:600;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-cursor:pointer;
+  min-height:360px;
+  background:white;
+  border-radius:24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:24px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  cursor:pointer;
 }
-
+.word-front{
+  font-size:38px;
+  line-height:1.1;
+  font-weight:800;
+  letter-spacing:-0.03em;
+}
+.article{
+  color:var(--muted);
+  margin-right:8px;
+}
+.word-m{color:var(--primary)}
+.word-f{color:var(--accent)}
+.word-neutral{color:var(--text)}
+.word-back{
+  font-size:34px;
+  line-height:1.1;
+  font-weight:800;
+  margin-bottom:12px;
+}
+.ipa{
+  font-size:18px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
 .meaning{
-margin-top:20px;
-font-size:18px;
-opacity:0.7;
-text-align:center;
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:10px;
 }
-
+.meta{
+  font-size:14px;
+  color:var(--muted);
+}
+.status{
+  margin-top:16px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+.error{
+  margin-top:16px;
+  color:#b91c1c;
+  font-size:14px;
+  white-space:pre-wrap;
+}
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:0;
+  width:min(500px,100%);
+  height:72px;
+  background:white;
+  border-top:1px solid #eee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--primary);
+  font-size:16px;
+  font-weight:700;
+}
 </style>
-
 </head>
-
 <body>
-
 <div class="app">
-
-<div id="flashcards" class="screen active">
-
-<div class="flashcard" id="flashcard">
-loading...
-</div>
-
-<div class="meaning" id="meaning"></div>
-
-</div>
-
-<div class="bottom-nav">
-
-<div class="nav-item active">
-Flashcards
-</div>
-
-</div>
-
+  <div class="screen">
+    <div class="flashcard" id="flashcard">loading...</div>
+    <div class="status" id="status">Loading words.json...</div>
+    <div class="error" id="error"></div>
+  </div>
+  <div class="bottom-nav">Flashcards</div>
 </div>
 
 <script>
-
 let words = []
 let index = 0
 let flipped = false
 
-async function loadAllDatasets(){
+function render(){
+  const card = words[index]
+  const cardEl = document.getElementById('flashcard')
+  const statusEl = document.getElementById('status')
 
-const files = [
+  if(!card){
+    cardEl.innerHTML = 'No words found.'
+    statusEl.textContent = '0 / 0'
+    return
+  }
 
-"words_a1_production.json",
-"words_a2_production.json",
-"words_verbs_production.json"
+  const article = card.article || ''
+  const word = card.fr || card.word || ''
+  const gender = card.gender || ''
+  const meaning = card.tr || ''
+  const ipa = card.ipa || ''
+  const level = card.level || ''
+  const pos = card.pos || ''
 
-]
+  let wordClass = 'word-neutral'
+  if(pos === 'noun' && gender === 'm') wordClass = 'word-m'
+  if(pos === 'noun' && gender === 'f') wordClass = 'word-f'
 
-for (let file of files){
+  if(!flipped){
+    cardEl.innerHTML = `
+      <div class="word-front">
+        ${article ? `<span class="article">${article}</span>` : ''}
+        <span class="${wordClass}">${word}</span>
+      </div>
+      <div class="meta" style="margin-top:14px;">Tap to flip</div>
+    `
+  }else{
+    cardEl.innerHTML = `
+      <div class="word-back">${word}</div>
+      ${ipa ? `<div class="ipa">/${ipa}/</div>` : ''}
+      <div class="meaning">${meaning}</div>
+      <div class="meta">${pos} • ${level}</div>
+      <div class="meta" style="margin-top:10px;">Tap for next</div>
+    `
+  }
 
-const res = await fetch(file + "?v=" + Date.now())
-const data = await res.json()
-
-words = words.concat(data)
-
+  statusEl.textContent = `${index + 1} / ${words.length}`
 }
 
-shuffle(words)
-
-showCard()
-
+async function loadWords(){
+  const errorEl = document.getElementById('error')
+  try{
+    const res = await fetch('words.json?v=20260311a')
+    if(!res.ok){
+      throw new Error('HTTP ' + res.status + ' while loading words.json')
+    }
+    words = await res.json()
+    if(!Array.isArray(words)){
+      throw new Error('words.json is not an array')
+    }
+    errorEl.textContent = ''
+    render()
+  }catch(err){
+    document.getElementById('flashcard').textContent = 'load failed'
+    document.getElementById('status').textContent = 'Could not load words.json'
+    errorEl.textContent = String(err)
+    console.error(err)
+  }
 }
 
-function shuffle(array){
+document.getElementById('flashcard').addEventListener('click', ()=>{
+  if(!words.length) return
+  if(!flipped){
+    flipped = true
+  }else{
+    flipped = false
+    index++
+    if(index >= words.length) index = 0
+  }
+  render()
+})
 
-for(let i=array.length-1;i>0;i--){
-
-const j=Math.floor(Math.random()*(i+1))
-
-[array[i],array[j]]=[array[j],array[i]]
-
-}
-
-}
-
-function showCard(){
-
-const w = words[index]
-
-document.getElementById("flashcard").innerText = w.article
-? w.article + " " + w.fr
-: w.fr
-
-document.getElementById("meaning").innerText = ""
-
-flipped=false
-
-}
-
-function flipCard(){
-
-const w = words[index]
-
-document.getElementById("meaning").innerText =
-w.tr + " • " + w.en
-
-flipped=true
-
-}
-
-function nextCard(){
-
-index++
-
-if(index >= words.length){
-
-index = 0
-
-}
-
-showCard()
-
-}
-
-document.getElementById("flashcard").onclick = function(){
-
-if(!flipped){
-
-flipCard()
-
-}else{
-
-nextCard()
-
-}
-
-}
-
-loadAllDatasets()
-
+loadWords()
 </script>
-
 </body>
 </html>
