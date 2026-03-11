@@ -4,51 +4,168 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Parléo</title>
+
 <style>
 :root{
   --primary:#6366F1;
+  --secondary:#14B8A6;
   --accent:#FB7185;
   --bg:#F5F5F4;
+  --surface:#FFFFFF;
   --text:#2B2B2B;
   --muted:#6B7280;
+  --border:#E7E5E4;
+  --shadow:0 12px 32px rgba(99,102,241,.10), 0 4px 14px rgba(0,0,0,.05);
 }
 *{box-sizing:border-box}
-body{
+html,body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:0;
   background:var(--bg);
   color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(99,102,241,.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(20,184,166,.07), transparent 24%),
+    var(--bg);
 }
 .app{
   max-width:500px;
-  margin:auto;
   min-height:100vh;
+  margin:0 auto;
   display:flex;
   flex-direction:column;
 }
 .screen{
+  display:none;
   flex:1;
-  display:block;
-  padding:20px 20px 90px;
+  padding:18px 18px 92px;
 }
-.flashcard{
-  min-height:360px;
-  background:white;
+.screen.active{display:block}
+.header{margin-bottom:16px}
+.brand{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-0.03em;
+}
+.sub{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+}
+.card{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.75);
   border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.practice-card{padding:22px}
+.practice-sentence{
+  font-size:29px;
+  line-height:1.35;
+  font-weight:800;
+  letter-spacing:-0.03em;
+  margin-bottom:16px;
+}
+.practice-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:30px;
+  padding:0 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--primary);
+  background:rgba(99,102,241,.10);
+}
+.badge.secondary{
+  color:#0F766E;
+  background:rgba(20,184,166,.10);
+}
+.btn-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.btn{
+  border:none;
+  border-radius:16px;
+  padding:14px 16px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--primary),#7C83FF);
+  color:#fff;
+  box-shadow:0 10px 22px rgba(99,102,241,.24);
+}
+.btn.ghost{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.flash-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+  padding:0 4px;
+}
+.flash-title{
+  font-size:15px;
+  font-weight:800;
+}
+.flash-count{
+  font-size:13px;
+  color:var(--muted);
+  font-weight:700;
+}
+.flash-shell{padding:14px}
+.flashcard{
+  min-height:520px;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at top left, rgba(99,102,241,.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(20,184,166,.10), transparent 28%),
+    linear-gradient(180deg,#FFFFFF 0%, #FCFCFF 100%);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:24px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  padding:26px 20px;
   cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+  transition:transform .18s ease;
 }
+.flashcard:active{transform:scale(.992)}
 .word-front{
-  font-size:38px;
-  line-height:1.1;
-  font-weight:800;
-  letter-spacing:-0.03em;
+  font-size:40px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-0.04em;
+  margin-bottom:14px;
+}
+.word-back{
+  font-size:36px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-0.04em;
+  margin-bottom:14px;
 }
 .article{
   color:var(--muted);
@@ -57,93 +174,262 @@ body{
 .word-m{color:var(--primary)}
 .word-f{color:var(--accent)}
 .word-neutral{color:var(--text)}
-.word-back{
-  font-size:34px;
-  line-height:1.1;
-  font-weight:800;
-  margin-bottom:12px;
-}
 .ipa{
-  font-size:18px;
+  font-size:20px;
+  line-height:1.5;
   color:var(--muted);
-  margin-bottom:12px;
+  margin-bottom:6px;
 }
 .meaning{
-  font-size:22px;
+  font-size:24px;
+  line-height:1.35;
+  font-weight:800;
+  margin-bottom:14px;
+}
+.back-tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:18px;
+}
+.hint{
+  font-size:12px;
+  color:#8B8B95;
   font-weight:700;
-  margin-bottom:10px;
+  letter-spacing:.02em;
 }
-.meta{
-  font-size:14px;
-  color:var(--muted);
+.settings-card{padding:8px 18px}
+.settings-item{
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+  font-size:15px;
 }
-.status{
-  margin-top:16px;
-  text-align:center;
-  color:var(--muted);
-  font-size:14px;
-}
+.settings-item:last-child{border-bottom:none}
 .error{
-  margin-top:16px;
+  margin-top:14px;
   color:#b91c1c;
-  font-size:14px;
+  font-size:13px;
   white-space:pre-wrap;
 }
 .bottom-nav{
   position:fixed;
   left:50%;
-  transform:translateX(-50%);
   bottom:0;
+  transform:translateX(-50%);
   width:min(500px,100%);
-  height:72px;
-  background:white;
-  border-top:1px solid #eee;
+  height:74px;
+  display:flex;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(14px);
+  border-top:1px solid rgba(0,0,0,.06);
+}
+.nav-item{
+  flex:1;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:var(--primary);
-  font-size:16px;
-  font-weight:700;
+  font-size:14px;
+  font-weight:800;
+  color:#7B7B84;
+  cursor:pointer;
+}
+.nav-item.active{color:var(--primary)}
+.empty{
+  padding:22px;
+  font-size:15px;
+  color:var(--muted);
+}
+@media (max-width:420px){
+  .practice-sentence{font-size:25px}
+  .word-front{font-size:34px}
+  .word-back{font-size:30px}
+  .meaning{font-size:21px}
+  .flashcard{min-height:470px}
 }
 </style>
 </head>
 <body>
+
 <div class="app">
-  <div class="screen">
-    <div class="flashcard" id="flashcard">loading...</div>
-    <div class="status" id="status">Loading words.json...</div>
-    <div class="error" id="error"></div>
+
+  <div id="practice" class="screen active">
+    <div class="header">
+      <div class="brand">Parléo</div>
+      <div class="sub">Sentence practice</div>
+    </div>
+
+    <div class="card practice-card">
+      <div class="practice-sentence" id="practiceSentence">Loading sentence...</div>
+
+      <div class="practice-meta">
+        <div class="badge" id="practiceTopic">topic</div>
+        <div class="badge secondary" id="practiceLevel">A1/A2</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn primary" onclick="nextSentence()">Next</button>
+        <button class="btn ghost" onclick="toggleTranslation()">TR</button>
+      </div>
+
+      <div class="error" id="practiceError"></div>
+    </div>
   </div>
-  <div class="bottom-nav">Flashcards</div>
+
+  <div id="flashcards" class="screen">
+    <div class="header">
+      <div class="brand">Parléo</div>
+      <div class="sub">Flashcards</div>
+    </div>
+
+    <div class="flash-top">
+      <div class="flash-title">Word Card</div>
+      <div class="flash-count" id="flashCount">0 / 0</div>
+    </div>
+
+    <div class="card flash-shell">
+      <div class="flashcard" id="flashcard">Loading...</div>
+    </div>
+
+    <div class="error" id="flashError"></div>
+  </div>
+
+  <div id="settings" class="screen">
+    <div class="header">
+      <div class="brand">Parléo</div>
+      <div class="sub">Settings</div>
+    </div>
+
+    <div class="card settings-card">
+      <div class="settings-item">Theme: Soft Learning</div>
+      <div class="settings-item">Masculine: Blue</div>
+      <div class="settings-item">Feminine: Pink</div>
+      <div class="settings-item">Flashcards: Tap to flip</div>
+      <div class="settings-item">Flashcards: Swipe left/right to change</div>
+      <div class="settings-item">State memory: Enabled</div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" data-tab="practice" onclick="switchTab('practice', this)">Practice</div>
+    <div class="nav-item" data-tab="flashcards" onclick="switchTab('flashcards', this)">Flashcards</div>
+    <div class="nav-item" data-tab="settings" onclick="switchTab('settings', this)">Settings</div>
+  </div>
 </div>
 
 <script>
-let words = []
-let index = 0
+let sentenceData = []
+let currentSentence = 0
+let showingTranslation = false
+
+let wordsData = []
+let currentWord = Number(localStorage.getItem('parleo_current_word') || 0)
 let flipped = false
 
-function render(){
-  const card = words[index]
-  const cardEl = document.getElementById('flashcard')
-  const statusEl = document.getElementById('status')
+const activeTab = localStorage.getItem('parleo_active_tab') || 'practice'
 
-  if(!card){
-    cardEl.innerHTML = 'No words found.'
-    statusEl.textContent = '0 / 0'
+function switchTab(id, el){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'))
+  if(el){
+    el.classList.add('active')
+  }else{
+    const autoEl = document.querySelector(`.nav-item[data-tab="${id}"]`)
+    if(autoEl) autoEl.classList.add('active')
+  }
+
+  localStorage.setItem('parleo_active_tab', id)
+}
+
+function restoreActiveTab(){
+  switchTab(activeTab)
+}
+
+async function loadSentenceDataset(){
+  const errEl = document.getElementById('practiceError')
+  try{
+    const res = await fetch('dataset.json?v=20260311b')
+    if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading dataset.json')
+    const data = await res.json()
+    sentenceData = [...(data.a1 || []), ...(data.a2 || [])]
+    errEl.textContent = ''
+    renderSentence()
+  }catch(err){
+    document.getElementById('practiceSentence').textContent = 'dataset.json could not be loaded.'
+    errEl.textContent = String(err)
+    console.error(err)
+  }
+}
+
+function renderSentence(){
+  if(!sentenceData.length){
+    document.getElementById('practiceSentence').textContent = 'No sentence data found.'
     return
   }
 
+  const item = sentenceData[currentSentence]
+  document.getElementById('practiceSentence').textContent = showingTranslation ? item.tr : item.fr
+  document.getElementById('practiceTopic').textContent = item.topic || 'topic'
+  document.getElementById('practiceLevel').textContent = item.id && item.id.startsWith('a2_') ? 'A2' : 'A1'
+}
+
+function nextSentence(){
+  if(!sentenceData.length) return
+  currentSentence++
+  if(currentSentence >= sentenceData.length) currentSentence = 0
+  showingTranslation = false
+  renderSentence()
+}
+
+function toggleTranslation(){
+  if(!sentenceData.length) return
+  showingTranslation = !showingTranslation
+  renderSentence()
+}
+
+async function loadWordsDataset(){
+  const errEl = document.getElementById('flashError')
+  try{
+    const res = await fetch('words.json?v=20260311b')
+    if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading words.json')
+    wordsData = await res.json()
+    if(!Array.isArray(wordsData)) throw new Error('words.json is not an array')
+    if(currentWord >= wordsData.length) currentWord = 0
+    errEl.textContent = ''
+    renderCard()
+  }catch(err){
+    document.getElementById('flashcard').innerHTML = '<div class="empty">words.json could not be loaded.</div>'
+    errEl.textContent = String(err)
+    console.error(err)
+  }
+}
+
+function renderCard(){
+  const countEl = document.getElementById('flashCount')
+  const cardEl = document.getElementById('flashcard')
+
+  if(!wordsData.length){
+    countEl.textContent = '0 / 0'
+    cardEl.innerHTML = '<div class="empty">No flashcards found.</div>'
+    return
+  }
+
+  const card = wordsData[currentWord]
   const article = card.article || ''
   const word = card.fr || card.word || ''
   const gender = card.gender || ''
-  const meaning = card.tr || ''
+  const pos = card.pos || ''
+  const meaningTr = card.tr || ''
   const ipa = card.ipa || ''
   const level = card.level || ''
-  const pos = card.pos || ''
 
   let wordClass = 'word-neutral'
   if(pos === 'noun' && gender === 'm') wordClass = 'word-m'
   if(pos === 'noun' && gender === 'f') wordClass = 'word-f'
+
+  countEl.textContent = `${currentWord + 1} / ${wordsData.length}`
 
   if(!flipped){
     cardEl.innerHTML = `
@@ -151,55 +437,69 @@ function render(){
         ${article ? `<span class="article">${article}</span>` : ''}
         <span class="${wordClass}">${word}</span>
       </div>
-      <div class="meta" style="margin-top:14px;">Tap to flip</div>
+      <div class="hint">Tap to flip • Swipe to change</div>
     `
   }else{
     cardEl.innerHTML = `
       <div class="word-back">${word}</div>
       ${ipa ? `<div class="ipa">/${ipa}/</div>` : ''}
-      <div class="meaning">${meaning}</div>
-      <div class="meta">${pos} • ${level}</div>
-      <div class="meta" style="margin-top:10px;">Tap for next</div>
+      <div class="meaning">${meaningTr}</div>
+      <div class="back-tags">
+        ${pos ? `<div class="badge">${pos}</div>` : ''}
+        ${level ? `<div class="badge secondary">${level}</div>` : ''}
+      </div>
+      <div class="hint">Tap to return</div>
     `
   }
 
-  statusEl.textContent = `${index + 1} / ${words.length}`
+  localStorage.setItem('parleo_current_word', String(currentWord))
 }
 
-async function loadWords(){
-  const errorEl = document.getElementById('error')
-  try{
-    const res = await fetch('words.json?v=20260311a')
-    if(!res.ok){
-      throw new Error('HTTP ' + res.status + ' while loading words.json')
-    }
-    words = await res.json()
-    if(!Array.isArray(words)){
-      throw new Error('words.json is not an array')
-    }
-    errorEl.textContent = ''
-    render()
-  }catch(err){
-    document.getElementById('flashcard').textContent = 'load failed'
-    document.getElementById('status').textContent = 'Could not load words.json'
-    errorEl.textContent = String(err)
-    console.error(err)
-  }
-}
+const flashcardEl = document.getElementById('flashcard')
 
-document.getElementById('flashcard').addEventListener('click', ()=>{
-  if(!words.length) return
-  if(!flipped){
-    flipped = true
-  }else{
-    flipped = false
-    index++
-    if(index >= words.length) index = 0
-  }
-  render()
+flashcardEl.addEventListener('click', () => {
+  if(!wordsData.length) return
+  flipped = !flipped
+  renderCard()
 })
 
-loadWords()
+let startX = 0
+let endX = 0
+
+flashcardEl.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX
+}, { passive:true })
+
+flashcardEl.addEventListener('touchend', (e) => {
+  endX = e.changedTouches[0].clientX
+
+  if(startX - endX > 50){
+    nextWord()
+  }else if(endX - startX > 50){
+    prevWord()
+  }
+}, { passive:true })
+
+function nextWord(){
+  if(!wordsData.length) return
+  currentWord++
+  if(currentWord >= wordsData.length) currentWord = 0
+  flipped = false
+  renderCard()
+}
+
+function prevWord(){
+  if(!wordsData.length) return
+  currentWord--
+  if(currentWord < 0) currentWord = wordsData.length - 1
+  flipped = false
+  renderCard()
+}
+
+restoreActiveTab()
+loadSentenceDataset()
+loadWordsDataset()
 </script>
+
 </body>
 </html>
