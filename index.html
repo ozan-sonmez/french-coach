@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Parléo</title>
 
 <style>
@@ -11,58 +11,71 @@
   --secondary:#14B8A6;
   --accent:#FB7185;
   --bg:#F5F5F4;
+  --surface:#FFFFFF;
   --text:#2B2B2B;
   --muted:#6B7280;
-  --card:#FFFFFF;
+  --border:#E7E5E4;
+  --shadow:0 12px 32px rgba(99,102,241,.10), 0 4px 14px rgba(0,0,0,.05);
 }
 
 *{box-sizing:border-box}
 
-body{
+html,body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  background:linear-gradient(180deg,#fafaf9 0%, #f5f5f4 100%);
+  padding:0;
+  background:var(--bg);
   color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(99,102,241,.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(20,184,166,.07), transparent 24%),
+    var(--bg);
 }
 
 .app{
   max-width:500px;
-  margin:auto;
   min-height:100vh;
+  margin:0 auto;
   display:flex;
   flex-direction:column;
-  background:var(--bg);
 }
 
 .screen{
-  flex:1;
   display:none;
-  padding:20px 18px 88px;
+  flex:1;
+  padding:18px 18px 92px;
 }
 
 .screen.active{
   display:block;
 }
 
-.section-title{
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin:0 0 10px;
+.header{
+  margin-bottom:16px;
 }
 
-.practice-card,
-.settings-card,
-.flashcard-shell{
-  background:rgba(255,255,255,.78);
+.brand{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-0.03em;
+}
+
+.sub{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.card{
+  background:rgba(255,255,255,.88);
   backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.8);
-  box-shadow:
-    0 10px 30px rgba(99,102,241,.08),
-    0 2px 10px rgba(0,0,0,.05);
-  border-radius:26px;
+  border:1px solid rgba(255,255,255,.75);
+  border-radius:24px;
+  box-shadow:var(--shadow);
 }
 
 .practice-card{
@@ -70,120 +83,161 @@ body{
 }
 
 .practice-sentence{
-  font-size:28px;
+  font-size:29px;
   line-height:1.35;
+  font-weight:800;
+  letter-spacing:-0.03em;
+  margin-bottom:16px;
+}
+
+.practice-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:30px;
+  padding:0 12px;
+  border-radius:999px;
+  font-size:12px;
   font-weight:700;
-  margin-bottom:18px;
-  letter-spacing:-0.02em;
+  color:var(--primary);
+  background:rgba(99,102,241,.10);
 }
 
-.practice-sub{
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:18px;
+.badge.secondary{
+  color:#0F766E;
+  background:rgba(20,184,166,.10);
 }
 
-.primary-btn{
+.btn-row{
+  display:flex;
+  gap:10px;
+}
+
+.btn{
   border:none;
-  background:linear-gradient(135deg,var(--primary),#7c83ff);
-  color:white;
-  padding:14px 18px;
   border-radius:16px;
+  padding:14px 16px;
   font-size:15px;
-  font-weight:700;
+  font-weight:800;
   cursor:pointer;
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,var(--primary),#7C83FF);
+  color:#fff;
   box-shadow:0 10px 22px rgba(99,102,241,.24);
 }
 
-.flash-wrap{
-  padding-top:4px;
+.btn.ghost{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--border);
 }
 
-.flashcard-shell{
-  min-height:520px;
-  padding:16px;
+.flash-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+  padding:0 4px;
+}
+
+.flash-title{
+  font-size:15px;
+  font-weight:800;
+}
+
+.flash-count{
+  font-size:13px;
+  color:var(--muted);
+  font-weight:700;
+}
+
+.flash-shell{
+  padding:14px;
 }
 
 .flashcard{
-  min-height:488px;
+  min-height:520px;
   border-radius:24px;
   background:
-    radial-gradient(circle at top left, rgba(99,102,241,.14), transparent 35%),
-    radial-gradient(circle at top right, rgba(20,184,166,.14), transparent 30%),
-    linear-gradient(180deg,#ffffff 0%, #fcfcff 100%);
+    radial-gradient(circle at top left, rgba(99,102,241,.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(20,184,166,.10), transparent 28%),
+    linear-gradient(180deg,#FFFFFF 0%, #FCFCFF 100%);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:22px 20px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+  padding:26px 20px;
   cursor:pointer;
   user-select:none;
   -webkit-user-select:none;
-  transition:transform .18s ease, box-shadow .18s ease;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+  transition:transform .18s ease;
 }
 
 .flashcard:active{
   transform:scale(.992);
 }
 
-.card-image{
-  width:180px;
-  height:180px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:20px;
+.word-front{
+  font-size:42px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-0.04em;
+  margin-bottom:14px;
 }
 
-.card-image svg{
-  width:100%;
-  height:100%;
-  display:block;
+.word-back{
+  font-size:38px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-0.04em;
+  margin-bottom:14px;
 }
 
-.card-word{
-  font-size:34px;
-  line-height:1.1;
-  font-weight:800;
-  letter-spacing:-0.03em;
+.ipa{
+  font-size:20px;
+  line-height:1.5;
+  color:var(--muted);
+  margin-bottom:6px;
 }
 
-.card-ipa{
+.syllables{
   font-size:18px;
   line-height:1.4;
   color:var(--muted);
-  margin-top:10px;
+  margin-bottom:18px;
 }
 
-.card-meaning{
-  font-size:22px;
+.meaning{
+  font-size:24px;
   line-height:1.35;
-  font-weight:700;
-  margin-top:16px;
-}
-
-.card-frequency{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  margin-top:16px;
-  min-width:58px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(99,102,241,.1);
-  color:var(--primary);
-  font-size:13px;
   font-weight:800;
-  letter-spacing:.04em;
+  margin-bottom:14px;
 }
 
-.card-hint{
-  margin-top:20px;
+.back-tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:18px;
+}
+
+.hint{
   font-size:12px;
-  color:#8b8b95;
-  font-weight:600;
+  color:#8B8B95;
+  font-weight:700;
+  letter-spacing:.02em;
 }
 
 .settings-card{
@@ -192,7 +246,7 @@ body{
 
 .settings-item{
   padding:16px 0;
-  border-bottom:1px solid #ececec;
+  border-bottom:1px solid var(--border);
   font-size:15px;
 }
 
@@ -208,7 +262,7 @@ body{
   width:min(500px,100%);
   height:74px;
   display:flex;
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.92);
   backdrop-filter:blur(14px);
   border-top:1px solid rgba(0,0,0,.06);
 }
@@ -218,9 +272,9 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:700;
   font-size:14px;
-  color:#7b7b84;
+  font-weight:800;
+  color:#7B7B84;
   cursor:pointer;
 }
 
@@ -228,12 +282,18 @@ body{
   color:var(--primary);
 }
 
+.empty{
+  padding:22px;
+  font-size:15px;
+  color:var(--muted);
+}
+
 @media (max-width:420px){
-  .practice-sentence{font-size:24px}
-  .card-word{font-size:30px}
-  .flashcard-shell{min-height:480px}
-  .flashcard{min-height:448px}
-  .card-image{width:156px;height:156px}
+  .practice-sentence{font-size:25px}
+  .word-front{font-size:35px}
+  .word-back{font-size:32px}
+  .meaning{font-size:21px}
+  .flashcard{min-height:470px}
 }
 </style>
 </head>
@@ -242,292 +302,239 @@ body{
 <div class="app">
 
   <div id="practice" class="screen active">
-    <div class="section-title">Sentence Practice</div>
-    <div class="practice-card">
-      <div class="practice-sentence" id="practiceSentence">Loading sentence...</div>
-      <div class="practice-sub">Quick sentence flow. Minimal and clean.</div>
-      <button class="primary-btn" onclick="nextSentence()">Next</button>
+    <div class="header">
+      <div class="brand">Parléo</div>
+      <div class="sub">Sentence practice</div>
     </div>
-  </div>
 
-  <div id="flashcards" class="screen">
-    <div class="section-title">Flashcards</div>
-    <div class="flash-wrap">
-      <div class="flashcard-shell">
-        <div class="flashcard" id="flashcard">Loading...</div>
+    <div class="card practice-card">
+      <div class="practice-sentence" id="practiceSentence">Loading sentence...</div>
+
+      <div class="practice-meta">
+        <div class="badge" id="practiceTopic">topic</div>
+        <div class="badge secondary" id="practiceLevel">A1/A2</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn primary" onclick="nextSentence()">Next</button>
+        <button class="btn ghost" onclick="showTranslation()">TR</button>
       </div>
     </div>
   </div>
 
+  <div id="flashcards" class="screen">
+    <div class="header">
+      <div class="brand">Parléo</div>
+      <div class="sub">Flashcards</div>
+    </div>
+
+    <div class="flash-top">
+      <div class="flash-title">Word Card</div>
+      <div class="flash-count" id="flashCount">0 / 0</div>
+    </div>
+
+    <div class="card flash-shell">
+      <div class="flashcard" id="flashcard">Loading...</div>
+    </div>
+  </div>
+
   <div id="settings" class="screen">
-    <div class="section-title">Settings</div>
-    <div class="settings-card">
+    <div class="header">
+      <div class="brand">Parléo</div>
+      <div class="sub">Settings</div>
+    </div>
+
+    <div class="card settings-card">
       <div class="settings-item">Theme: Soft Learning</div>
       <div class="settings-item">Flashcards: Tap to flip</div>
-      <div class="settings-item">Navigation: Bottom tabs</div>
+      <div class="settings-item">Flashcards: Swipe left/right to change</div>
+      <div class="settings-item">State memory: Enabled</div>
     </div>
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('practice',this)">Practice</div>
-    <div class="nav-item" onclick="switchTab('flashcards',this)">Flashcards</div>
-    <div class="nav-item" onclick="switchTab('settings',this)">Settings</div>
+    <div class="nav-item active" data-tab="practice" onclick="switchTab('practice', this)">Practice</div>
+    <div class="nav-item" data-tab="flashcards" onclick="switchTab('flashcards', this)">Flashcards</div>
+    <div class="nav-item" data-tab="settings" onclick="switchTab('settings', this)">Settings</div>
   </div>
 
 </div>
 
 <script>
-/* NAV */
-function switchTab(id,el){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
-  document.getElementById(id).classList.add("active")
-  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"))
-  el.classList.add("active")
+/* ---------- STATE ---------- */
+let sentenceData = []
+let currentSentence = 0
+let showingTranslation = false
+
+let wordsData = []
+let currentWord = Number(localStorage.getItem('parleo_current_word') || 0)
+let flipped = false
+
+const activeTab = localStorage.getItem('parleo_active_tab') || 'practice'
+
+/* ---------- NAV ---------- */
+function switchTab(id, el){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'))
+  if(el){
+    el.classList.add('active')
+  }else{
+    const autoEl = document.querySelector(`.nav-item[data-tab="${id}"]`)
+    if(autoEl) autoEl.classList.add('active')
+  }
+
+  localStorage.setItem('parleo_active_tab', id)
 }
 
-/* PRACTICE */
-let sentenceData=[]
-let currentSentence=0
+function restoreActiveTab(){
+  switchTab(activeTab)
+}
 
+/* ---------- PRACTICE ---------- */
 async function loadSentenceDataset(){
   try{
-    const res=await fetch("dataset.json")
-    const data=await res.json()
-    sentenceData=[...(data.a1||[]), ...(data.a2||[])]
-    if(sentenceData.length>0){
-      document.getElementById("practiceSentence").textContent=sentenceData[0].fr
-    }else{
-      document.getElementById("practiceSentence").textContent="No sentence data found."
-    }
-  }catch(e){
-    document.getElementById("practiceSentence").textContent="dataset.json could not be loaded."
-    console.error(e)
+    const res = await fetch('dataset.json')
+    const data = await res.json()
+
+    sentenceData = [
+      ...(data.a1 || []),
+      ...(data.a2 || [])
+    ]
+
+    renderSentence()
+  }catch(err){
+    document.getElementById('practiceSentence').textContent = 'dataset.json could not be loaded.'
+    console.error('Sentence dataset error:', err)
   }
+}
+
+function renderSentence(){
+  if(!sentenceData.length){
+    document.getElementById('practiceSentence').textContent = 'No sentence data found.'
+    return
+  }
+
+  const item = sentenceData[currentSentence]
+  document.getElementById('practiceSentence').textContent = showingTranslation ? item.tr : item.fr
+  document.getElementById('practiceTopic').textContent = item.topic || 'topic'
+  document.getElementById('practiceLevel').textContent = item.id?.startsWith('a2_') ? 'A2' : 'A1'
 }
 
 function nextSentence(){
   if(!sentenceData.length) return
   currentSentence++
-  if(currentSentence>=sentenceData.length) currentSentence=0
-  document.getElementById("practiceSentence").textContent=sentenceData[currentSentence].fr
+  if(currentSentence >= sentenceData.length) currentSentence = 0
+  showingTranslation = false
+  renderSentence()
 }
 
-/* INLINE SVG ILLUSTRATIONS */
-function svgWrap(inner){
-  return `
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity=".10"/>
-      </filter>
-    </defs>
-    ${inner}
-  </svg>`
+function showTranslation(){
+  if(!sentenceData.length) return
+  showingTranslation = !showingTranslation
+  renderSentence()
 }
 
-const illustrationMap = {
-  manger: svgWrap(`
-    <ellipse cx="100" cy="170" rx="52" ry="10" fill="#E7E5E4"/>
-    <circle cx="80" cy="82" r="34" fill="#FDE68A" filter="url(#s)"/>
-    <path d="M60 82c10-15 30-19 40-8 10 11 6 28-9 38-18 11-45 7-54-10" fill="#F59E0B"/>
-    <rect x="110" y="62" width="10" height="58" rx="5" fill="#A7F3D0"/>
-    <rect x="125" y="62" width="10" height="58" rx="5" fill="#99F6E4"/>
-    <rect x="110" y="54" width="25" height="10" rx="5" fill="#14B8A6"/>
-    <rect x="118" y="117" width="30" height="8" rx="4" fill="#9CA3AF"/>
-  `),
-  maison: svgWrap(`
-    <ellipse cx="100" cy="170" rx="58" ry="10" fill="#E7E5E4"/>
-    <rect x="58" y="78" width="84" height="70" rx="16" fill="#BFDBFE" filter="url(#s)"/>
-    <path d="M48 90 L100 48 L152 90" fill="#FB7185"/>
-    <rect x="90" y="108" width="20" height="40" rx="8" fill="#6366F1"/>
-    <rect x="70" y="96" width="16" height="16" rx="4" fill="#FFFFFF"/>
-    <rect x="116" y="96" width="16" height="16" rx="4" fill="#FFFFFF"/>
-  `),
-  travail: svgWrap(`
-    <ellipse cx="100" cy="172" rx="62" ry="10" fill="#E7E5E4"/>
-    <rect x="48" y="102" width="104" height="12" rx="6" fill="#C4B5FD"/>
-    <rect x="68" y="66" width="64" height="40" rx="8" fill="#A7F3D0" filter="url(#s)"/>
-    <rect x="74" y="72" width="52" height="26" rx="6" fill="#FFFFFF"/>
-    <rect x="92" y="114" width="16" height="22" rx="6" fill="#A78BFA"/>
-    <rect x="58" y="88" width="18" height="14" rx="4" fill="#FDBA74"/>
-    <rect x="124" y="82" width="14" height="20" rx="3" fill="#F9A8D4"/>
-  `),
-  parler: svgWrap(`
-    <ellipse cx="100" cy="170" rx="52" ry="10" fill="#E7E5E4"/>
-    <rect x="42" y="62" width="64" height="46" rx="20" fill="#C7D2FE" filter="url(#s)"/>
-    <path d="M70 108 L62 124 L82 110" fill="#C7D2FE"/>
-    <rect x="94" y="86" width="64" height="46" rx="20" fill="#99F6E4" filter="url(#s)"/>
-    <path d="M126 132 L138 146 L136 128" fill="#99F6E4"/>
-    <circle cx="70" cy="85" r="4" fill="#6366F1"/>
-    <circle cx="84" cy="85" r="4" fill="#6366F1"/>
-    <circle cx="108" cy="109" r="4" fill="#14B8A6"/>
-    <circle cx="122" cy="109" r="4" fill="#14B8A6"/>
-  `),
-  apprendre: svgWrap(`
-    <ellipse cx="100" cy="170" rx="58" ry="10" fill="#E7E5E4"/>
-    <path d="M52 68c18-10 42-10 58 2v58c-16-12-40-12-58-2V68z" fill="#C7D2FE" filter="url(#s)"/>
-    <path d="M148 68c-18-10-42-10-58 2v58c16-12 40-12 58-2V68z" fill="#A7F3D0" filter="url(#s)"/>
-    <path d="M100 62 L104 74 L116 78 L104 82 L100 94 L96 82 L84 78 L96 74 Z" fill="#FBBF24"/>
-  `),
-  ville: svgWrap(`
-    <ellipse cx="100" cy="172" rx="64" ry="10" fill="#E7E5E4"/>
-    <rect x="50" y="82" width="28" height="62" rx="8" fill="#BFDBFE" filter="url(#s)"/>
-    <rect x="82" y="62" width="36" height="82" rx="10" fill="#C4B5FD" filter="url(#s)"/>
-    <rect x="122" y="94" width="26" height="50" rx="8" fill="#99F6E4" filter="url(#s)"/>
-    <circle cx="42" cy="144" r="10" fill="#86EFAC"/>
-    <rect x="39" y="130" width="6" height="18" rx="3" fill="#A16207"/>
-    <g fill="#FFFFFF">
-      <rect x="57" y="92" width="6" height="6" rx="2"/>
-      <rect x="65" y="92" width="6" height="6" rx="2"/>
-      <rect x="57" y="102" width="6" height="6" rx="2"/>
-      <rect x="65" y="102" width="6" height="6" rx="2"/>
-      <rect x="92" y="76" width="7" height="7" rx="2"/>
-      <rect x="103" y="76" width="7" height="7" rx="2"/>
-      <rect x="92" y="89" width="7" height="7" rx="2"/>
-      <rect x="103" y="89" width="7" height="7" rx="2"/>
-    </g>
-  `),
-  famille: svgWrap(`
-    <ellipse cx="100" cy="172" rx="58" ry="10" fill="#E7E5E4"/>
-    <circle cx="72" cy="78" r="18" fill="#F9A8D4"/>
-    <circle cx="128" cy="78" r="18" fill="#A5B4FC"/>
-    <circle cx="100" cy="98" r="15" fill="#FDE68A"/>
-    <rect x="56" y="96" width="32" height="46" rx="14" fill="#FB7185" filter="url(#s)"/>
-    <rect x="112" y="96" width="32" height="46" rx="14" fill="#6366F1" filter="url(#s)"/>
-    <rect x="86" y="112" width="28" height="32" rx="12" fill="#14B8A6" filter="url(#s)"/>
-  `),
-  enfant: svgWrap(`
-    <ellipse cx="100" cy="172" rx="48" ry="10" fill="#E7E5E4"/>
-    <circle cx="100" cy="74" r="22" fill="#FDE68A"/>
-    <rect x="78" y="98" width="44" height="46" rx="18" fill="#60A5FA" filter="url(#s)"/>
-    <rect x="70" y="106" width="12" height="34" rx="6" fill="#60A5FA"/>
-    <rect x="118" y="106" width="12" height="34" rx="6" fill="#60A5FA"/>
-    <rect x="86" y="140" width="10" height="24" rx="5" fill="#F59E0B"/>
-    <rect x="104" y="140" width="10" height="24" rx="5" fill="#F59E0B"/>
-    <circle cx="92" cy="72" r="3" fill="#2B2B2B"/>
-    <circle cx="108" cy="72" r="3" fill="#2B2B2B"/>
-    <path d="M92 83c4 4 12 4 16 0" stroke="#2B2B2B" stroke-width="3" fill="none" stroke-linecap="round"/>
-  `),
-  "école": svgWrap(`
-    <ellipse cx="100" cy="172" rx="60" ry="10" fill="#E7E5E4"/>
-    <rect x="54" y="82" width="92" height="62" rx="14" fill="#FECACA" filter="url(#s)"/>
-    <path d="M48 92 L100 56 L152 92" fill="#FB7185"/>
-    <rect x="90" y="112" width="20" height="32" rx="6" fill="#6366F1"/>
-    <circle cx="100" cy="86" r="10" fill="#FFFFFF"/>
-    <path d="M100 86 L100 80 M100 86 L105 88" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round"/>
-    <rect x="126" y="60" width="4" height="28" rx="2" fill="#9CA3AF"/>
-    <path d="M130 60 L144 66 L130 72 Z" fill="#14B8A6"/>
-  `),
-  "café": svgWrap(`
-    <ellipse cx="100" cy="172" rx="50" ry="10" fill="#E7E5E4"/>
-    <rect x="64" y="84" width="56" height="46" rx="14" fill="#BFDBFE" filter="url(#s)"/>
-    <path d="M120 94h10c10 0 14 6 14 13s-4 13-14 13h-10" fill="none" stroke="#6366F1" stroke-width="6" stroke-linecap="round"/>
-    <rect x="58" y="130" width="82" height="8" rx="4" fill="#A78BFA"/>
-    <path d="M78 60c-4 8 4 10 0 18" stroke="#FB7185" stroke-width="4" stroke-linecap="round" fill="none"/>
-    <path d="M98 56c-4 8 4 10 0 18" stroke="#14B8A6" stroke-width="4" stroke-linecap="round" fill="none"/>
-    <path d="M118 60c-4 8 4 10 0 18" stroke="#F59E0B" stroke-width="4" stroke-linecap="round" fill="none"/>
-  `)
-}
-
-function placeholderSVG(){
-  return svgWrap(`
-    <ellipse cx="100" cy="172" rx="54" ry="10" fill="#E7E5E4"/>
-    <rect x="58" y="58" width="84" height="84" rx="24" fill="#EDE9FE" filter="url(#s)"/>
-    <circle cx="100" cy="92" r="18" fill="#C4B5FD"/>
-    <rect x="76" y="114" width="48" height="12" rx="6" fill="#A5B4FC"/>
-  `)
-}
-
-function getCardIllustration(word){
-  return illustrationMap[word] || placeholderSVG()
-}
-
-/* FLASHCARDS */
-let wordsData=[]
-let currentWord=0
-let flipped=false
-
+/* ---------- FLASHCARDS ---------- */
 async function loadWordsDataset(){
   try{
-    const res=await fetch("words_dataset.json")
-    wordsData=await res.json()
+    const res = await fetch('words_dataset.json')
+    wordsData = await res.json()
+
+    if(currentWord >= wordsData.length) currentWord = 0
     renderCard()
-  }catch(e){
-    document.getElementById("flashcard").innerHTML="<div class='card-word'>words_dataset.json could not be loaded.</div>"
-    console.error(e)
+  }catch(err){
+    document.getElementById('flashcard').innerHTML = '<div class="empty">words_dataset.json could not be loaded.</div>'
+    console.error('Words dataset error:', err)
   }
 }
 
 function renderCard(){
+  const countEl = document.getElementById('flashCount')
+  const cardEl = document.getElementById('flashcard')
+
   if(!wordsData.length){
-    document.getElementById("flashcard").innerHTML="<div class='card-word'>No flashcards found.</div>"
+    countEl.textContent = '0 / 0'
+    cardEl.innerHTML = '<div class="empty">No flashcards found.</div>'
     return
   }
 
-  const card=wordsData[currentWord]
-  const meaning = card?.meaning?.tr || ""
-  const ipa = card?.ipa || ""
-  const syllables = card?.syllables || ""
-  const frequency = card?.frequency || ""
-  const illustration = getCardIllustration(card.word)
+  const card = wordsData[currentWord]
+  countEl.textContent = `${currentWord + 1} / ${wordsData.length}`
+
+  const meaningTr = card?.meaning?.tr || ''
+  const ipa = card?.ipa || ''
+  const syllables = card?.syllables || ''
+  const frequency = card?.frequency || ''
+  const category = card?.category || ''
 
   if(!flipped){
-    document.getElementById("flashcard").innerHTML = `
-      <div class="card-image">${illustration}</div>
-      <div class="card-word">${card.word}</div>
-      <div class="card-hint">Tap to flip • Swipe to change</div>
+    cardEl.innerHTML = `
+      <div class="word-front">${card.word}</div>
+      <div class="hint">Tap to flip • Swipe to change</div>
     `
   }else{
-    document.getElementById("flashcard").innerHTML = `
-      <div class="card-word">${card.word}</div>
-      <div class="card-ipa">/${ipa}/</div>
-      <div class="card-ipa">${syllables}</div>
-      <div class="card-meaning">${meaning}</div>
-      <div class="card-frequency">${frequency}</div>
-      <div class="card-hint">Tap to return</div>
+    cardEl.innerHTML = `
+      <div class="word-back">${card.word}</div>
+      <div class="ipa">/${ipa}/</div>
+      <div class="syllables">${syllables}</div>
+      <div class="meaning">${meaningTr}</div>
+      <div class="back-tags">
+        ${frequency ? `<div class="badge">${frequency}</div>` : ''}
+        ${category ? `<div class="badge secondary">${category}</div>` : ''}
+      </div>
+      <div class="hint">Tap to return</div>
     `
   }
+
+  localStorage.setItem('parleo_current_word', String(currentWord))
 }
 
-/* FLIP */
-document.getElementById("flashcard").addEventListener("click",()=>{
+/* ---------- FLASHCARD INTERACTION ---------- */
+const flashcardEl = document.getElementById('flashcard')
+
+flashcardEl.addEventListener('click', () => {
   if(!wordsData.length) return
-  flipped=!flipped
+  flipped = !flipped
   renderCard()
 })
 
-/* SWIPE */
-let startX=0
-let endX=0
-const cardEl=document.getElementById("flashcard")
+let startX = 0
+let endX = 0
 
-cardEl.addEventListener("touchstart",(e)=>{
-  startX=e.touches[0].clientX
-},{passive:true})
+flashcardEl.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX
+}, { passive:true })
 
-cardEl.addEventListener("touchend",(e)=>{
-  endX=e.changedTouches[0].clientX
-  if(startX-endX>50) nextWord()
-  if(endX-startX>50) prevWord()
-},{passive:true})
+flashcardEl.addEventListener('touchend', (e) => {
+  endX = e.changedTouches[0].clientX
+
+  if(startX - endX > 50){
+    nextWord()
+  }else if(endX - startX > 50){
+    prevWord()
+  }
+}, { passive:true })
 
 function nextWord(){
   if(!wordsData.length) return
   currentWord++
-  if(currentWord>=wordsData.length) currentWord=0
-  flipped=false
+  if(currentWord >= wordsData.length) currentWord = 0
+  flipped = false
   renderCard()
 }
 
 function prevWord(){
   if(!wordsData.length) return
   currentWord--
-  if(currentWord<0) currentWord=wordsData.length-1
-  flipped=false
+  if(currentWord < 0) currentWord = wordsData.length - 1
+  flipped = false
   renderCard()
 }
 
-/* LOAD */
+/* ---------- INIT ---------- */
+restoreActiveTab()
 loadSentenceDataset()
 loadWordsDataset()
 </script>
