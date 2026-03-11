@@ -270,6 +270,7 @@ body{
       <div class="btn-row">
         <button class="btn primary" onclick="nextSentence()">Next</button>
         <button class="btn ghost" onclick="toggleTranslation()">TR</button>
+        <button class="btn ghost" onclick="playSentenceAudio()">🔊 Listen</button>
       </div>
 
       <div class="error" id="practiceError"></div>
@@ -306,6 +307,7 @@ body{
       <div class="settings-item">Feminine: Pink</div>
       <div class="settings-item">Flashcards: Tap to flip</div>
       <div class="settings-item">Flashcards: Swipe left/right to change</div>
+      <div class="settings-item">Practice: Listen restored</div>
       <div class="settings-item">State memory: Enabled</div>
     </div>
   </div>
@@ -321,6 +323,7 @@ body{
 let sentenceData = []
 let currentSentence = 0
 let showingTranslation = false
+let currentAudio = null
 
 let wordsData = []
 let currentWord = Number(localStorage.getItem('parleo_current_word') || 0)
@@ -350,7 +353,7 @@ function restoreActiveTab(){
 async function loadSentenceDataset(){
   const errEl = document.getElementById('practiceError')
   try{
-    const res = await fetch('dataset.json?v=20260311b')
+    const res = await fetch('dataset.json?v=20260311c')
     if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading dataset.json')
     const data = await res.json()
     sentenceData = [...(data.a1 || []), ...(data.a2 || [])]
@@ -377,6 +380,7 @@ function renderSentence(){
 
 function nextSentence(){
   if(!sentenceData.length) return
+  stopSentenceAudio()
   currentSentence++
   if(currentSentence >= sentenceData.length) currentSentence = 0
   showingTranslation = false
@@ -389,10 +393,33 @@ function toggleTranslation(){
   renderSentence()
 }
 
+function stopSentenceAudio(){
+  if(currentAudio){
+    currentAudio.pause()
+    currentAudio.currentTime = 0
+    currentAudio = null
+  }
+}
+
+function playSentenceAudio(){
+  if(!sentenceData.length) return
+
+  const item = sentenceData[currentSentence]
+  if(!item || !item.id) return
+
+  stopSentenceAudio()
+
+  currentAudio = new Audio(`audio/${item.id}.mp3`)
+  currentAudio.play().catch(err => {
+    document.getElementById('practiceError').textContent = 'Audio could not be played: ' + err
+    console.error(err)
+  })
+}
+
 async function loadWordsDataset(){
   const errEl = document.getElementById('flashError')
   try{
-    const res = await fetch('words.json?v=20260311b')
+    const res = await fetch('words.json?v=20260311c')
     if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading words.json')
     wordsData = await res.json()
     if(!Array.isArray(wordsData)) throw new Error('words.json is not an array')
