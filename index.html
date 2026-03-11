@@ -71,6 +71,7 @@ font-size:28px;
 font-weight:600;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
 cursor:pointer;
+user-select:none;
 }
 
 .card-ipa{
@@ -110,17 +111,15 @@ Loading sentence...
 </div>
 
 <div id="flashcards" class="screen">
-<div class="flashcard" id="flashcard" onclick="flipCard()">
+<div class="flashcard" id="flashcard">
 Loading...
 </div>
 </div>
 
 <div id="settings" class="screen">
-
 <div class="settings-item">Language: French</div>
 <div class="settings-item">Level: A1</div>
 <div class="settings-item">Version: Parléo Alpha</div>
-
 </div>
 
 <div class="bottom-nav">
@@ -177,10 +176,8 @@ sentenceData=[
 ]
 
 if(sentenceData.length>0){
-
 document.getElementById("practiceSentence").textContent=
 sentenceData[0].fr
-
 }
 
 }
@@ -237,9 +234,62 @@ document.getElementById("flashcard").innerHTML=
 
 }
 
-function flipCard(){
+/* FLIP */
+
+document.getElementById("flashcard").addEventListener("click",()=>{
 
 flipped=!flipped
+renderCard()
+
+})
+
+/* SWIPE */
+
+let startX=0
+let endX=0
+
+const card=document.getElementById("flashcard")
+
+card.addEventListener("touchstart",(e)=>{
+startX=e.touches[0].clientX
+})
+
+card.addEventListener("touchend",(e)=>{
+
+endX=e.changedTouches[0].clientX
+
+if(startX-endX>50){
+nextWord()
+}
+
+if(endX-startX>50){
+prevWord()
+}
+
+})
+
+function nextWord(){
+
+currentWord++
+
+if(currentWord>=wordsData.length){
+currentWord=0
+}
+
+flipped=false
+renderCard()
+
+}
+
+function prevWord(){
+
+currentWord--
+
+if(currentWord<0){
+currentWord=wordsData.length-1
+}
+
+flipped=false
 renderCard()
 
 }
