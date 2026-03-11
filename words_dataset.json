@@ -1,62 +1,530 @@
 [
   {
     "word": "manger",
-    "meaning": {
-      "tr": "yemek yemek",
-      "en": "to eat"
-    },
+    "meaning": { "tr": "yemek yemek", "en": "to eat" },
     "ipa": "mɑ̃ʒe",
     "syllables": "man-ger",
-    "frequency": "A1"
+    "frequency": "A1",
+    "category": "verb"
   },
   {
     "word": "maison",
-    "meaning": {
-      "tr": "ev",
-      "en": "house"
-    },
+    "meaning": { "tr": "ev", "en": "house" },
     "ipa": "mɛzɔ̃",
     "syllables": "mai-son",
-    "frequency": "A1"
+    "frequency": "A1",
+    "category": "noun"
   },
   {
     "word": "travail",
-    "meaning": {
-      "tr": "iş",
-      "en": "work"
-    },
+    "meaning": { "tr": "iş", "en": "work" },
     "ipa": "tʁavaj",
     "syllables": "tra-vail",
-    "frequency": "A1"
+    "frequency": "A1",
+    "category": "noun"
   },
   {
     "word": "parler",
-    "meaning": {
-      "tr": "konuşmak",
-      "en": "to speak"
-    },
+    "meaning": { "tr": "konuşmak", "en": "to speak" },
     "ipa": "paʁle",
     "syllables": "par-ler",
-    "frequency": "A1"
+    "frequency": "A1",
+    "category": "verb"
   },
   {
     "word": "apprendre",
-    "meaning": {
-      "tr": "öğrenmek",
-      "en": "to learn"
-    },
+    "meaning": { "tr": "öğrenmek", "en": "to learn" },
     "ipa": "apʁɑ̃dʁ",
     "syllables": "ap-pren-dre",
-    "frequency": "A1"
+    "frequency": "A1",
+    "category": "verb"
   },
   {
     "word": "ville",
-    "meaning": {
-      "tr": "şehir",
-      "en": "city"
-    },
+    "meaning": { "tr": "şehir", "en": "city" },
     "ipa": "vil",
     "syllables": "ville",
-    "frequency": "A1"
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "famille",
+    "meaning": { "tr": "aile", "en": "family" },
+    "ipa": "famij",
+    "syllables": "fa-mille",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "enfant",
+    "meaning": { "tr": "çocuk", "en": "child" },
+    "ipa": "ɑ̃fɑ̃",
+    "syllables": "en-fant",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "école",
+    "meaning": { "tr": "okul", "en": "school" },
+    "ipa": "ekɔl",
+    "syllables": "é-cole",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "café",
+    "meaning": { "tr": "kahve", "en": "coffee" },
+    "ipa": "kafe",
+    "syllables": "ca-fé",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "pain",
+    "meaning": { "tr": "ekmek", "en": "bread" },
+    "ipa": "pɛ̃",
+    "syllables": "pain",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "eau",
+    "meaning": { "tr": "su", "en": "water" },
+    "ipa": "o",
+    "syllables": "eau",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "livre",
+    "meaning": { "tr": "kitap", "en": "book" },
+    "ipa": "livʁ",
+    "syllables": "li-vre",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "métro",
+    "meaning": { "tr": "metro", "en": "subway" },
+    "ipa": "metʁo",
+    "syllables": "mé-tro",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "parc",
+    "meaning": { "tr": "park", "en": "park" },
+    "ipa": "paʁk",
+    "syllables": "parc",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "travailer",
+    "meaning": { "tr": "çalışmak", "en": "to work" },
+    "ipa": "tʁavaje",
+    "syllables": "tra-va-iller",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "habiter",
+    "meaning": { "tr": "yaşamak, oturmak", "en": "to live" },
+    "ipa": "abite",
+    "syllables": "ha-bi-ter",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "venir",
+    "meaning": { "tr": "gelmek", "en": "to come" },
+    "ipa": "vəniʁ",
+    "syllables": "ve-nir",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "aller",
+    "meaning": { "tr": "gitmek", "en": "to go" },
+    "ipa": "ale",
+    "syllables": "al-ler",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "vouloir",
+    "meaning": { "tr": "istemek", "en": "to want" },
+    "ipa": "vulwaʁ",
+    "syllables": "vou-loir",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "aimer",
+    "meaning": { "tr": "sevmek", "en": "to like" },
+    "ipa": "eme",
+    "syllables": "ai-mer",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "être",
+    "meaning": { "tr": "olmak", "en": "to be" },
+    "ipa": "ɛtʁ",
+    "syllables": "ê-tre",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "avoir",
+    "meaning": { "tr": "sahip olmak", "en": "to have" },
+    "ipa": "avwaʁ",
+    "syllables": "a-voir",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "jour",
+    "meaning": { "tr": "gün", "en": "day" },
+    "ipa": "ʒuʁ",
+    "syllables": "jour",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "soir",
+    "meaning": { "tr": "akşam", "en": "evening" },
+    "ipa": "swaʁ",
+    "syllables": "soir",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "matin",
+    "meaning": { "tr": "sabah", "en": "morning" },
+    "ipa": "matɛ̃",
+    "syllables": "ma-tin",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "ami",
+    "meaning": { "tr": "arkadaş", "en": "friend" },
+    "ipa": "ami",
+    "syllables": "a-mi",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "fils",
+    "meaning": { "tr": "oğul", "en": "son" },
+    "ipa": "fis",
+    "syllables": "fils",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "femme",
+    "meaning": { "tr": "kadın, eş", "en": "woman, wife" },
+    "ipa": "fam",
+    "syllables": "fem-me",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "homme",
+    "meaning": { "tr": "erkek, adam", "en": "man" },
+    "ipa": "ɔm",
+    "syllables": "hom-me",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "voiture",
+    "meaning": { "tr": "araba", "en": "car" },
+    "ipa": "vwatyʁ",
+    "syllables": "voi-tu-re",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "bus",
+    "meaning": { "tr": "otobüs", "en": "bus" },
+    "ipa": "bys",
+    "syllables": "bus",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "train",
+    "meaning": { "tr": "tren", "en": "train" },
+    "ipa": "tʁɛ̃",
+    "syllables": "train",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "travailleur",
+    "meaning": { "tr": "çalışan", "en": "worker" },
+    "ipa": "tʁavajœʁ",
+    "syllables": "tra-vail-leur",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "client",
+    "meaning": { "tr": "müşteri", "en": "customer" },
+    "ipa": "klijɑ̃",
+    "syllables": "cli-ent",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "hôtel",
+    "meaning": { "tr": "otel", "en": "hotel" },
+    "ipa": "otɛl",
+    "syllables": "hô-tel",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "question",
+    "meaning": { "tr": "soru", "en": "question" },
+    "ipa": "kɛstjɔ̃",
+    "syllables": "ques-tion",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "réponse",
+    "meaning": { "tr": "cevap", "en": "answer" },
+    "ipa": "ʁepɔ̃s",
+    "syllables": "ré-pon-se",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "temps",
+    "meaning": { "tr": "zaman", "en": "time" },
+    "ipa": "tɑ̃",
+    "syllables": "temps",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "heure",
+    "meaning": { "tr": "saat", "en": "hour" },
+    "ipa": "œʁ",
+    "syllables": "heu-re",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "semaine",
+    "meaning": { "tr": "hafta", "en": "week" },
+    "ipa": "səmɛn",
+    "syllables": "se-mai-ne",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "année",
+    "meaning": { "tr": "yıl", "en": "year" },
+    "ipa": "ane",
+    "syllables": "an-née",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "langue",
+    "meaning": { "tr": "dil", "en": "language" },
+    "ipa": "lɑ̃g",
+    "syllables": "lan-gue",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "français",
+    "meaning": { "tr": "Fransızca", "en": "French" },
+    "ipa": "fʁɑ̃sɛ",
+    "syllables": "fran-çais",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "anglais",
+    "meaning": { "tr": "İngilizce", "en": "English" },
+    "ipa": "ɑ̃glɛ",
+    "syllables": "an-glais",
+    "frequency": "A1",
+    "category": "noun"
+  },
+  {
+    "word": "lecture",
+    "meaning": { "tr": "okuma", "en": "reading" },
+    "ipa": "lɛktyʁ",
+    "syllables": "lec-tu-re",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "écouter",
+    "meaning": { "tr": "dinlemek", "en": "to listen" },
+    "ipa": "ekute",
+    "syllables": "é-cou-ter",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "regarder",
+    "meaning": { "tr": "bakmak, izlemek", "en": "to watch" },
+    "ipa": "ʁəgaʁde",
+    "syllables": "re-gar-der",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "comprendre",
+    "meaning": { "tr": "anlamak", "en": "to understand" },
+    "ipa": "kɔ̃pʁɑ̃dʁ",
+    "syllables": "com-pren-dre",
+    "frequency": "A2",
+    "category": "verb"
+  },
+  {
+    "word": "répéter",
+    "meaning": { "tr": "tekrar etmek", "en": "to repeat" },
+    "ipa": "ʁepete",
+    "syllables": "ré-pé-ter",
+    "frequency": "A2",
+    "category": "verb"
+  },
+  {
+    "word": "écrire",
+    "meaning": { "tr": "yazmak", "en": "to write" },
+    "ipa": "ekʁiʁ",
+    "syllables": "é-cri-re",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "lire",
+    "meaning": { "tr": "okumak", "en": "to read" },
+    "ipa": "liʁ",
+    "syllables": "li-re",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "marcher",
+    "meaning": { "tr": "yürümek", "en": "to walk" },
+    "ipa": "maʁʃe",
+    "syllables": "mar-cher",
+    "frequency": "A1",
+    "category": "verb"
+  },
+  {
+    "word": "vivre",
+    "meaning": { "tr": "yaşamak", "en": "to live" },
+    "ipa": "vivʁ",
+    "syllables": "viv-re",
+    "frequency": "A2",
+    "category": "verb"
+  },
+  {
+    "word": "rester",
+    "meaning": { "tr": "kalmak", "en": "to stay" },
+    "ipa": "ʁɛste",
+    "syllables": "res-ter",
+    "frequency": "A2",
+    "category": "verb"
+  },
+  {
+    "word": "besoin",
+    "meaning": { "tr": "ihtiyaç", "en": "need" },
+    "ipa": "bəzwɛ̃",
+    "syllables": "be-soin",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "aide",
+    "meaning": { "tr": "yardım", "en": "help" },
+    "ipa": "ɛd",
+    "syllables": "ai-de",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "avenir",
+    "meaning": { "tr": "gelecek", "en": "future" },
+    "ipa": "avəniʁ",
+    "syllables": "a-ve-nir",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "objectif",
+    "meaning": { "tr": "hedef", "en": "goal" },
+    "ipa": "ɔbʒɛktif",
+    "syllables": "ob-jec-tif",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "confiance",
+    "meaning": { "tr": "özgüven, güven", "en": "confidence" },
+    "ipa": "kɔ̃fjɑ̃s",
+    "syllables": "con-fian-ce",
+    "frequency": "A2",
+    "category": "noun"
+  },
+  {
+    "word": "important",
+    "meaning": { "tr": "önemli", "en": "important" },
+    "ipa": "ɛ̃pɔʁtɑ̃",
+    "syllables": "im-por-tant",
+    "frequency": "A1",
+    "category": "adjective"
+  },
+  {
+    "word": "simple",
+    "meaning": { "tr": "basit", "en": "simple" },
+    "ipa": "sɛ̃pl",
+    "syllables": "sim-ple",
+    "frequency": "A1",
+    "category": "adjective"
+  },
+  {
+    "word": "difficile",
+    "meaning": { "tr": "zor", "en": "difficult" },
+    "ipa": "difi-sil",
+    "syllables": "dif-fi-ci-le",
+    "frequency": "A1",
+    "category": "adjective"
+  },
+  {
+    "word": "calme",
+    "meaning": { "tr": "sakin", "en": "calm" },
+    "ipa": "kalm",
+    "syllables": "cal-me",
+    "frequency": "A1",
+    "category": "adjective"
+  },
+  {
+    "word": "pratique",
+    "meaning": { "tr": "pratik, kullanışlı", "en": "practical" },
+    "ipa": "pʁatik",
+    "syllables": "pra-ti-que",
+    "frequency": "A2",
+    "category": "adjective"
+  },
+  {
+    "word": "nouveau",
+    "meaning": { "tr": "yeni", "en": "new" },
+    "ipa": "nuvo",
+    "syllables": "nou-veau",
+    "frequency": "A1",
+    "category": "adjective"
   }
 ]
