@@ -232,8 +232,7 @@ if(!flipped){
 document.getElementById("flashcard").innerHTML=
 `
 <div class="card-image">
-<img src="images/${card.word}.png">
-</div>
+<img src="images/${card.word}.png" onerror="this.src='images/placeholder.png'"></div>
 <div class="card-word">${card.word}</div>
 `
 
