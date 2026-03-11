@@ -11,7 +11,6 @@
   --secondary:#14B8A6;
   --accent:#FB7185;
   --bg:#F5F5F4;
-  --surface:#FFFFFF;
   --text:#2B2B2B;
   --muted:#6B7280;
   --border:#E7E5E4;
@@ -66,10 +65,20 @@ body{
 .practice-card{padding:22px}
 .practice-sentence{
   font-size:29px;
-  line-height:1.35;
+  line-height:1.55;
   font-weight:800;
   letter-spacing:-0.03em;
   margin-bottom:16px;
+}
+.practice-word{
+  display:inline-block;
+  padding:2px 4px;
+  border-radius:8px;
+  transition:background .12s ease, color .12s ease;
+}
+.practice-word.active{
+  background:rgba(99,102,241,.16);
+  color:#4338CA;
 }
 .practice-meta{
   display:flex;
@@ -270,7 +279,7 @@ body{
       <div class="btn-row">
         <button class="btn primary" onclick="nextSentence()">Next</button>
         <button class="btn ghost" onclick="toggleTranslation()">TR</button>
-        <button class="btn ghost" onclick="playSentenceAudio()">🔊 Listen</button>
+        <button class="btn ghost" onclick="replaySentenceAudio()">Listen</button>
       </div>
 
       <div class="error" id="practiceError"></div>
@@ -305,9 +314,8 @@ body{
       <div class="settings-item">Theme: Soft Learning</div>
       <div class="settings-item">Masculine: Blue</div>
       <div class="settings-item">Feminine: Pink</div>
-      <div class="settings-item">Flashcards: Tap to flip</div>
-      <div class="settings-item">Flashcards: Swipe left/right to change</div>
-      <div class="settings-item">Practice: Listen restored</div>
+      <div class="settings-item">Practice: mp3 only + auto read + highlight</div>
+      <div class="settings-item">Flashcards: tap flip + swipe</div>
       <div class="settings-item">State memory: Enabled</div>
     </div>
   </div>
@@ -324,6 +332,7 @@ let sentenceData = []
 let currentSentence = 0
 let showingTranslation = false
 let currentAudio = null
+let highlightTimer = null
 
 let wordsData = []
 let currentWord = Number(localStorage.getItem('parleo_current_word') || 0)
@@ -353,12 +362,13 @@ function restoreActiveTab(){
 async function loadSentenceDataset(){
   const errEl = document.getElementById('practiceError')
   try{
-    const res = await fetch('dataset.json?v=20260311c')
+    const res = await fetch('dataset.json?v=20260311e')
     if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading dataset.json')
     const data = await res.json()
     sentenceData = [...(data.a1 || []), ...(data.a2 || [])]
     errEl.textContent = ''
     renderSentence()
+    autoReadCurrentSentence()
   }catch(err){
     document.getElementById('practiceSentence').textContent = 'dataset.json could not be loaded.'
     errEl.textContent = String(err)
@@ -366,16 +376,120 @@ async function loadSentenceDataset(){
   }
 }
 
-function renderSentence(){
+function escapeHtml(text){
+  return text
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+}
+
+function renderSentence(activeWordIndex = -1){
   if(!sentenceData.length){
     document.getElementById('practiceSentence').textContent = 'No sentence data found.'
     return
   }
 
   const item = sentenceData[currentSentence]
-  document.getElementById('practiceSentence').textContent = showingTranslation ? item.tr : item.fr
   document.getElementById('practiceTopic').textContent = item.topic || 'topic'
   document.getElementById('practiceLevel').textContent = item.id && item.id.startsWith('a2_') ? 'A2' : 'A1'
+
+  const text = showingTranslation ? item.tr : item.fr
+
+  if(showingTranslation){
+    document.getElementById('practiceSentence').textContent = text
+    return
+  }
+
+  const words = text.split(/\s+/)
+  const html = words.map((word, idx) => {
+    const safe = escapeHtml(word)
+    const activeClass = idx === activeWordIndex ? 'active' : ''
+    return `<span class="practice-word ${activeClass}">${safe}</span>`
+  }).join(' ')
+
+  document.getElementById('practiceSentence').innerHTML = html
+}
+
+function stopSentenceAudio(){
+  if(currentAudio){
+    currentAudio.pause()
+    currentAudio.currentTime = 0
+    currentAudio = null
+  }
+  if(highlightTimer){
+    clearInterval(highlightTimer)
+    highlightTimer = null
+  }
+  renderSentence(-1)
+}
+
+function startHighlightForAudio(durationSec, text){
+  const words = text.split(/\s+/)
+  const totalWords = words.length
+  if(!totalWords || !durationSec || !isFinite(durationSec)) return
+
+  let currentIndex = -1
+  const stepMs = Math.max(140, (durationSec * 1000) / totalWords)
+
+  highlightTimer = setInterval(() => {
+    currentIndex++
+    if(currentIndex < totalWords){
+      renderSentence(currentIndex)
+    }else{
+      clearInterval(highlightTimer)
+      highlightTimer = null
+      renderSentence(-1)
+    }
+  }, stepMs)
+}
+
+function autoReadCurrentSentence(){
+  if(!sentenceData.length || showingTranslation) return
+
+  const errEl = document.getElementById('practiceError')
+  errEl.textContent = ''
+
+  const item = sentenceData[currentSentence]
+  stopSentenceAudio()
+
+  if(!item || !item.id) return
+
+  const audio = new Audio(`audio/${item.id}.mp3`)
+  currentAudio = audio
+
+  audio.addEventListener('loadedmetadata', () => {
+    startHighlightForAudio(audio.duration, item.fr)
+  })
+
+  audio.addEventListener('ended', () => {
+    if(highlightTimer){
+      clearInterval(highlightTimer)
+      highlightTimer = null
+    }
+    renderSentence(-1)
+  })
+
+  audio.addEventListener('error', () => {
+    if(highlightTimer){
+      clearInterval(highlightTimer)
+      highlightTimer = null
+    }
+    renderSentence(-1)
+    errEl.textContent = 'Audio could not be played.'
+  })
+
+  audio.play().catch((err) => {
+    if(highlightTimer){
+      clearInterval(highlightTimer)
+      highlightTimer = null
+    }
+    renderSentence(-1)
+    errEl.textContent = 'Audio could not be played: ' + err
+  })
+}
+
+function replaySentenceAudio(){
+  autoReadCurrentSentence()
 }
 
 function nextSentence(){
@@ -385,41 +499,23 @@ function nextSentence(){
   if(currentSentence >= sentenceData.length) currentSentence = 0
   showingTranslation = false
   renderSentence()
+  autoReadCurrentSentence()
 }
 
 function toggleTranslation(){
   if(!sentenceData.length) return
+  stopSentenceAudio()
   showingTranslation = !showingTranslation
   renderSentence()
-}
-
-function stopSentenceAudio(){
-  if(currentAudio){
-    currentAudio.pause()
-    currentAudio.currentTime = 0
-    currentAudio = null
+  if(!showingTranslation){
+    autoReadCurrentSentence()
   }
-}
-
-function playSentenceAudio(){
-  if(!sentenceData.length) return
-
-  const item = sentenceData[currentSentence]
-  if(!item || !item.id) return
-
-  stopSentenceAudio()
-
-  currentAudio = new Audio(`audio/${item.id}.mp3`)
-  currentAudio.play().catch(err => {
-    document.getElementById('practiceError').textContent = 'Audio could not be played: ' + err
-    console.error(err)
-  })
 }
 
 async function loadWordsDataset(){
   const errEl = document.getElementById('flashError')
   try{
-    const res = await fetch('words.json?v=20260311c')
+    const res = await fetch('words.json?v=20260311e')
     if(!res.ok) throw new Error('HTTP ' + res.status + ' while loading words.json')
     wordsData = await res.json()
     if(!Array.isArray(wordsData)) throw new Error('words.json is not an array')
