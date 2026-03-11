@@ -86,7 +86,7 @@ border-bottom:1px solid #eee;
 <div class="practice-sentence" id="practiceSentence">
 Loading sentence...
 </div>
-<button onclick="listenSentence()">Listen</button>
+<button onclick="nextSentence()">Next</button>
 </div>
 
 <div id="flashcards" class="screen">
@@ -141,74 +141,62 @@ el.classList.add("active")
 
 }
 
-/* PRACTICE DATASET */
+/* PRACTICE */
 
 let sentenceData=[]
 let currentSentence=0
 
 async function loadSentenceDataset(){
 
-try{
-
 const res=await fetch("dataset.json")
+const data=await res.json()
 
-sentenceData=await res.json()
+sentenceData=[
+...(data.a1 || []),
+...(data.a2 || [])
+]
 
 if(sentenceData.length>0){
-document.getElementById("practiceSentence").textContent=sentenceData[0].fr
-}
 
-}catch(e){
-console.error("Sentence dataset error:",e)
-}
+document.getElementById("practiceSentence").textContent=
+sentenceData[0].fr
 
 }
 
-/* PRACTICE AUDIO */
+}
 
-function listenSentence(){
+function nextSentence(){
 
-if(sentenceData.length===0) return
+currentSentence++
 
-let audioFile=sentenceData[currentSentence].audio
+if(currentSentence>=sentenceData.length){
+currentSentence=0
+}
 
-if(!audioFile) return
-
-let audio=new Audio("audio/"+audioFile)
-
-audio.play()
+document.getElementById("practiceSentence").textContent=
+sentenceData[currentSentence].fr
 
 }
 
-/* WORD DATASET */
+/* FLASHCARDS */
 
 let wordsData=[]
 
 async function loadWordsDataset(){
 
-try{
-
 const res=await fetch("words_dataset.json")
-
 wordsData=await res.json()
-
-console.log("Words dataset loaded:",wordsData)
 
 if(wordsData.length>0){
 
-document.getElementById("flashcard").textContent=wordsData[0].word
-
-}
-
-}catch(e){
-
-console.error("Dataset error:",e)
+document.getElementById("flashcard").textContent=
+wordsData[0].word
 
 }
 
 }
 
-/* LOAD DATA */
+/* LOAD */
 
 loadSentenceDataset()
 loadWordsDataset()
