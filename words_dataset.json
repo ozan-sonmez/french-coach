@@ -16,12 +16,12 @@
     "category": "noun"
   },
   {
-    "word": "travail",
-    "meaning": { "tr": "iş", "en": "work" },
-    "ipa": "tʁavaj",
-    "syllables": "tra-vail",
+    "word": "travailler",
+    "meaning": { "tr": "calismak", "en": "to work" },
+    "ipa": "tʁavaje",
+    "syllables": "tra-va-iller",
     "frequency": "A1",
-    "category": "noun"
+    "category": "verb"
   },
   {
     "word": "parler",
