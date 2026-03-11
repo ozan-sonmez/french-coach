@@ -59,35 +59,48 @@ margin-bottom:20px;
 }
 
 .flashcard{
-height:320px;
+height:340px;
 background:white;
-border-radius:16px;
+border-radius:20px;
 display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
 text-align:center;
 padding:20px;
-font-size:28px;
-font-weight:600;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
 cursor:pointer;
 user-select:none;
 }
 
+.card-image{
+height:120px;
+margin-bottom:15px;
+}
+
+.card-image img{
+height:100%;
+}
+
+.card-word{
+font-size:28px;
+font-weight:600;
+}
+
 .card-ipa{
 font-size:18px;
-margin-top:10px;
+margin-top:8px;
 color:#666;
 }
 
 .card-meaning{
 font-size:20px;
-margin-top:15px;
+margin-top:12px;
 }
 
 .card-frequency{
 font-size:14px;
-margin-top:8px;
+margin-top:6px;
 color:#999;
 }
 
@@ -217,13 +230,18 @@ const card=wordsData[currentWord]
 if(!flipped){
 
 document.getElementById("flashcard").innerHTML=
-`<div>${card.word}</div>`
+`
+<div class="card-image">
+<img src="images/${card.word}.png">
+</div>
+<div class="card-word">${card.word}</div>
+`
 
 }else{
 
 document.getElementById("flashcard").innerHTML=
 `
-<div>${card.word}</div>
+<div class="card-word">${card.word}</div>
 <div class="card-ipa">/${card.ipa}/</div>
 <div class="card-ipa">${card.syllables}</div>
 <div class="card-meaning">${card.meaning.tr}</div>
